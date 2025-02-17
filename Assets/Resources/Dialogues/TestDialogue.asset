@@ -1,0 +1,71 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b47e8935dc184185b1e75ee5c1267e7, type: 3}
+  m_Name: TestDialogue
+  m_EditorClassIdentifier: 
+  Cells:
+  - Index: 0
+    CharacterName: 
+    NPC: {fileID: 11400000, guid: 7c843a595a30e4dbbb4b80192736b59f, type: 2}
+    SelectedVariantIndex: 0
+    CellType: 0
+    JumpToIndex: 1
+    CellFlag: 0
+    Content: "\u6211\u662F\u5927\u5929\u72D7"
+  - Index: 1
+    CharacterName: 
+    NPC: {fileID: 11400000, guid: ad286df9201b248a782aaa4116e8d425, type: 2}
+    SelectedVariantIndex: 0
+    CellType: 0
+    JumpToIndex: 2
+    CellFlag: 2
+    Content: "\u6211\u662F\u5927\u8708\u86A3"
+  - Index: 2
+    CharacterName: 
+    NPC: {fileID: 0}
+    SelectedVariantIndex: 0
+    CellType: 0
+    JumpToIndex: 3
+    CellFlag: 2
+    Content: "\u9009\u62E9\u5929\u72D7\u8FD8\u662F\u8708\u86A3\uFF1F"
+  - Index: 3
+    CharacterName: 
+    NPC: {fileID: 0}
+    SelectedVariantIndex: 0
+    CellType: 1
+    JumpToIndex: 5
+    CellFlag: 2
+    Content: "\u8708\u86A3"
+  - Index: 4
+    CharacterName: 
+    NPC: {fileID: 0}
+    SelectedVariantIndex: 0
+    CellType: 1
+    JumpToIndex: 6
+    CellFlag: 2
+    Content: "\u5929\u72D7"
+  - Index: 5
+    CharacterName: 
+    NPC: {fileID: 11400000, guid: ad286df9201b248a782aaa4116e8d425, type: 2}
+    SelectedVariantIndex: 0
+    CellType: 0
+    JumpToIndex: 0
+    CellFlag: 1
+    Content: "\u563F\u563F\uFF0C\u8C22\u8C22\u4F60\u9009\u62E9\u6211"
+  - Index: 6
+    CharacterName: 
+    NPC: {fileID: 11400000, guid: 7c843a595a30e4dbbb4b80192736b59f, type: 2}
+    SelectedVariantIndex: 0
+    CellType: 0
+    JumpToIndex: 0
+    CellFlag: 1
+    Content: "\u4F60\u9009\u62E9\u4E86\u5929\u72D7"
