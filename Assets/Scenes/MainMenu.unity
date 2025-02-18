@@ -658,6 +658,8 @@ GameObject:
   - component: {fileID: 795677954}
   - component: {fileID: 795677953}
   - component: {fileID: 795677952}
+  - component: {fileID: 795677957}
+  - component: {fileID: 795677956}
   m_Layer: 0
   m_Name: ----------MANAGER----------
   m_TagString: Untagged
@@ -725,6 +727,40 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &795677956
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 795677951}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 193729fe642096c45aa93a1f85c04594, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  recordName:
+  - 
+  - 
+  - 
+  - 
+  - 
+  lastID: 233
+--- !u!114 &795677957
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 795677951}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d379c300d8c6be545a1af06f0c9f52df, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  level: 0
+  scensName: 2
+  gameTime: 0
 --- !u!1 &829337614
 GameObject:
   m_ObjectHideFlags: 0
@@ -882,7 +918,7 @@ MonoBehaviour:
   m_BlockingObjects: 0
   m_BlockingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 63
 --- !u!114 &863790093
 MonoBehaviour:
   m_ObjectHideFlags: 0

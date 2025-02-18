@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public enum SceneName
 {
     MainMenu,
+    DataLoad,
     SampleScene,
 }
 
