@@ -3,6 +3,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
+using UnityEngine.Serialization;
 
 [Serializable]
 public class AudioInfo
@@ -20,12 +22,10 @@ public class AudioManager : SingletonPersistent<AudioManager>
     public List<AudioInfo> sfxAudioInfoList;
 
     // 音量控制全局音量
-    public float mainVolume;
-
-    // BGM音量因子，实际音量 = mainVolume * bgmVolumeFactor
+    public float mainVolumeFactor;
+    
     public float bgmVolumeFactor;
 
-    // SFX音量因子，实际音量 = mainVolume * sfxVolumeFactor
     public float sfxVolumeFactor;
 
     // 音频资源的根节点
@@ -34,6 +34,14 @@ public class AudioManager : SingletonPersistent<AudioManager>
     private GameObject _bgmSourcesRootGO;
     private GameObject _sfxSourcesRootGO;
 
+    // 引用AudioMixer
+    public AudioMixer audioMixer;
+
+    // 暴露参数名称
+    private const string MAIN_VOLUME_PARAM = "Main";
+    private const string BGM_VOLUME_PARAM = "BGM";
+    private const string SFX_VOLUME_PARAM = "Sfx";
+    
     protected override void Awake()
     {
         base.Awake();
@@ -46,12 +54,20 @@ public class AudioManager : SingletonPersistent<AudioManager>
         _sfxSourcesRootGO.transform.SetParent(transform);
 
         // 加载存储的音量设置
-        mainVolume = PlayerPrefs.GetFloat("MainVolume", 1f);
-        bgmVolumeFactor = PlayerPrefs.GetFloat("BgmVolumeFactor", 1f);
-        sfxVolumeFactor = PlayerPrefs.GetFloat("SfxVolumeFactor", 1f);
+        mainVolumeFactor = PlayerPrefs.GetFloat("MainVolume", .8f);
+        bgmVolumeFactor = PlayerPrefs.GetFloat("BgmVolumeFactor", .8f);
+        sfxVolumeFactor = PlayerPrefs.GetFloat("SfxVolumeFactor", .8f);
     }
-    
-    
+
+    private void Start()
+    {
+        // 初始化AudioMixer的音量
+        ChangeMainVolume(mainVolumeFactor);
+        ChangeBgmVolume(bgmVolumeFactor);
+        ChangeSfxVolume(sfxVolumeFactor);
+    }
+
+
     /// <summary>
     /// 播放BGM
     /// </summary>
@@ -81,7 +97,7 @@ public class AudioManager : SingletonPersistent<AudioManager>
 
         if (audioInfo != null)
         {
-            s.Append(audioInfo.audioSource.DOFade(mainVolume * bgmVolumeFactor, fadeInDuration).OnComplete(() =>
+            s.Append(audioInfo.audioSource.DOFade(mainVolumeFactor * bgmVolumeFactor, fadeInDuration).OnComplete(() =>
             {
                 audioInfo.audioSource.Play();
             }));
@@ -103,12 +119,15 @@ public class AudioManager : SingletonPersistent<AudioManager>
         AudioSource fadeInAudioSource = fadeInAudioGO.AddComponent<AudioSource>();
         fadeInAudioSource.clip = Resources.Load<AudioClip>(fadeInData.audioPath);
         fadeInAudioSource.loop = loop;
-        fadeInAudioSource.volume = fadeInDuration > 0 ? 0 : mainVolume * bgmVolumeFactor;
+        fadeInAudioSource.volume = fadeInDuration > 0 ? 0 : mainVolumeFactor * bgmVolumeFactor;
+        
+        fadeInAudioSource.outputAudioMixerGroup = audioMixer.FindMatchingGroups("Master")[1]; // 设置为音频混合器的 "Master" 组，确保应用音量控制
+        
         fadeInAudioSource.Play();
 
         if (fadeInDuration > 0)
         {
-            s.Append(fadeInAudioSource.DOFade(mainVolume * bgmVolumeFactor, fadeInDuration));
+            s.Append(fadeInAudioSource.DOFade(mainVolumeFactor * bgmVolumeFactor, fadeInDuration));
         }
 
         AudioInfo info = new AudioInfo
@@ -120,7 +139,7 @@ public class AudioManager : SingletonPersistent<AudioManager>
         bgmAudioInfoList.Add(info);
         StartCoroutine(DetectingAudioPlayState(info, true));
     }
-
+    
     /// <summary>
     /// 暂停BGM
     /// </summary>
@@ -191,9 +210,8 @@ public class AudioManager : SingletonPersistent<AudioManager>
     /// 播放音效
     /// </summary>
     /// <param name="sfxName">要播放的音效片段名称</param>
-    /// <param name="fadeInDuration">淡入间隔</param>
     /// <param name="loop">是否循环</param>
-    public void PlaySfx(string sfxName, float fadeInDuration = 0, bool loop = false)
+    public void PlaySfx(string sfxName, bool loop = false)
     {
         Sequence s = DOTween.Sequence();
 
@@ -206,39 +224,24 @@ public class AudioManager : SingletonPersistent<AudioManager>
             return;
         }
 
-
         // 创建音频播放器
         GameObject sfxAudioGO = new GameObject(sfxName);
-
         sfxAudioGO.transform.SetParent(_sfxSourcesRootGO.transform);
 
         AudioSource sfxAudioSource = sfxAudioGO.AddComponent<AudioSource>();
-
         sfxAudioSource.clip = Resources.Load<AudioClip>(sfxData.audioPath);
-
         sfxAudioSource.loop = loop;
-
-        // 设置音量
-        sfxAudioSource.volume = mainVolume * sfxVolumeFactor;
+        
+        sfxAudioSource.outputAudioMixerGroup = audioMixer.FindMatchingGroups("Master")[2]; // 设置为音频混合器的 "Master" 组，确保应用音量控制
 
         sfxAudioSource.Play();
-        
-        if (fadeInDuration > 0)
-        {
-            sfxAudioSource.volume = 0;
-            s.Append(sfxAudioSource.DOFade(mainVolume * sfxVolumeFactor, fadeInDuration));
-        }
-        
+
         AudioInfo info = new AudioInfo();
-        
         info.audioName = sfxName;
-
         info.audioSource = sfxAudioSource;
-
         sfxAudioInfoList.Add(info);
 
         StartCoroutine(DetectingAudioPlayState(info, false));
-        //ThreadPool.QueueUserWorkItem(new WaitCallback(DetectingAudioPlayState), sfxAudioGO);//?????????????????????????
     }
 
     /// <summary>
@@ -260,9 +263,9 @@ public class AudioManager : SingletonPersistent<AudioManager>
 
 
     /// <summary>
-    /// ????��
+    /// 停止音效
     /// </summary>
-    /// <param name="stopSfxName">??????��??</param>
+    /// <param name="stopSfxName">要停止的音效名称</param>
     public void StopSfx(string stopSfxName)
     {
         AudioInfo audioInfo = bgmAudioInfoList.Find(x => x.audioName == stopSfxName);
@@ -283,60 +286,72 @@ public class AudioManager : SingletonPersistent<AudioManager>
     /// <summary>
     /// 修改全局音量，并保存到PlayerPrefs
     /// </summary>
-    /// <param name="volume">新的全局音量</param>
-    public void ChangeMainVolume(float volume)
+    /// <param name="factor">新的全局音量</param>
+    public void ChangeMainVolume(float factor)
     {
-        mainVolume = volume;
-        PlayerPrefs.SetFloat("MainVolume", mainVolume);
-
-        foreach (var info in bgmAudioInfoList)
+        mainVolumeFactor = factor;
+        
+        mainVolumeFactor = Mathf.Clamp(mainVolumeFactor, 0, 1);
+        
+        PlayerPrefs.SetFloat("MainVolume", mainVolumeFactor);
+        
+        if (mainVolumeFactor == 0)
         {
-            info.audioSource.volume = mainVolume * bgmVolumeFactor;
+            audioMixer.SetFloat(MAIN_VOLUME_PARAM, -80f);
         }
-        foreach (var info in sfxAudioInfoList)
+        else
         {
-            info.audioSource.volume = mainVolume * sfxVolumeFactor;
+            audioMixer.SetFloat(MAIN_VOLUME_PARAM, Mathf.Log10(mainVolumeFactor * bgmVolumeFactor) * 20);
         }
-        Debug.Log($"MainVolume changed to {mainVolume}");
     }
 
     /// <summary>
-    /// 修改BGM音量因子，并保存到PlayerPrefs
+    /// 修改BGM音量并使用AudioMixer控制音量
     /// </summary>
-    /// <param name="factor">新的BGM音量因子</param>
     public void ChangeBgmVolume(float factor)
     {
         bgmVolumeFactor = factor;
-        PlayerPrefs.SetFloat("BgmVolumeFactor", bgmVolumeFactor);
+        
+        bgmVolumeFactor = Mathf.Clamp(bgmVolumeFactor, 0f, 1f);
 
-        foreach (var info in bgmAudioInfoList)
+        PlayerPrefs.SetFloat("BgmVolumeFactor", bgmVolumeFactor);
+        
+        if (bgmVolumeFactor == 0)
         {
-            info.audioSource.volume = mainVolume * bgmVolumeFactor;
+            audioMixer.SetFloat(BGM_VOLUME_PARAM, -80f);
         }
-        Debug.Log($"BgmVolumeFactor changed to {bgmVolumeFactor}");
+        else
+        {
+            audioMixer.SetFloat(BGM_VOLUME_PARAM, Mathf.Log10(mainVolumeFactor * bgmVolumeFactor) * 20);
+        }
     }
 
     /// <summary>
-    /// 修改SFX音量因子，并保存到PlayerPrefs
+    /// 修改音效音量并使用AudioMixer控制音量
     /// </summary>
-    /// <param name="factor">新的SFX音量因子</param>
     public void ChangeSfxVolume(float factor)
     {
         sfxVolumeFactor = factor;
+        
+        sfxVolumeFactor = Mathf.Clamp(sfxVolumeFactor, 0f, 1f);
+
         PlayerPrefs.SetFloat("SfxVolumeFactor", sfxVolumeFactor);
 
-        foreach (var info in sfxAudioInfoList)
+        // 如果因子为0，则设置为非常小的音量接近静音
+        if (sfxVolumeFactor == 0)
         {
-            info.audioSource.volume = mainVolume * sfxVolumeFactor;
+            audioMixer.SetFloat(SFX_VOLUME_PARAM, -80f);
         }
-        Debug.Log($"SfxVolumeFactor changed to {sfxVolumeFactor}");
+        else
+        {
+            audioMixer.SetFloat(SFX_VOLUME_PARAM, Mathf.Log10(mainVolumeFactor * sfxVolumeFactor) * 20);
+        }
     }
+
 
     /// <summary>
     /// 检测音频播放状态并清理结束播放的音频资源
     /// </summary>
-    /// <param name="info">音频信息</param>
-    /// <param name="isBgm">是否是BGM</param>
     IEnumerator DetectingAudioPlayState(AudioInfo info, bool isBgm)
     {
         AudioSource audioSource = info.audioSource;

@@ -20,7 +20,7 @@ public class PauseSettingsPanel : BasePanel
         base.Awake();
 
         // 初始化音量滑动条的默认值
-        mainVolumeSlider.value = AudioManager.Instance.mainVolume;
+        mainVolumeSlider.value = AudioManager.Instance.mainVolumeFactor;
         bgmVolumeSlider.value = AudioManager.Instance.bgmVolumeFactor;
         sfxVolumeSlider.value = AudioManager.Instance.sfxVolumeFactor;
 

@@ -9,10 +9,9 @@ public class Test : MonoBehaviour
     
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.A))
-            AudioManager.Instance.PlayBgm("BGM");
-        if (Input.GetKeyDown(KeyCode.S))
+        if (Input.GetMouseButtonDown(0))
             AudioManager.Instance.PlaySfx("click");
+        
         if (Input.GetKeyDown(KeyCode.Escape))
             UIManager.Instance.OpenPanel("SettingPanel");
 
