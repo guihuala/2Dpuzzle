@@ -8,11 +8,11 @@ public static class EVENTMGR
     #region 进入可交互物体的UI提示
 
     // 进入可交互物体
-    public static event Action OnEnterInteractive;
+    public static event Action<string> OnEnterInteractive;
 
-    public static void TriggerEnterInteractive()
+    public static void TriggerEnterInteractive(string eventText)
     {
-        OnEnterInteractive?.Invoke();
+        OnEnterInteractive?.Invoke(eventText);
     }
 
     // 离开可交互物体
