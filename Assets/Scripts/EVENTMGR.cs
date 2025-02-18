@@ -1,18 +1,28 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
 
-public class EVENTMGR : MonoBehaviour
+public static class EVENTMGR
 {
-    // Start is called before the first frame update
-    void Start()
+    // 游戏需要用到的主要事件
+
+    #region 进入可交互物体的UI提示
+
+    // 进入可交互物体
+    public static event Action OnEnterInteractive;
+
+    public static void TriggerEnterInteractive()
     {
-        
+        OnEnterInteractive?.Invoke();
     }
 
-    // Update is called once per frame
-    void Update()
+    // 离开可交互物体
+    public static event Action OnExitInteractive;
+
+    public static void TriggerExitInteractive()
     {
-        
+        OnExitInteractive?.Invoke();
     }
+
+    #endregion
+
 }
