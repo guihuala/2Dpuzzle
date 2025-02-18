@@ -11,7 +11,6 @@ public class DialoguePanel : BasePanel
     private Image _characterImage;
     private Text _characterNameText;
     private Text _contentText;
-    private Button _skipBtn;
 
     #endregion
 
@@ -32,9 +31,6 @@ public class DialoguePanel : BasePanel
         _characterNameText = transform.GetChild(1).GetChild(0).GetChild(0).GetComponent<Text>();
         _contentText = transform.GetChild(1).GetChild(1).GetComponent<Text>();
         _characterImage = transform.GetChild(0).GetComponent<Image>();
-
-        _skipBtn = transform.GetChild(2).GetComponent<Button>();
-        _skipBtn.onClick.AddListener(SkipAllDialogue);
     }
 
     public void StartDialogue(DialogueData data)
