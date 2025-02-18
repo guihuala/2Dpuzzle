@@ -1,14 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.Serialization;
+using UnityEngine.UI;  // 引用UI命名空间
 
 public class PlayerController : MonoBehaviour
 {
+    [Header("玩家移动基本参数")]
     public float moveSpeed = 5f;          // 普通移动速度
     public float runSpeed = 10f;          // 奔跑速度
     public float climbSpeed = 3f;         // 攀爬速度
@@ -19,21 +16,31 @@ public class PlayerController : MonoBehaviour
     private bool isGrounded;
     private Vector2 moveDirection;
     private bool isClimbing = false;
-    
+
+    [Header("交互UI提示")]
+    public GameObject interactionUI;      // 交互提示UI
+    private InteractableObject currentInteractableObject;  // 当前可交互物体
+
     [Header("音频")]
     [SerializeField] private RandomAudioPlayer walkAudioPlayer;
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        if (interactionUI != null)
+        {
+            interactionUI.SetActive(false);  // 初始时隐藏UI
+        }
     }
 
-    void FixedUpdate()
+    void Update()
     {
         isGrounded = Physics2D.Raycast(transform.position, Vector2.down, groundCheckDistance, groundLayer);
         
         // 处理角色的移动
         HandleMovement();
+        
+        Interact();
     }
 
     void HandleMovement()
@@ -43,51 +50,65 @@ public class PlayerController : MonoBehaviour
 
         moveDirection = new Vector2(horizontal, vertical).normalized;
 
-        if (!isClimbing)
+        // 横向移动逻辑
+        Vector2 targetVelocity = moveDirection * (Input.GetKey(KeyCode.LeftShift) ? runSpeed : moveSpeed);
+        rb.velocity = new Vector2(targetVelocity.x, rb.velocity.y);
+
+        if (moveDirection.magnitude > 0.1f) // 如果有明显的移动
         {
-            Vector2 targetVelocity = moveDirection * (Input.GetKey(KeyCode.LeftShift) ? runSpeed : moveSpeed);
-            rb.velocity = new Vector2(targetVelocity.x, rb.velocity.y);
-            
-            if (moveDirection.magnitude > 0.1f) // 如果有明显的移动
-            {
-                walkAudioPlayer.PlayRandomSound();
-            }
+            walkAudioPlayer.PlayRandomSound();
         }
-        else if (isClimbing)
+
+        // 攀爬
+        if (isClimbing)
         {
             float verticalClimb = Input.GetAxis("Vertical");
             rb.velocity = new Vector2(rb.velocity.x, verticalClimb * climbSpeed); // 只修改垂直方向的速度
         }
     }
 
-    // 检测与交互物体的碰撞
+    public void ToggleClimbing(bool isclimbing)
+    {
+        isClimbing = isclimbing;
+    }
+    
     void Interact()
     {
-        if (Input.GetKeyDown(KeyCode.E))
+        if (currentInteractableObject != null && Input.GetKeyDown(KeyCode.E))
         {
-            RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.right, 3f);
-            if (hit.collider != null && hit.collider.CompareTag("Interactable"))
-            {
-                Debug.Log("与 " + hit.collider.name + " 进行交互");
-                // 调用交互的逻辑
-            }
+            currentInteractableObject.Interact();
         }
     }
 
-    // 攀爬检测
+    // 检测与交互物体的碰撞
     private void OnTriggerStay2D(Collider2D other)
     {
-        if (other.CompareTag("Climbable"))
+        InteractableObject interactableObject = other.GetComponent<InteractableObject>();
+        if (interactableObject != null)
         {
-            isClimbing = true;
+            currentInteractableObject = interactableObject;
+            currentInteractableObject.Enter();
+            ShowInteractionUI(true);
         }
     }
 
     private void OnTriggerExit2D(Collider2D other)
     {
-        if (other.CompareTag("Climbable"))
+        InteractableObject interactableObject = other.GetComponent<InteractableObject>();
+        if (interactableObject != null)
         {
-            isClimbing = false;
+            currentInteractableObject.Exit();
+            currentInteractableObject = null;
+            ShowInteractionUI(false);
+        }
+    }
+
+    // 显示或隐藏交互提示UI
+    void ShowInteractionUI(bool show)
+    {
+        if (interactionUI != null)
+        {
+            interactionUI.SetActive(show);
         }
     }
 }
