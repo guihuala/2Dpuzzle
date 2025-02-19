@@ -14,11 +14,15 @@ public class ClimbingLadder : InteractableObject
 
     public override void Enter()
     {
+        base.Enter();
+        
         player.ToggleClimbing(true);
     }
 
     public override void Exit()
     {
+        base.Exit();
+        
         player.ToggleClimbing(false);
     }
 }

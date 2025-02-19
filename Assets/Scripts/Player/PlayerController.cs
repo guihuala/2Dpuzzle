@@ -18,7 +18,6 @@ public class PlayerController : MonoBehaviour
     private bool isClimbing = false;
 
     [Header("交互UI提示")]
-    public GameObject interactionUI;      // 交互提示UI
     private InteractableObject currentInteractableObject;  // 当前可交互物体
 
     [Header("音频")]
@@ -27,10 +26,6 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        if (interactionUI != null)
-        {
-            interactionUI.SetActive(false);  // 初始时隐藏UI
-        }
     }
 
     void Update()
@@ -88,7 +83,6 @@ public class PlayerController : MonoBehaviour
         {
             currentInteractableObject = interactableObject;
             currentInteractableObject.Enter();
-            ShowInteractionUI(true);
         }
     }
 
@@ -99,16 +93,6 @@ public class PlayerController : MonoBehaviour
         {
             currentInteractableObject.Exit();
             currentInteractableObject = null;
-            ShowInteractionUI(false);
-        }
-    }
-
-    // 显示或隐藏交互提示UI
-    void ShowInteractionUI(bool show)
-    {
-        if (interactionUI != null)
-        {
-            interactionUI.SetActive(show);
         }
     }
 }
