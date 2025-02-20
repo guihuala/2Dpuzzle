@@ -23,3 +23,5 @@ MonoBehaviour:
     uiPath: UIPanels/SleepBlackPanel
   - uiName: SaveButtonGroup
     uiPath: UIPanels/SaveButtonGroup
+  - uiName: CollectiblePanel
+    uiPath: UIPanels/CollectiblePanel

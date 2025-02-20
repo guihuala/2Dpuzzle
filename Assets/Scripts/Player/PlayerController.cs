@@ -40,6 +40,8 @@ public class PlayerController : MonoBehaviour
     private void InstanceOnOnOpenBag(object sender, EventArgs e)
     {
         Debug.Log("open bag");
+
+        UIManager.Instance.OpenPanel("CollectiblePanel");
     }
     
     void InstanceOnInteract(object sender, EventArgs e)
