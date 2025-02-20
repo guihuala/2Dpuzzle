@@ -7,7 +7,8 @@ public enum SceneName
 {
     MainMenu,
     DataLoad,
-    SampleScene,
+    LayerTest,
+    
 }
 
 public class SceneLoader : SingletonPersistent<SceneLoader>
