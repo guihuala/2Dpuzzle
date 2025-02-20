@@ -21,3 +21,5 @@ MonoBehaviour:
     uiPath: UIPanels/SceneLoadedBlackPanel
   - uiName: SleepBlackPanel
     uiPath: UIPanels/SleepBlackPanel
+  - uiName: SaveButtonGroup
+    uiPath: UIPanels/SaveButtonGroup

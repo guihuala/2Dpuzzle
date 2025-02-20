@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ClimbingLadder : InteractableObject
+public class ClimbingLadder : BaseInteractableObject
 {
     private PlayerController player;
 

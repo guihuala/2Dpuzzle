@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
-public class RecordPanel : MonoBehaviour
+public class RecordPanel : BasePanel
 {
     public Transform grid;               // 存档列表的容器
     public GameObject recordPrefab;      // 存档项预制件
@@ -12,7 +12,6 @@ public class RecordPanel : MonoBehaviour
 
     [Header("按钮")]
     public Button open;
-    public Button exit;
     public Button save;
     public Button load;
     [ColorUsage(true)]
@@ -56,7 +55,6 @@ public class RecordPanel : MonoBehaviour
         open.onClick.AddListener(() => CloseOrOpen());
         save.onClick.AddListener(() => SaveOrLoad());
         load.onClick.AddListener(() => SaveOrLoad(false));
-        exit.onClick.AddListener(QuitGame);
         #endregion
 
         // 初始化时间
@@ -164,40 +162,7 @@ public class RecordPanel : MonoBehaviour
         // 删除存档
         DeleteRecord(gridID, false);
     }
-
-    private void QuitGame()
-    {
-        string autoName = SAVE.FindAuto();
-        if (autoName != "")
-        {
-            int autoID;
-            // 查找自动存档对应的编号
-            RecordInGrid.TryGetValue(autoName, out autoID);
-            // 删除旧的自动存档，创建新的自动存档
-            NewRecord(autoID, ".auto");
-        }
-        else
-        {
-            for (int i = 0; i < RecordData.recordNum; i++)
-            {
-                // 找到空位
-                if (RecordData.Instance.recordName[i] == "")
-                {
-                    NewRecord(i, ".auto");
-                    break;
-                }
-            }
-
-        }
-
-        // 退出游戏
-        #if UNITY_EDITOR
-            UnityEditor.EditorApplication.isPlaying = false;
-        #else
-            Application.Quit();                          
-        #endif
-    }
-
+    
     // 创建新存档
     void NewRecord(int i, string end = ".save")
     {

@@ -244,7 +244,7 @@ Transform:
   m_GameObject: {fileID: 8448593032559520131}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.7, y: 1.7, z: 1.7}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 9082629338538986717}
@@ -318,11 +318,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 5
   runSpeed: 8
-  climbSpeed: 3
+  climbSpeed: 5
+  ladderHorizontalSpeed: 5
   groundCheckDistance: 0.1
   groundLayer:
     serializedVersion: 2
     m_Bits: 8
+  gravityScale: 2
   walkAudioPlayer: {fileID: 5748808956126392850}
 --- !u!70 &5693556647065563147
 CapsuleCollider2D:

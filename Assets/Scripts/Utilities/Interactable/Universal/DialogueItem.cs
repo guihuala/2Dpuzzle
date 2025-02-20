@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DialogueItem : InteractableObject
+public class DialogueItem : BaseInteractableObject
 {
     [SerializeField] private DialogueData dialogueData;
 

@@ -3,20 +3,22 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
 
-public class InteractableObject : MonoBehaviour
+public class BaseInteractableObject : MonoBehaviour,Interactable
 {
     private bool canInteract = true;  // 是否允许交互
     private bool isLit = false;      // 物体是否在光照范围内
     
     private SpriteRenderer spriteRenderer;
 
-    [SerializeField] protected string interactInfo;
+    [SerializeField] 
+    [TextArea]protected string interactInfo;
     [SerializeField] protected Material interactOutlineMaterial;
     [SerializeField] protected Material defaultMaterial;
     
     [SerializeField] private bool requiresLightToActivate = true; // 是否需要光照激活交互
+    //这边以后可以改成枚举（光照激活、无光照激活、永久激活等等状态）
 
-    private void Start()
+    protected virtual void Start()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
     }
@@ -41,10 +43,10 @@ public class InteractableObject : MonoBehaviour
         {
             canInteract = isLit;  // 只有在有光照的情况下才能交互
         }
-        else
-        {
-            canInteract = !isLit;  // 如果不需要光照，则在光照照射时取消激活
-        }
+        // else
+        // {
+        //     canInteract = !isLit;  // 如果不需要光照，则在光照照射时取消激活
+        // }
     }
 
     // 判断物体是否在光源的照射范围内

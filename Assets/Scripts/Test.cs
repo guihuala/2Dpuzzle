@@ -9,8 +9,5 @@ public class Test : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
             AudioManager.Instance.PlaySfx("click");
-        
-        if (Input.GetKeyDown(KeyCode.Escape))
-            UIManager.Instance.OpenPanel("SettingPanel");
     }
 }
