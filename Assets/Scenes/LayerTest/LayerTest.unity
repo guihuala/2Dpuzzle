@@ -460,7 +460,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 114eaabd96fc79c438a0ba7a68a45bd2, type: 2}
+  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -519,12 +519,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9856433f0d610a74fa8dd21a2560f17d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lightLayer:
-    serializedVersion: 2
-    m_Bits: 63
-  fadeSpeed: 2
-  maxLights: 4
-  edgeBlurAmount: 0.1
 --- !u!1 &258830157
 GameObject:
   m_ObjectHideFlags: 0
@@ -574,7 +568,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &388585601
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1163,7 +1157,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 114eaabd96fc79c438a0ba7a68a45bd2, type: 2}
+  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1222,12 +1216,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9856433f0d610a74fa8dd21a2560f17d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lightLayer:
-    serializedVersion: 2
-    m_Bits: 63
-  fadeSpeed: 2
-  maxLights: 4
-  edgeBlurAmount: 0.1
 --- !u!1 &680965835
 GameObject:
   m_ObjectHideFlags: 0
@@ -1534,15 +1522,15 @@ SpriteRenderer:
   m_SortingLayerID: -600351563
   m_SortingLayer: -1
   m_SortingOrder: -20
-  m_Sprite: {fileID: 21300000, guid: 3b1bb2321fc194feab88fb8eafde97b3, type: 3}
-  m_Color: {r: 0.7830189, g: 0.60942507, b: 0.60942507, a: 1}
+  m_Sprite: {fileID: 21300000, guid: afe97cbffea6440e090b24decb731d25, type: 3}
+  m_Color: {r: 1, g: 0.61006284, b: 0.61006284, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
   m_Size: {x: 5.76, y: 3.24}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 0
+  m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!4 &752171526
@@ -1553,8 +1541,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 752171524}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -10.6, y: 2.26, z: 20}
-  m_LocalScale: {x: 2, y: 2, z: 2}
+  m_LocalPosition: {x: -12.77, y: 3.46, z: 20}
+  m_LocalScale: {x: 5, y: 5, z: 5}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
@@ -1572,12 +1560,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9856433f0d610a74fa8dd21a2560f17d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lightLayer:
-    serializedVersion: 2
-    m_Bits: 63
-  fadeSpeed: 2
-  maxLights: 4
-  edgeBlurAmount: 0.568
 --- !u!1 &754500695
 GameObject:
   m_ObjectHideFlags: 0
@@ -3040,7 +3022,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 114eaabd96fc79c438a0ba7a68a45bd2, type: 2}
+  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -3099,12 +3081,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9856433f0d610a74fa8dd21a2560f17d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lightLayer:
-    serializedVersion: 2
-    m_Bits: 63
-  fadeSpeed: 2
-  maxLights: 4
-  edgeBlurAmount: 0.1
 --- !u!1 &1321018053
 GameObject:
   m_ObjectHideFlags: 0
@@ -3396,7 +3372,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 114eaabd96fc79c438a0ba7a68a45bd2, type: 2}
+  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -3455,12 +3431,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9856433f0d610a74fa8dd21a2560f17d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lightLayer:
-    serializedVersion: 2
-    m_Bits: 63
-  fadeSpeed: 2
-  maxLights: 4
-  edgeBlurAmount: 0.1
 --- !u!1 &1521178926
 GameObject:
   m_ObjectHideFlags: 0
@@ -3835,7 +3805,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 114eaabd96fc79c438a0ba7a68a45bd2, type: 2}
+  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -3894,12 +3864,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9856433f0d610a74fa8dd21a2560f17d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lightLayer:
-    serializedVersion: 2
-    m_Bits: 63
-  fadeSpeed: 2
-  maxLights: 4
-  edgeBlurAmount: 0.1
 --- !u!1 &1785007957
 GameObject:
   m_ObjectHideFlags: 0

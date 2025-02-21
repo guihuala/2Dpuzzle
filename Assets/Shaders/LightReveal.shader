@@ -3,114 +3,112 @@ Shader "Custom/LightReveal"
     Properties
     {
         _MainTex ("Texture", 2D) = "white" {}
-        _Opacity ("Opacity", Range(0, 1)) = 1
-        _BlurAmount ("Blur Amount", Range(0, 1)) = 0.1
-        _Color ("Tint", Color) = (1,1,1,1)
+        _Opacity ("Overall Opacity", Range(0, 1)) = 1
+        _Color ("Tint Color", Color) = (1,1,1,1)
+        _LightColor ("Light Color", Color) = (1,1,1,1)
     }
     
     SubShader
     {
         Tags 
         { 
-            "Queue"="Transparent" 
-            "RenderType"="Transparent" 
-            "PreviewType"="Plane"
+            "RenderType" = "Transparent"
+            "Queue" = "Transparent"
+            "RenderPipeline" = "UniversalPipeline"
         }
 
         Blend SrcAlpha OneMinusSrcAlpha
-        Cull Off
         ZWrite Off
 
         Pass
         {
-            CGPROGRAM
+            HLSLPROGRAM
             #pragma vertex vert
             #pragma fragment frag
-            #include "UnityCG.cginc"
+            
+            #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
 
-            #define MAX_LIGHTS 4
-
-            struct appdata
+            struct Attributes
             {
-                float4 vertex : POSITION;
+                float4 positionOS : POSITION;
                 float2 uv : TEXCOORD0;
-                fixed4 color : COLOR;
+                float4 color : COLOR;
             };
 
-            struct v2f
+            struct Varyings
             {
+                float4 positionHCS : SV_POSITION;
                 float2 uv : TEXCOORD0;
-                float4 vertex : SV_POSITION;
-                float4 worldPos : TEXCOORD1;
-                fixed4 color : COLOR;
+                float3 positionWS : TEXCOORD1;
+                float3 positionOS : TEXCOORD2;
+                float4 color : COLOR;
             };
 
-            sampler2D _MainTex;
-            float4 _MainTex_ST;
-            float4 _MainTex_TexelSize;
-            float _Opacity;
-            float _BlurAmount;
-            fixed4 _Color;
+            TEXTURE2D(_MainTex);
+            SAMPLER(sampler_MainTex);
 
-            // 光源数据
-            float4 _LightPositions[MAX_LIGHTS];
-            float _LightIntensities[MAX_LIGHTS];
-            float _LightRanges[MAX_LIGHTS];
-            int _LightCount;
+            CBUFFER_START(UnityPerMaterial)
+                float4 _MainTex_ST;
+                float _Opacity;
+                float4 _Color;
+                float4 _LightColor;
+                float4 _LightPositions[8];
+                float _LightIntensities[8];
+                float _LightRanges[8];
+                int _LightCount;
+            CBUFFER_END
 
-            v2f vert (appdata v)
+            Varyings vert(Attributes IN)
             {
-                v2f o;
-                o.vertex = UnityObjectToClipPos(v.vertex);
-                o.uv = TRANSFORM_TEX(v.uv, _MainTex);
-                o.worldPos = mul(unity_ObjectToWorld, v.vertex);
-                o.color = v.color;
-                return o;
+                Varyings OUT;
+                OUT.positionHCS = TransformObjectToHClip(IN.positionOS.xyz);
+                OUT.positionWS = TransformObjectToWorld(IN.positionOS.xyz);
+                OUT.positionOS = IN.positionOS.xyz;
+                OUT.uv = TRANSFORM_TEX(IN.uv, _MainTex);
+                OUT.color = IN.color;
+                return OUT;
             }
 
-            float CalculateLightInfluence(float2 worldPos, float2 lightPos, float range, float intensity)
+            float4 frag(Varyings IN) : SV_Target
             {
-                float dist = length(worldPos - lightPos);
-                float normalizedDist = saturate(dist / range);
-                return lerp(intensity, 0, normalizedDist);
-            }
-
-            fixed4 frag (v2f i) : SV_Target
-            {
-                // 采样周围9个点进行模糊
-                float2 blur = _MainTex_TexelSize.xy * _BlurAmount * 30;
+                float4 color = SAMPLE_TEXTURE2D(_MainTex, sampler_MainTex, IN.uv);
                 
-                fixed4 col = tex2D(_MainTex, i.uv) * 0.2;
-                col += tex2D(_MainTex, i.uv + float2(-blur.x, -blur.y)) * 0.1;
-                col += tex2D(_MainTex, i.uv + float2(-blur.x, 0)) * 0.1;
-                col += tex2D(_MainTex, i.uv + float2(-blur.x, blur.y)) * 0.1;
-                col += tex2D(_MainTex, i.uv + float2(0, -blur.y)) * 0.1;
-                col += tex2D(_MainTex, i.uv + float2(0, blur.y)) * 0.1;
-                col += tex2D(_MainTex, i.uv + float2(blur.x, -blur.y)) * 0.1;
-                col += tex2D(_MainTex, i.uv + float2(blur.x, 0)) * 0.1;
-                col += tex2D(_MainTex, i.uv + float2(blur.x, blur.y)) * 0.1;
-
-                col *= _Color;
-
-                // 计算所有光源的影响
+                // 应用基础颜色和精灵颜色
+                color *= _Color * IN.color;
+                
+                // 计算所有光源的累积影响
                 float totalLight = 0;
-                for (int idx = 0; idx < _LightCount; idx++)
+                float3 finalLightColor = float3(0, 0, 0);
+                
+                for (int i = 0; i < _LightCount; i++)
                 {
-                    float2 lightPos = _LightPositions[idx].xy;
-                    float range = _LightRanges[idx];
-                    float intensity = _LightIntensities[idx];
+                    float2 lightPos = _LightPositions[i].xy;
+                    float distance = length(IN.positionOS.xy - lightPos);
+                    float range = _LightRanges[i];
+                    float intensity = _LightIntensities[i];
                     
-                    float lightInfluence = CalculateLightInfluence(i.worldPos.xy, lightPos, range, intensity);
-                    totalLight = max(totalLight, lightInfluence);
+                    // 计算光照衰减
+                    float attenuation = saturate(1 - distance / range);
+                    attenuation = smoothstep(0, 1, attenuation);
+                    
+                    totalLight += attenuation * intensity;
+                    finalLightColor += _LightColor.rgb * attenuation * intensity;
                 }
-
-                // 应用光照和边缘虚化
-                float edgeFade = smoothstep(1.0, 1.0 - _BlurAmount, length(i.uv - 0.5) * 2);
-                col.a *= totalLight * edgeFade * _Opacity;
-
-                return col;
+                
+                // 限制总光照强度并应用平滑过渡
+                totalLight = saturate(totalLight);
+                totalLight = smoothstep(0, 1, totalLight);
+                finalLightColor = saturate(finalLightColor);
+                
+                // 应用光照颜色到RGB通道
+                color.rgb *= (1 + finalLightColor);
+                
+                // 应用总体不透明度
+                color.a *= totalLight * _Opacity;
+                
+                return color;
             }
-            ENDCG
+            ENDHLSL
         }
     }
 } 

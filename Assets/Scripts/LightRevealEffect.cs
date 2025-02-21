@@ -4,18 +4,9 @@ using UnityEngine.Rendering.Universal;
 [RequireComponent(typeof(SpriteRenderer))]
 public class LightRevealEffect : MonoBehaviour
 {
-    [Header("光照设置")]
-    [SerializeField] private LayerMask lightLayer;  // 光源所在的层
-    [SerializeField] private float fadeSpeed = 2f;    // 淡入淡出速度
-    [SerializeField] private int maxLights = 8;       // 最大支持的光源数量
-
-    [Header("材质设置")]
-    [SerializeField, Range(0f, 1f)] private float edgeBlurAmount = 0.1f;  // 边缘模糊程度
-
     private SpriteRenderer spriteRenderer;
     private Material material;
     private static readonly int OpacityID = Shader.PropertyToID("_Opacity");
-    private static readonly int BlurAmountID = Shader.PropertyToID("_BlurAmount");
     private static readonly int LightPositionsID = Shader.PropertyToID("_LightPositions");
     private static readonly int LightIntensitiesID = Shader.PropertyToID("_LightIntensities");
     private static readonly int LightRangesID = Shader.PropertyToID("_LightRanges");
@@ -33,14 +24,13 @@ public class LightRevealEffect : MonoBehaviour
         material = new Material(Shader.Find("Custom/LightReveal"));
         spriteRenderer.material = material;
 
-        // 初始化光源数组
-        lightPositions = new Vector4[maxLights];
-        lightIntensities = new float[maxLights];
-        lightRanges = new float[maxLights];
+        // 初始化光源数组（使用固定大小8）
+        lightPositions = new Vector4[8];
+        lightIntensities = new float[8];
+        lightRanges = new float[8];
 
         // 设置初始值
         material.SetFloat(OpacityID, 1f);
-        material.SetFloat(BlurAmountID, edgeBlurAmount);
     }
 
     private void Update()
@@ -57,10 +47,7 @@ public class LightRevealEffect : MonoBehaviour
         currentLightCount = 0;
         foreach (Light2D light in sceneLights)
         {
-            // 检查光源是否在指定层上
-            if (((1 << light.gameObject.layer) & lightLayer.value) == 0) continue;
-
-            if (currentLightCount >= maxLights) break;
+            if (currentLightCount >= 8) break;
 
             // 转换光源位置到物体的局部空间
             Vector3 localPos = transform.InverseTransformPoint(light.transform.position);
@@ -77,7 +64,6 @@ public class LightRevealEffect : MonoBehaviour
         material.SetFloatArray(LightIntensitiesID, lightIntensities);
         material.SetFloatArray(LightRangesID, lightRanges);
         material.SetInt(LightCountID, currentLightCount);
-        material.SetFloat(BlurAmountID, edgeBlurAmount);
     }
 
     private void OnDrawGizmosSelected()
