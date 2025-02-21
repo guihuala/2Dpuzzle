@@ -432,6 +432,7 @@ GameObject:
   m_Component:
   - component: {fileID: 230745436}
   - component: {fileID: 230745435}
+  - component: {fileID: 230745437}
   m_Layer: 0
   m_Name: 5 (1)
   m_TagString: Untagged
@@ -459,7 +460,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 80c11bc0820d6487ab2e4cd1b991d556, type: 2}
+  - {fileID: 2100000, guid: 114eaabd96fc79c438a0ba7a68a45bd2, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -506,6 +507,24 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 16
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &230745437
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 230745434}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9856433f0d610a74fa8dd21a2560f17d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lightLayer:
+    serializedVersion: 2
+    m_Bits: 63
+  fadeSpeed: 2
+  maxLights: 4
+  edgeBlurAmount: 0.1
 --- !u!1 &258830157
 GameObject:
   m_ObjectHideFlags: 0
@@ -1116,6 +1135,7 @@ GameObject:
   m_Component:
   - component: {fileID: 649458111}
   - component: {fileID: 649458110}
+  - component: {fileID: 649458112}
   m_Layer: 0
   m_Name: 2 (1)
   m_TagString: Untagged
@@ -1143,7 +1163,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 80c11bc0820d6487ab2e4cd1b991d556, type: 2}
+  - {fileID: 2100000, guid: 114eaabd96fc79c438a0ba7a68a45bd2, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1190,6 +1210,24 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &649458112
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 649458109}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9856433f0d610a74fa8dd21a2560f17d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lightLayer:
+    serializedVersion: 2
+    m_Bits: 63
+  fadeSpeed: 2
+  maxLights: 4
+  edgeBlurAmount: 0.1
 --- !u!1 &680965835
 GameObject:
   m_ObjectHideFlags: 0
@@ -1260,8 +1298,8 @@ MonoBehaviour:
     m_Extent: {x: 0.9985302, y: 0.99853027, z: 0}
   m_PointLightInnerAngle: 360
   m_PointLightOuterAngle: 360
-  m_PointLightInnerRadius: 0
-  m_PointLightOuterRadius: 10
+  m_PointLightInnerRadius: 1.6
+  m_PointLightOuterRadius: 11.3
   m_ShapeLightParametricSides: 5
   m_ShapeLightParametricAngleOffset: 0
   m_ShapeLightParametricRadius: 1
@@ -1447,6 +1485,7 @@ GameObject:
   m_Component:
   - component: {fileID: 752171526}
   - component: {fileID: 752171525}
+  - component: {fileID: 752171527}
   m_Layer: 0
   m_Name: 1 (1)
   m_TagString: Untagged
@@ -1474,7 +1513,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 80c11bc0820d6487ab2e4cd1b991d556, type: 2}
+  - {fileID: 2100000, guid: 114eaabd96fc79c438a0ba7a68a45bd2, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1514,13 +1553,31 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 752171524}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 8, z: 20}
+  m_LocalPosition: {x: -10.6, y: 2.26, z: 20}
   m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &752171527
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 752171524}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9856433f0d610a74fa8dd21a2560f17d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lightLayer:
+    serializedVersion: 2
+    m_Bits: 63
+  fadeSpeed: 2
+  maxLights: 4
+  edgeBlurAmount: 0.568
 --- !u!1 &846611436
 GameObject:
   m_ObjectHideFlags: 0
@@ -1820,7 +1877,7 @@ SpriteRenderer:
   m_Size: {x: 1, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!4 &969167277
@@ -1848,6 +1905,7 @@ GameObject:
   m_Component:
   - component: {fileID: 973882775}
   - component: {fileID: 973882776}
+  - component: {fileID: 973882777}
   m_Layer: 0
   m_Name: Light 2D
   m_TagString: Untagged
@@ -1870,7 +1928,42 @@ Transform:
   m_Father: {fileID: 2049884479}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &973882776
+--- !u!58 &973882776
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 973882774}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.5
+--- !u!114 &973882777
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1908,7 +2001,7 @@ MonoBehaviour:
     m_Extent: {x: 0.9985302, y: 0.99853027, z: 0}
   m_PointLightInnerAngle: 360
   m_PointLightOuterAngle: 360
-  m_PointLightInnerRadius: 0
+  m_PointLightInnerRadius: 1
   m_PointLightOuterRadius: 20
   m_ShapeLightParametricSides: 5
   m_ShapeLightParametricAngleOffset: 0
@@ -2050,7 +2143,7 @@ SpriteRenderer:
   m_Size: {x: 1, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!4 &1057649371
@@ -2305,7 +2398,7 @@ SpriteRenderer:
   m_Size: {x: 36, y: 20.25}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!4 &1129365055
@@ -2761,6 +2854,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1300459718}
   - component: {fileID: 1300459717}
+  - component: {fileID: 1300459719}
   m_Layer: 0
   m_Name: 6
   m_TagString: Untagged
@@ -2788,7 +2882,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 80c11bc0820d6487ab2e4cd1b991d556, type: 2}
+  - {fileID: 2100000, guid: 114eaabd96fc79c438a0ba7a68a45bd2, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2835,6 +2929,24 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 17
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1300459719
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1300459716}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9856433f0d610a74fa8dd21a2560f17d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lightLayer:
+    serializedVersion: 2
+    m_Bits: 63
+  fadeSpeed: 2
+  maxLights: 4
+  edgeBlurAmount: 0.1
 --- !u!1 &1321018053
 GameObject:
   m_ObjectHideFlags: 0
@@ -3098,6 +3210,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1483533612}
   - component: {fileID: 1483533611}
+  - component: {fileID: 1483533613}
   m_Layer: 0
   m_Name: 4 (1)
   m_TagString: Untagged
@@ -3125,7 +3238,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 80c11bc0820d6487ab2e4cd1b991d556, type: 2}
+  - {fileID: 2100000, guid: 114eaabd96fc79c438a0ba7a68a45bd2, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -3172,6 +3285,24 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 15
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1483533613
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1483533610}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9856433f0d610a74fa8dd21a2560f17d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lightLayer:
+    serializedVersion: 2
+    m_Bits: 63
+  fadeSpeed: 2
+  maxLights: 4
+  edgeBlurAmount: 0.1
 --- !u!1 &1521178926
 GameObject:
   m_ObjectHideFlags: 0
@@ -3518,6 +3649,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1770339566}
   - component: {fileID: 1770339565}
+  - component: {fileID: 1770339567}
   m_Layer: 0
   m_Name: 3 (1)
   m_TagString: Untagged
@@ -3545,7 +3677,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 80c11bc0820d6487ab2e4cd1b991d556, type: 2}
+  - {fileID: 2100000, guid: 114eaabd96fc79c438a0ba7a68a45bd2, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -3592,6 +3724,24 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 14
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1770339567
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1770339564}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9856433f0d610a74fa8dd21a2560f17d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lightLayer:
+    serializedVersion: 2
+    m_Bits: 63
+  fadeSpeed: 2
+  maxLights: 4
+  edgeBlurAmount: 0.1
 --- !u!1 &1785007957
 GameObject:
   m_ObjectHideFlags: 0
