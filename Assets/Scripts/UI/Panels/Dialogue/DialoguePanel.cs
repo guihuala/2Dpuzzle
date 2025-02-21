@@ -33,6 +33,11 @@ public class DialoguePanel : BasePanel
         _characterImage = transform.GetChild(0).GetComponent<Image>();
     }
 
+    private void Start()
+    {
+        GameInput.Instance.OnInteractAction += RefreshDialogue;
+    }
+
     public void StartDialogue(DialogueData data)
     {
         _currentData = data;
@@ -149,25 +154,5 @@ public class DialoguePanel : BasePanel
         NextDialogue();
         RefreshDialogue();
         selectPanel.gameObject.SetActive(false);
-    }
-
-    public void SkipAllDialogue()
-    {
-        _typingTween?.Kill(); // 停止打字机效果
-        _isTyping = false;
-
-        if (_currentData == null) return;
-
-        // 跳转到最后一条对话
-        _currentIndex = _currentData.Cells.Count - 1;
-
-        var finalCell = _currentData.Cells[_currentIndex];
-        _characterImage.sprite = finalCell.CharacterSprite;
-        _characterNameText.text = finalCell.CharacterName;
-        _contentText.text = finalCell.Content;
-
-        _isDialogueEnding = true;
-
-        EndDialogue();
     }
 }

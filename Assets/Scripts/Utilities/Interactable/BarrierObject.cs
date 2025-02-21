@@ -3,15 +3,20 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
 
+// 不需要存储状态
+// 在进入场景的时候路灯之类的光源读取数据开启了
+// 就会自动切换状态
 public class BarrierObject : MonoBehaviour, Interactable
 {
-    private bool isLit = false;      // 物体是否在光照范围内
+    private bool isLit = false;
     
     private SpriteRenderer spriteRenderer;
     private Collider2D collider2D;
 
-    [SerializeField] 
-    [TextArea]protected string interactInfo;
+    [SerializeField]
+    [TextArea]
+    protected string interactInfo;
+    
 
     protected virtual void Start()
     {
@@ -22,9 +27,7 @@ public class BarrierObject : MonoBehaviour, Interactable
     private void Update()
     {
         Light2D[] lights = FindObjectsOfType<Light2D>();
-
         isLit = false;
-
         foreach (var light in lights)
         {
             if (IsInLightRange(light))
@@ -33,17 +36,12 @@ public class BarrierObject : MonoBehaviour, Interactable
                 break;
             }
         }
-        
         UpdateState();
     }
 
-    // 判断物体是否在光源的照射范围内
     private bool IsInLightRange(Light2D light)
     {
-        // 获取物体与光源的距离
         float distanceToLight = Vector2.Distance(transform.position, light.transform.position);
-
-        // 判断物体是否在光源的照射范围内
         return distanceToLight <= light.pointLightOuterRadius;
     }
 
@@ -57,28 +55,21 @@ public class BarrierObject : MonoBehaviour, Interactable
         else
         {
             spriteRenderer.color = Color.white;
-            collider2D.isTrigger= false;
+            collider2D.isTrigger = false;
         }
     }
 
     public virtual void Enter()
     {
-        if (!isLit)
-            return;
-        
+        if (!isLit) return;
         EVENTMGR.TriggerEnterInteractive(interactInfo);
     }
 
     public virtual void Exit()
     {
-        if (!isLit)
-            return;
-        
+        if (!isLit) return;
         EVENTMGR.TriggerExitInteractive();
     }
 
-    public void Interact()
-    {
-        
-    }
+    public void Interact() { }
 }

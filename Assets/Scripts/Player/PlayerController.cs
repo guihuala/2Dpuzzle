@@ -37,14 +37,14 @@ public class PlayerController : MonoBehaviour
         GameInput.Instance.OnOpenBag += InstanceOnOnOpenBag;
     }
 
-    private void InstanceOnOnOpenBag(object sender, EventArgs e)
+    private void InstanceOnOnOpenBag()
     {
         Debug.Log("open bag");
 
         UIManager.Instance.OpenPanel("CollectiblePanel");
     }
     
-    void InstanceOnInteract(object sender, EventArgs e)
+    void InstanceOnInteract()
     {
         if (_currentBaseInteractableObject != null)
         {

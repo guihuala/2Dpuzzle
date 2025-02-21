@@ -1,7 +1,5 @@
-using DG.Tweening;
-using UnityEngine;
+using System;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 
 public enum SceneName
 {
@@ -44,5 +42,17 @@ public class SceneLoader : SingletonPersistent<SceneLoader>
 
             UIManager.Instance.RemovePanel("SleepBlackPanel");
         });
+    }
+    
+    // 检查传入的字符串是否在枚举中，返回找到的场景枚举
+    public SceneName GetSceneInEnum(string sceneName)
+    {
+        // 尝试解析字符串到枚举
+        if (Enum.TryParse(sceneName, out SceneName result))
+        {
+            return result; // 返回找到的枚举值
+        }
+
+        return SceneName.MainMenu; // 如果未找到则返回主菜单
     }
 }

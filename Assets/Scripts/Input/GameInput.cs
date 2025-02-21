@@ -8,8 +8,8 @@ public class GameInput : Singleton<GameInput>
 {
     private const string PLAYER_PREFS_BINDINGS = "InputBindings";
 
-    public event EventHandler OnInteractAction;
-    public event EventHandler OnOpenBag;
+    public event Action OnInteractAction;
+    public event Action OnOpenBag;
     
     public event EventHandler OnPauseAction;
     public event EventHandler OnBindingRebind;
@@ -64,12 +64,12 @@ public class GameInput : Singleton<GameInput>
 
     private void OpenBag_performed(InputAction.CallbackContext obj)
     {
-        OnOpenBag?.Invoke(this, EventArgs.Empty);
+        OnOpenBag?.Invoke();
     }
 
     private void Interact_Performed(InputAction.CallbackContext obj)
     {
-        OnInteractAction?.Invoke(this, EventArgs.Empty);
+        OnInteractAction?.Invoke();
     }
 
     /// <summary>
