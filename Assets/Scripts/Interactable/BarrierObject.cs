@@ -30,7 +30,7 @@ public class BarrierObject : MonoBehaviour, Interactable
         isLit = false;
         foreach (var light in lights)
         {
-            if (IsInLightRange(light))
+            if (IsInLightRange(light) && light.enabled)
             {
                 isLit = true;
                 break;

@@ -25,7 +25,7 @@ public class BaseInteractableObject : MonoBehaviour, Interactable, ISaveableMech
         spriteRenderer = GetComponent<SpriteRenderer>();
         
         uniqueID = gameObject.name;
-        MechanismManager.Instance.RegisterMechanism(uniqueID, this);
+        GameProgressManager.Instance.RegisterMechanism(uniqueID, this);
     }
 
     private void Update()

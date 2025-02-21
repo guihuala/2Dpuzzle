@@ -5,12 +5,5 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "CGCollectible", menuName = "Collectibles/CG", order = 2)]
 public class CGCollectible : CollectibleItem
 {
-    // 胶片
-    public Sprite cgImage;
-    
-    public override void ShowDetails()
-    {
-        base.ShowDetails();
-        Debug.Log("CG Image: " + cgImage.name);
-    }
+    // 把CG当成预制件什么的吧
 }

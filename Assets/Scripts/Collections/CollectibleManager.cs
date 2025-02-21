@@ -6,9 +6,21 @@ public class CollectibleManager : SingletonPersistent<CollectibleManager>
 {
     public List<CollectibleItem> allItems = new List<CollectibleItem>(); // 存储所有游戏有的收藏品
     
-    private HashSet<string> collectedItemNames = new HashSet<string>();
-    
-    // 存储用
+    private HashSet<string> collectedItemNames = new HashSet<string>();    
+
+    private void Start()
+    {
+        // GameProgressManager.Instance.OnCollectibleCollected += 
+    }
+
+    private void OnDestroy()
+    {
+        // GameProgressManager.Instance.OnCollectibleCollected -= 
+    }
+
+    #region 存储相关的方法（并非存储）
+
+    // 遍历哈希表并返回已有的收藏品的数据，用于存储
     public List<CollectibleItem> GetCollectedItems()
     {
         List<CollectibleItem> collectedItems = new List<CollectibleItem>();
@@ -21,6 +33,7 @@ public class CollectibleManager : SingletonPersistent<CollectibleManager>
         return collectedItems;
     }
 
+    // 用名字查找
     public CollectibleItem FindCollectibleItemFromList(string itemName)
     {
         foreach (var item in allItems)
@@ -32,8 +45,12 @@ public class CollectibleManager : SingletonPersistent<CollectibleManager>
         }
 
         return null;
-    }
-    
+    }    
+
+    #endregion
+
+    #region 增删查
+
     // 获取收藏品
     public void CollectItem(CollectibleItem item)
     {
@@ -63,5 +80,9 @@ public class CollectibleManager : SingletonPersistent<CollectibleManager>
         {
             collectedItemNames.Remove(item.itemName);
         }
-    }
+    }    
+
+    #endregion
+
+    // 一个判断进度的方法 但是具体怎么判断还不清楚
 }

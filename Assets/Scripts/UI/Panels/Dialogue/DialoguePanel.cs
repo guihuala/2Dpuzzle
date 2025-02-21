@@ -1,7 +1,6 @@
 using DG.Tweening;
 using System;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class DialoguePanel : BasePanel
@@ -81,6 +80,8 @@ public class DialoguePanel : BasePanel
             .OnComplete(() =>
             {
                 _isTyping = false;
+                // 检查是否有事件需要触发
+                currentCell.TriggerEvent();  // 如果对话单元有事件，则触发事件
             });
     }
 

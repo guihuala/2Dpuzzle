@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class RecordData : SingletonPersistent<RecordData>
 {
-    public const int recordNum = 5;             // 存档数量
+    public const int recordNum = 8;             // 存档数量
     public const string NAME = "RecordData";     // 存档的键名
 
     public string[] recordName = new string[recordNum];    // 存档文件名（完整路径）
@@ -56,6 +56,40 @@ public class RecordData : SingletonPersistent<RecordData>
             string json = SAVE.PlayerPrefsLoad(NAME);
             SaveData saveData = JsonUtility.FromJson<SaveData>(json);
             ForLoad(saveData);
+        }
+    }
+    
+    public int GetFirstEmptyRecordIndex()
+    {
+        for (int i = 0; i < recordNum; i++)
+        {
+            if (string.IsNullOrEmpty(recordName[i]))
+            {
+                return i; // 返回第一个为空的索引
+            }
+        }
+
+        return 0; // 如果没有找到空的记录，返回0
+    }
+
+    // 判断存档是否已满
+    public bool IsRecordFull()
+    {
+        foreach (var record in recordName)
+        {
+            if (string.IsNullOrEmpty(record))
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public void Delete()
+    {
+        if (PlayerPrefs.HasKey(NAME))
+        {
+            SAVE.PlayerPrefsDelete(NAME);
         }
     }
 }

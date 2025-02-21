@@ -24,5 +24,4 @@ public static class EVENTMGR
     }
 
     #endregion
-
 }

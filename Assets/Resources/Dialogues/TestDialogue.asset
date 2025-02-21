@@ -21,6 +21,9 @@ MonoBehaviour:
     JumpToIndex: 1
     CellFlag: 0
     Content: "\u6211\u662F\u5927\u5929\u72D7"
+    OnDialogueEvent:
+      m_PersistentCalls:
+        m_Calls: []
   - Index: 1
     CharacterName: 
     NPC: {fileID: 11400000, guid: ad286df9201b248a782aaa4116e8d425, type: 2}
@@ -29,6 +32,9 @@ MonoBehaviour:
     JumpToIndex: 2
     CellFlag: 2
     Content: "\u6211\u662F\u5927\u8708\u86A3"
+    OnDialogueEvent:
+      m_PersistentCalls:
+        m_Calls: []
   - Index: 2
     CharacterName: 
     NPC: {fileID: 0}
@@ -37,6 +43,9 @@ MonoBehaviour:
     JumpToIndex: 3
     CellFlag: 2
     Content: "\u9009\u62E9\u5929\u72D7\u8FD8\u662F\u8708\u86A3\uFF1F"
+    OnDialogueEvent:
+      m_PersistentCalls:
+        m_Calls: []
   - Index: 3
     CharacterName: 
     NPC: {fileID: 0}
@@ -45,6 +54,9 @@ MonoBehaviour:
     JumpToIndex: 5
     CellFlag: 2
     Content: "\u8708\u86A3"
+    OnDialogueEvent:
+      m_PersistentCalls:
+        m_Calls: []
   - Index: 4
     CharacterName: 
     NPC: {fileID: 0}
@@ -53,6 +65,9 @@ MonoBehaviour:
     JumpToIndex: 6
     CellFlag: 2
     Content: "\u5929\u72D7"
+    OnDialogueEvent:
+      m_PersistentCalls:
+        m_Calls: []
   - Index: 5
     CharacterName: 
     NPC: {fileID: 11400000, guid: ad286df9201b248a782aaa4116e8d425, type: 2}
@@ -61,6 +76,9 @@ MonoBehaviour:
     JumpToIndex: 0
     CellFlag: 1
     Content: "\u563F\u563F\uFF0C\u8C22\u8C22\u4F60\u9009\u62E9\u6211"
+    OnDialogueEvent:
+      m_PersistentCalls:
+        m_Calls: []
   - Index: 6
     CharacterName: 
     NPC: {fileID: 11400000, guid: 7c843a595a30e4dbbb4b80192736b59f, type: 2}
@@ -69,3 +87,6 @@ MonoBehaviour:
     JumpToIndex: 0
     CellFlag: 1
     Content: "\u4F60\u9009\u62E9\u4E86\u5929\u72D7"
+    OnDialogueEvent:
+      m_PersistentCalls:
+        m_Calls: []

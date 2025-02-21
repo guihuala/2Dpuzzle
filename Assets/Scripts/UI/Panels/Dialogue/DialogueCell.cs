@@ -1,6 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 /// <summary>
 /// 代表对话的单元格，每个单元包含对话文本及相关属性。
@@ -20,6 +22,18 @@ public class DialogueCell
 
     [TextArea(3, 5)]
     public string Content;  // 对话内容
+    
+    // 使用 UnityEvent 来支持在编辑器中配置事件
+    [Header("事件触发")]
+    public UnityEvent OnDialogueEvent;  // 对话单元触发的事件（例如：获得物品）
+
+    /// <summary>
+    /// 触发对话事件
+    /// </summary>
+    public void TriggerEvent()
+    {
+        OnDialogueEvent?.Invoke();  // 执行绑定的事件
+    }
 
     /// <summary>
     /// 获取当前对话单元对应的角色头像。

@@ -1,8 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine;
 
 public class SaveManager : SingletonPersistent<SaveManager>
 {
+    public int ID;
+    
     public SceneName scensName;
     public float gameTime;
 
@@ -24,7 +27,7 @@ public class SaveManager : SingletonPersistent<SaveManager>
             scensName = scensName,
             gameTime = gameTime,
             collectedItems = CollectibleManager.Instance.GetCollectedItems(),
-            mechanismStates = MechanismManager.Instance.GetAllMechanismStates()
+            mechanismStates = GameProgressManager.Instance.GetAllMechanismStates()
         };
         return savedata;
     }
@@ -43,9 +46,44 @@ public class SaveManager : SingletonPersistent<SaveManager>
         }
 
         // 恢复机关状态
-        MechanismManager.Instance.LoadMechanismStates(savedata.mechanismStates);
+        GameProgressManager.Instance.LoadMechanismStates(savedata.mechanismStates);
     }
 
+    public void NewRecord(string end = ".save")
+    {
+        // 如果原位置有存档则删除
+        if (RecordData.Instance.recordName[ID] != "")
+        {
+            DeleteRecord(ID);
+        }
+
+        // 创建新存档
+        RecordData.Instance.recordName[ID] = $"{System.DateTime.Now:yyyyMMdd_HHmmss}{end}";
+        RecordData.Instance.lastID = ID;
+        RecordData.Instance.Save();
+
+        Save(ID);
+        
+        TIMEMGR.SetOriTime();
+    }
+
+    void DeleteRecord(int i, bool isCover = true)
+    {
+        if (i < 0 || i >= RecordData.recordNum || RecordData.Instance.recordName[i] == "")
+        {
+            Debug.LogWarning("删除存档失败：非法的存档索引！");
+            return;
+        }
+
+        Delete(i);
+        RecordData.Instance.Delete();
+
+        if (!isCover)
+        {
+            RecordData.Instance.recordName[i] = "";
+        }
+    }
+    
     public void Save(int id)
     {
         SAVE.JsonSave(RecordData.Instance.recordName[id], ForSave());

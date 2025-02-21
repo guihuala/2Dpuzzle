@@ -27,6 +27,13 @@ public static class SAVE
         // 从PlayerPrefs读取字符串，默认值为null
         return PlayerPrefs.GetString(key, null);
     }
+    
+    public static void PlayerPrefsDelete(string key)
+    {
+        PlayerPrefs.DeleteKey(key);
+        PlayerPrefs.Save();
+    }
+    
     #endregion
 
     #region JSON存储

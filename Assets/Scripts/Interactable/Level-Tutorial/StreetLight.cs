@@ -12,13 +12,13 @@ public class StreetLight : ItemReuiredObject
         base.Start();
 
         _light = GetComponentInChildren<Light2D>();
-        _light.gameObject.SetActive(false);
+        _light.enabled = false;
     }
 
     protected override void ActiveObject()
     {
         base.ActiveObject();
         
-        _light.gameObject.SetActive(true);
+        _light.enabled = true;
     }
 }
