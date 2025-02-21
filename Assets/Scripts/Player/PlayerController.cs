@@ -118,7 +118,7 @@ public class PlayerController : MonoBehaviour
             }
         }
         
-        if (moveDirection.magnitude > 0.1f && isGrounded)
+        if (moveDirection.magnitude > 0.1f)
         {
             walkAudioPlayer.PlayRandomSound();
         }
