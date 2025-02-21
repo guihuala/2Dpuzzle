@@ -4,6 +4,9 @@ using UnityEngine.Rendering.Universal;
 [RequireComponent(typeof(SpriteRenderer))]
 public class LightRevealEffect : MonoBehaviour
 {
+    [SerializeField]
+    private Light2D[] targetLights; // 在Inspector中指定的目标光源
+
     private SpriteRenderer spriteRenderer;
     private Material material;
     private static readonly int OpacityID = Shader.PropertyToID("_Opacity");
@@ -41,13 +44,13 @@ public class LightRevealEffect : MonoBehaviour
 
     private void UpdateLightInformation()
     {
-        // 获取场景中所有的2D光源
-        Light2D[] sceneLights = FindObjectsOfType<Light2D>();
-
         currentLightCount = 0;
-        foreach (Light2D light in sceneLights)
+        if (targetLights == null) return;
+
+        foreach (Light2D light in targetLights)
         {
             if (currentLightCount >= 8) break;
+            if (light == null) continue;
 
             // 转换光源位置到物体的局部空间
             Vector3 localPos = transform.InverseTransformPoint(light.transform.position);
