@@ -218,6 +218,7 @@ GameObject:
   - component: {fileID: 7523159988907282001}
   - component: {fileID: 1957077191010783171}
   - component: {fileID: 6687937389494183854}
+  - component: {fileID: 8999866942347647597}
   m_Layer: 0
   m_Name: CMPlayerCam
   m_TagString: Untagged
@@ -312,6 +313,21 @@ MonoBehaviour:
   breathSpeed: 1
   breathAmount: 0.2
   positionAmount: 0.5
+--- !u!114 &8999866942347647597
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1131416356578356108}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f453f694addf4275988fac205bc91968, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_BoundingShape2D: {fileID: 0}
+  m_Damping: 0.5
+  m_MaxWindowSize: -1
 --- !u!1 &2231449592356017997
 GameObject:
   m_ObjectHideFlags: 0
@@ -1015,11 +1031,11 @@ MonoBehaviour:
   m_ScreenX: 0.5
   m_ScreenY: 0.73
   m_CameraDistance: 13.5
-  m_DeadZoneWidth: 0.3
+  m_DeadZoneWidth: 0
   m_DeadZoneHeight: 0
   m_DeadZoneDepth: 0
   m_UnlimitedSoftZone: 0
-  m_SoftZoneWidth: 0.5
+  m_SoftZoneWidth: 0.3
   m_SoftZoneHeight: 0
   m_BiasX: 0
   m_BiasY: 0
