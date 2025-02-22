@@ -13,7 +13,7 @@ public class Objects : MonoBehaviour
 
    private void Awake()
    {
-      image = GetComponent<Image>();
+      image =transform.GetChild(1).GetComponent<Image>();
    }
 
    public virtual void Func()

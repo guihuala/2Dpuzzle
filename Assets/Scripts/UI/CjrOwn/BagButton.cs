@@ -7,7 +7,8 @@ using UnityEngine.UI;
 
 public class BagButton : MonoBehaviour
 {
-    public Image NpcSprite;
+    public Image ObjSprite_BG;
+    public Image ObjSprit;
     public TextMeshProUGUI Description;
     public Objects CurrentObject;
     static BagButton _instance;
@@ -30,7 +31,8 @@ public class BagButton : MonoBehaviour
     {
         Description = GetComponentInChildren<TextMeshProUGUI>();
         Transform child= transform.GetChild(0);
-        NpcSprite = child.GetChild(child.childCount - 1).GetComponent<Image>();
+        ObjSprite_BG = child.GetChild(child.childCount - 1).GetComponent<Image>();
+        ObjSprit=ObjSprite_BG.transform.GetChild(0).GetComponent<Image>();
         CurrentObject = null;
     }
 
