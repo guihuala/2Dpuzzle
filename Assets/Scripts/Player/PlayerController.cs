@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 
 public class PlayerController : MonoBehaviour
@@ -27,6 +28,10 @@ public class PlayerController : MonoBehaviour
 
     [Header("音频")]
     [SerializeField] private RandomAudioPlayer walkAudioPlayer;
+    
+    [Header("粒子特效")]
+    [SerializeField] private ParticleSystem landingParticleEffect; // 落地特效
+    [SerializeField] private Transform particleEffectTransform;
 
     void Start()
     {
@@ -36,11 +41,21 @@ public class PlayerController : MonoBehaviour
         GameInput.Instance.OnInteractAction += InstanceOnInteract;
         GameInput.Instance.OnOpenBag += InstanceOnOnOpenBag;
     }
+    
+    
+    void PlayLandingEffect()
+    {
+        if (landingParticleEffect != null)
+        {
+            ParticleSystem landingEffectInstance = Instantiate(landingParticleEffect, particleEffectTransform.position, Quaternion.identity);
+            
+            landingEffectInstance.Play();
+        }
+    }
+
 
     private void InstanceOnOnOpenBag()
     {
-        Debug.Log("open bag");
-
         UIManager.Instance.OpenPanel("CollectiblePanel");
     }
     
@@ -54,12 +69,20 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
+        // 判断玩家是否落地
+        bool wasGroundedLastFrame = isGrounded;  // 记录上一帧的状态
         isGrounded = Physics2D.Raycast(transform.position, Vector2.down, groundCheckDistance, groundLayer);
+
+        // 如果玩家从空中落地
+        if (isGrounded && !wasGroundedLastFrame)
+        {
+            PlayLandingEffect(); // 播放落地特效
+        }
 
         // 处理角色的移动
         HandleMovement();
     }
-
+    
     void HandleMovement()
     {
         Vector2 moveVector = GameInput.Instance.GetMovementVectorNormalized();
@@ -137,23 +160,26 @@ public class PlayerController : MonoBehaviour
             isClimbing = false;
         }
     }
-
-
-    // 检测与交互物体的碰撞
+    
     private void OnTriggerStay2D(Collider2D other)
     {
         Interactable baseInteractableObject = other.GetComponent<Interactable>();
-        if (baseInteractableObject != null)
+        if (baseInteractableObject != null && baseInteractableObject != _currentBaseInteractableObject)
         {
+            if (_currentBaseInteractableObject != null)
+            {
+                _currentBaseInteractableObject.Exit();
+            }
+            
             _currentBaseInteractableObject = baseInteractableObject;
             _currentBaseInteractableObject.Enter();
         }
     }
-
+    
     private void OnTriggerExit2D(Collider2D other)
     {
         Interactable baseInteractableObject = other.GetComponent<Interactable>();
-        if (baseInteractableObject != null)
+        if (baseInteractableObject != null && baseInteractableObject == _currentBaseInteractableObject)
         {
             _currentBaseInteractableObject.Exit();
             _currentBaseInteractableObject = null;
