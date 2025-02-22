@@ -6,6 +6,8 @@ using UnityEngine;
 public class AutoCameraSetup : MonoBehaviour
 {
     public bool autoSetupCameraFollow = true;
+
+    
     public string cameraFollowGameObjectName = "Player";
 
     void Awake ()

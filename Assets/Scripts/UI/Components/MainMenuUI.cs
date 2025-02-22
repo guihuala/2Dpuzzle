@@ -14,7 +14,7 @@ public class MainMenuUI : MonoBehaviour
     {
         startBtn.onClick.AddListener((() =>
         {
-            SceneLoader.Instance.LoadScene(SceneName.SampleScene, "Loading...");
+            SceneLoader.Instance.LoadScene(SceneName.DataLoad, "Loading...");
             AudioManager.Instance.PlaySfx("click");
         }));
         settingBtn.onClick.AddListener((() =>

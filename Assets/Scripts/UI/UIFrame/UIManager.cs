@@ -1,6 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class UIManager : SingletonPersistent<UIManager>
 {
@@ -32,6 +34,22 @@ public class UIManager : SingletonPersistent<UIManager>
         InitDicts();
     }
 
+    private void Start()
+    {
+        EVENTMGR.OnChangeDefaultSelectedUI += SetDefaultSelectedButton;
+    }
+
+    private void OnDestroy()
+    {
+        EVENTMGR.OnChangeDefaultSelectedUI -= SetDefaultSelectedButton;
+    }
+
+    // 当事件触发时，设置新的默认选中按钮
+    private void SetDefaultSelectedButton(GameObject newDefaultButton)
+    {
+        EventSystem.current.SetSelectedGameObject(newDefaultButton.gameObject);
+    }
+    
     // 初始化字典
     private void InitDicts()
     {
