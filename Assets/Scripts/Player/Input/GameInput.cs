@@ -11,7 +11,7 @@ public class GameInput : Singleton<GameInput>
     public event Action OnInteractAction;
     public event Action OnOpenBag;
     
-    public event EventHandler OnPauseAction;
+    public event Action OnPauseAction;
     public event EventHandler OnBindingRebind;
 
     public enum Binding
@@ -57,7 +57,7 @@ public class GameInput : Singleton<GameInput>
 
     private void Pause_performed(InputAction.CallbackContext obj)
     {
-        OnPauseAction?.Invoke(this, EventArgs.Empty);
+        OnPauseAction?.Invoke();
 
         UIManager.Instance.OpenPanel("SettingPanel");
     }

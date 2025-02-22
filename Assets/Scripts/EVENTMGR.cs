@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.UI;
 
 public static class EVENTMGR
 {
@@ -23,5 +24,16 @@ public static class EVENTMGR
         OnExitInteractive?.Invoke();
     }
 
+    #endregion
+
+    #region 切换默认选中按钮
+    
+    public static event Action<GameObject> OnChangeDefaultSelectedUI;
+
+    public static void TriggerChangeDefaultSelectedButton(GameObject newDefaultUI)
+    {
+        OnChangeDefaultSelectedUI?.Invoke(newDefaultUI);
+    }
+    
     #endregion
 }

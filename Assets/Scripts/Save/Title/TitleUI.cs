@@ -2,29 +2,32 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.SceneManagement;
+using UnityEngine.EventSystems;
+
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 public class TitleUI : MonoBehaviour
 {
-    public Button Continue;       // 继续游戏按钮
-    public Button Load;           // 加载游戏按钮
-    public Button New;            // 新游戏按钮
-    public Button Exit;           // 退出游戏按钮
+    public Button continueBtn;       // 继续游戏按钮
+    public Button loadBtn;           // 加载游戏按钮
+    public Button newGameBtn;        // 新游戏按钮
+    public Button returnMenuBtn;     // 返回菜单按钮
 
     public GameObject recordPanel; // 存档面板
 
+    private Button[] buttons;
+
     private void Awake()
     {
-        // 继续游戏，加载最后一次的存档
-        Continue.onClick.AddListener(() => LoadRecord(RecordData.Instance.lastID));
-        // 打开/关闭存档列表
-        Load.onClick.AddListener(OpenRecordPanel);
-        // 注册加载存档事件
+        continueBtn.onClick.AddListener(() => LoadRecord(RecordData.Instance.lastID));
+        loadBtn.onClick.AddListener(OpenRecordPanel);
         TitleLoadDataUI.OnLoad += LoadRecord;
-        // 新游戏（重置数据并开始新游戏）
-        New.onClick.AddListener(NewGame);
-        // 退出游戏（保存存档）
-        Exit.onClick.AddListener(QuitGame);
+        newGameBtn.onClick.AddListener(NewGame);
+        returnMenuBtn.onClick.AddListener(ReturnMenu);
     }
 
     private void OnDestroy()
@@ -41,9 +44,27 @@ public class TitleUI : MonoBehaviour
         // 如果有存档，则激活“继续游戏”和“加载游戏”按钮
         if (RecordData.Instance.lastID != 233)
         {
-            Continue.interactable = true;
-            Load.interactable = true;
-        }           
+            continueBtn.gameObject.SetActive(false);
+            loadBtn.gameObject.SetActive(false);
+        }
+
+        buttons = new Button[] { continueBtn, loadBtn, newGameBtn, returnMenuBtn };
+        
+        SetDefaultSelectedButton();
+    }
+
+    // 设置默认选中的按钮
+    private void SetDefaultSelectedButton()
+    {
+        // 遍历按钮，找到第一个激活的按钮
+        foreach (Button btn in buttons)
+        {
+            if (btn.gameObject.activeSelf && btn.interactable)
+            {
+                EventSystem.current.SetSelectedGameObject(btn.gameObject); // 设置第一个激活的按钮为选中
+                break;
+            }
+        }
     }
 
     // 加载指定存档
@@ -79,13 +100,9 @@ public class TitleUI : MonoBehaviour
         SceneLoader.Instance.LoadScene(SaveManager.Instance.scensName,"...");
     }
 
-    // 退出游戏
-    void QuitGame()
+    // 返回主菜单
+    void ReturnMenu()
     {     
-        #if UNITY_EDITOR
-            UnityEditor.EditorApplication.isPlaying = false;
-        #else
-            Application.Quit();                          
-        #endif
+        SceneLoader.Instance.LoadScene(SceneName.MainMenu,"...");
     }
 }

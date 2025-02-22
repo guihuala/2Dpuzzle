@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class RecordData : SingletonPersistent<RecordData>
 {
-    public const int recordNum = 8;             // 存档数量
+    public const int recordNum = 5;             // 存档数量
     public const string NAME = "RecordData";     // 存档的键名
 
     public string[] recordName = new string[recordNum];    // 存档文件名（完整路径）
