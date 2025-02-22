@@ -310,7 +310,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   breathSpeed: 1
-  breathAmount: 0.5
+  breathAmount: 0.2
   positionAmount: 0.5
 --- !u!1 &2231449592356017997
 GameObject:
