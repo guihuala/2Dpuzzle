@@ -18,6 +18,8 @@ public class TitleUI : MonoBehaviour
     public Button returnMenuBtn;     // 返回菜单按钮
 
     public GameObject recordPanel; // 存档面板
+    
+    private bool isFirstTimePlay;
 
     private Button[] buttons;
 
@@ -43,6 +45,11 @@ public class TitleUI : MonoBehaviour
 
         // 如果有存档，则激活“继续游戏”和“加载游戏”按钮
         if (RecordData.Instance.lastID != 233)
+        {
+            continueBtn.gameObject.SetActive(true);
+            loadBtn.gameObject.SetActive(true);
+        }
+        else
         {
             continueBtn.gameObject.SetActive(false);
             loadBtn.gameObject.SetActive(false);
@@ -89,15 +96,23 @@ public class TitleUI : MonoBehaviour
     {
         recordPanel.SetActive(!recordPanel.activeSelf);
     }
-
+    
     // 开始新游戏
     void NewGame()
     {
-        // 初始化玩家数据
-        // 此处可以调用 Player 的 Init 方法，也可以直接使用默认数据
+        SaveManager.Instance.ID = RecordData.Instance.GetFirstEmptyRecordIndex();
+        
+        if(!RecordData.Instance.IsRecordFull())
+            SaveManager.Instance.NewRecord();
 
+        if (isFirstTimePlay)
+        {
+            // 可以播放CG
+            return;
+        }
+        
         // 切换到默认场景
-        SceneLoader.Instance.LoadScene(SaveManager.Instance.scensName,"...");
+        SceneLoader.Instance.LoadScene(SceneName.LayerTest,"loading...");
     }
 
     // 返回主菜单

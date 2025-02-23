@@ -12,6 +12,12 @@ public class ItemReuiredObject : BaseInteractableObject
     {
         base.Start();
         
+        Debug.Log(isActivated);
+        if (isActivated)
+        {
+            ActiveObject();
+        }
+        
         // 绑定选择物品事件（IfItemMatch）
     }
 
@@ -29,7 +35,13 @@ public class ItemReuiredObject : BaseInteractableObject
     // 判断是否满足条件
     private void IfItemMatch(string _itemName)
     {
-        if(_itemName == itemName)
-            ActiveObject();
+        if (_itemName == itemName)
+        {
+            ActiveObject();     
+            isActivated = true;
+
+            GameProgressManager.Instance.UpdateMechanismState(uniqueID,SaveState());
+            SaveManager.Instance.NewRecord();
+        }
     }
 }

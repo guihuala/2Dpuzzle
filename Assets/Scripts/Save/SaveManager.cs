@@ -49,6 +49,10 @@ public class SaveManager : SingletonPersistent<SaveManager>
         GameProgressManager.Instance.LoadMechanismStates(savedata.mechanismStates);
     }
 
+    /// <summary>
+    /// 创建新存档，或者自动保存
+    /// </summary>
+    /// <param name="end"></param>
     public void NewRecord(string end = ".save")
     {
         // 如果原位置有存档则删除

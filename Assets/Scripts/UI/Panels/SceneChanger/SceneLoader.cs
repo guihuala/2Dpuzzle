@@ -6,6 +6,7 @@ public enum SceneName
     MainMenu,
     DataLoad,
     LayerTest,
+    ghlgScene,
     
 }
 
@@ -41,6 +42,9 @@ public class SceneLoader : SingletonPersistent<SceneLoader>
             SceneManager.LoadScene(sceneName.ToString());
 
             UIManager.Instance.RemovePanel("SleepBlackPanel");
+            
+            // 改变一下存档管理器当前的场景
+            SaveManager.Instance.scensName = sceneName;
         });
     }
     

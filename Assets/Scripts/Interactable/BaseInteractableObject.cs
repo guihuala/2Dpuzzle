@@ -8,8 +8,8 @@ public class BaseInteractableObject : MonoBehaviour, Interactable, ISaveableMech
     private bool canInteract = true;
     
     private bool isLit = false;
-    private bool isActivated = false; // 机关是否被激活
-    private bool isTaken = false;    // 机关是否被取走
+    protected bool isActivated = false; // 机关是否被激活 比如灯是否被打开
+    protected bool isTaken = false;    // 是否被取走 比如物品和收藏品
 
     private SpriteRenderer spriteRenderer;
 
@@ -18,7 +18,7 @@ public class BaseInteractableObject : MonoBehaviour, Interactable, ISaveableMech
     [SerializeField] protected Material defaultMaterial;
     [SerializeField] private bool requiresLightToActivate = true;
 
-    private string uniqueID;  // 每个BaseInteractableObject的唯一标识
+    protected string uniqueID;  // 每个BaseInteractableObject的唯一标识
 
     protected virtual void Start()
     {
@@ -93,11 +93,12 @@ public class BaseInteractableObject : MonoBehaviour, Interactable, ISaveableMech
     // 加载状态
     public void LoadState(MechanismState state)
     {
-        isLit = state.isTriggered;
+        isActivated = state.isActivated;
+        isTaken = state.isTaken;
     }
-
-    MechanismState ISaveableMechanism.SaveState()
+    
+    public MechanismState SaveState()
     {
-        return new MechanismState { mechanismID = uniqueID, isTriggered = isLit };
+        return new MechanismState { mechanismID = uniqueID, isActivated = isActivated, isTaken = isTaken };
     }
 }

@@ -79,6 +79,8 @@ public class PauseSettingsPanel : BasePanel
     {
         Time.timeScale = 1;
         
+        SaveManager.Instance.NewRecord();
+        
         SceneLoader.Instance.LoadScene(SceneName.MainMenu,"back to main menu...");
 
         // 防止面板还在字典中

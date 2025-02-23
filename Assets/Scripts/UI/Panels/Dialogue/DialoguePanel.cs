@@ -34,7 +34,12 @@ public class DialoguePanel : BasePanel
 
     private void Start()
     {
-        GameInput.Instance.OnInteractAction += RefreshDialogue;
+        GameInput.Instance.OnInteractAction += OnInteract;
+    }
+
+    private void OnDestroy()
+    {
+        GameInput.Instance.OnInteractAction -= OnInteract;
     }
 
     public void StartDialogue(DialogueData data)
@@ -118,7 +123,7 @@ public class DialoguePanel : BasePanel
         }
     }
 
-    public void OnPointerDown()
+    public void OnInteract()
     {
         if (_isWaitingForSelect) return;
 

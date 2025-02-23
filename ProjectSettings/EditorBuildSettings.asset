@@ -14,4 +14,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/LayerTest/LayerTest.unity
     guid: 9aab663d5c1e94d5f855aa2cc37cd74c
+  - enabled: 1
+    path: Assets/Scenes/LayerTest/ghlgScene.unity
+    guid: b97444f624b944a9f99d7cbacf1f8dd6
   m_configObjects: {}

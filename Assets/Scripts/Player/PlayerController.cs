@@ -56,7 +56,10 @@ public class PlayerController : MonoBehaviour
 
     private void InstanceOnOnOpenBag()
     {
-        UIManager.Instance.OpenPanel("CollectiblePanel");
+        if (UIManager.Instance.OpenPanel("CollectiblePanel") == null)
+        {
+            UIManager.Instance.ClosePanel("CollectiblePanel");
+        }
     }
     
     void InstanceOnInteract()

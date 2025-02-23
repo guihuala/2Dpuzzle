@@ -16,5 +16,7 @@ public class ChangeSceneItem : BaseInteractableObject
     public override void Enter()
     {
         SceneLoader.Instance.LoadScene(nextScene,"...");
+        
+        GameProgressManager.Instance.LoadSceneMechanisms(nextScene);
     }
 }

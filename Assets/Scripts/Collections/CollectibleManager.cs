@@ -70,7 +70,6 @@ public class CollectibleManager : SingletonPersistent<CollectibleManager>
     // 移除收藏品（读取数据的时候
     public void ClearAllItems()
     {
-        allItems.Clear();
         collectedItemNames.Clear();
     }
     

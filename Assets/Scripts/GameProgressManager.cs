@@ -4,11 +4,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-/// <summary>
-/// 原本是机关状态管理类，
-/// 秽土重生成游戏进度管理类
-/// 但是还没有改什么
-/// </summary>
 public class GameProgressManager : SingletonPersistent<GameProgressManager>
 {
     // 推动游戏进度的事件，比如获得了关键物品（收藏品）
@@ -47,8 +42,7 @@ public class GameProgressManager : SingletonPersistent<GameProgressManager>
     }    
 
     #endregion
-
-
+    
     #region 与目的地有关的方法
 
     public SceneName GetNextScene()
@@ -57,6 +51,7 @@ public class GameProgressManager : SingletonPersistent<GameProgressManager>
     }
 
     #endregion
+    
     #region 与机关状态有关的方法
 
         // 注册机关到当前场景的字典
@@ -99,6 +94,8 @@ public class GameProgressManager : SingletonPersistent<GameProgressManager>
         // 加载特定场景的机关状态
         public void LoadSceneMechanisms(SceneName sceneName)
         {
+            ClearAllMechanisms();
+            
             if (sceneMechanisms.ContainsKey(sceneName))
             {
                 currentSceneMechanisms = sceneMechanisms[sceneName];
@@ -117,4 +114,27 @@ public class GameProgressManager : SingletonPersistent<GameProgressManager>
 
     #endregion
     
+    #region 修改单个机关状态
+    
+    public bool UpdateMechanismState(string mechanismID, MechanismState newState)
+    {
+        // 如果当前场景中存在该机关
+        if (currentSceneMechanisms.ContainsKey(mechanismID))
+        {
+            ISaveableMechanism mechanism = currentSceneMechanisms[mechanismID];
+
+            // 使用新的状态加载这个机关
+            mechanism.LoadState(newState);
+
+            // 更新字典中的状态（如果需要的话，按需求可以手动修改字典中的保存状态）
+            currentSceneMechanisms[mechanismID] = mechanism;
+
+            SaveMechanismState();
+            
+            return true; // 返回表示成功
+        }
+        return false; // 如果没有找到该机关，返回false
+    }
+
+    #endregion
 }

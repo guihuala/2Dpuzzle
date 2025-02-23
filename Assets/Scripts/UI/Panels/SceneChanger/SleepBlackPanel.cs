@@ -14,7 +14,7 @@ public class SleepBlackPanel : BasePanel
     {
         base.Awake();
 
-        _sleepText = transform.GetChild(0).GetComponent<Text>();
+        _sleepText = transform.GetChild(1).GetChild(0).GetComponent<Text>();
     }
 
     public void StartSleepCounting(float duration,string textStr,UnityAction callBack)
