@@ -204,7 +204,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   clips:
-  - {fileID: 8300000, guid: f4b943c7904db48dbb146ff4113b6710, type: 3}
+  - {fileID: 8300000, guid: 5d5b366ee58ae4e7e9be0e1bfedcf7db, type: 3}
   layerOverrides:
   - layer:
       serializedVersion: 2
@@ -433,7 +433,7 @@ Animator:
   m_GameObject: {fileID: 8448593032559520131}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 4e0ab202ac6134f4ba6098c2d3778cf7, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0

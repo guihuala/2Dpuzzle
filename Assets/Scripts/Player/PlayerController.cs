@@ -85,7 +85,7 @@ public class PlayerController : MonoBehaviour
         // 处理角色的移动
         HandleMovement();
     }
-    
+
     void HandleMovement()
     {
         Vector2 moveVector = GameInput.Instance.GetMovementVectorNormalized();
@@ -93,17 +93,16 @@ public class PlayerController : MonoBehaviour
         float vertical = moveVector.y;
 
         moveDirection = new Vector2(horizontal, vertical).normalized;
-        
-        if (isNearLadder) // 玩家在梯子附近并按下向上时
+
+        if (isNearLadder)
         {
             isClimbing = true;
         }
-        else if (!isNearLadder || isGrounded) // 离开梯子或站在地面时，退出爬梯子状态
+        else if (!isNearLadder || isGrounded)
         {
             isClimbing = false;
         }
-        
-        // 如果在梯子上，执行爬梯子逻辑
+
         if (isClimbing)
         {
             // 设置垂直方向的速度，垂直输入控制上下移动
@@ -112,46 +111,45 @@ public class PlayerController : MonoBehaviour
             // 设置水平方向的速度，在梯子上水平移动时使用较慢的速度
             float horizontalVelocity = horizontal * ladderHorizontalSpeed;
 
-            // 禁止重力
+            // 减小重力
             rb.velocity = new Vector2(horizontalVelocity, verticalVelocity);
-            rb.gravityScale = 0f;
+            rb.gravityScale = .5f;
 
-            // 更新动画状态
             if (animator != null)
             {
-                animator.SetBool("isClimbing", true);
-                animator.SetFloat("climbSpeed", Mathf.Abs(vertical)); // 设置动画中的爬梯速度
+                animator.SetBool("IsClimb", true);
+                animator.SetFloat("speed", Mathf.Abs(horizontal)); 
             }
-            
+
             if (horizontal != 0)
             {
                 transform.localScale = new Vector3(Mathf.Sign(horizontal), 1, 1);
             }
         }
-        else // 非梯子状态下的正常移动逻辑
+        else
         {
             float currentMoveSpeed = Input.GetKey(KeyCode.LeftShift) ? runSpeed : moveSpeed;
             Vector2 targetVelocity = new Vector2(horizontal * currentMoveSpeed, rb.velocity.y);
             rb.velocity = targetVelocity;
 
-            rb.gravityScale = gravityScale; // 恢复正常重力
+            rb.gravityScale = gravityScale;
 
-            // 更新动画状态：如果玩家正在走
+            // 更新动画
             if (animator != null)
             {
-                animator.SetBool("isClimbing", false); // 停止爬梯子动画
-                animator.SetFloat("speed", Mathf.Abs(horizontal)); // 设置走路动画速度
+                animator.SetBool("IsClimb", false);
+                animator.SetFloat("speed", Mathf.Abs(horizontal)); 
+            }
+
+            if (horizontal != 0)
+            {
+                transform.localScale = new Vector3(Mathf.Sign(horizontal), 1, 1);
             }
         }
-        
+
         if (moveDirection.magnitude > 0.1f)
         {
             walkAudioPlayer.PlayRandomSound();
-        }
-        
-        if (!isClimbing && horizontal != 0)
-        {
-            transform.localScale = new Vector3(Mathf.Sign(horizontal), 1, 1);
         }
     }
 
