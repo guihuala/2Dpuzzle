@@ -11,9 +11,14 @@ public class Objects : MonoBehaviour
    public Image  image;
 
 
-   private void Awake()
+   public virtual void Awake()
    {
       image =transform.GetChild(1).GetComponent<Image>();
+   }
+
+   public virtual void Start()
+   {
+     
    }
 
    public virtual void Func()
@@ -21,8 +26,9 @@ public class Objects : MonoBehaviour
     
    }
 
-   public void click()
+   public virtual void click()
    {
-      BagButton.instance.SetObjects(this);
+      if(BagButton.instance!=null)
+         BagButton.instance.SetObjects(this);
    }
 }

@@ -38,6 +38,7 @@ public class BagButton : MonoBehaviour
 
     public void Click_Cancel()
     {
+        CurrentObject.image.color = Color.white;
         gameObject.SetActive(false);
     }
 
@@ -50,6 +51,8 @@ public class BagButton : MonoBehaviour
         }
         CurrentObject = newObject;
         CurrentObject.image.color = Color.red;
+        Description.text = newObject.des;
+        ObjSprit.sprite = newObject.image.sprite;
     }
 
     void InitContent()
