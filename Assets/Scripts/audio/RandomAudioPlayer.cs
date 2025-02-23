@@ -22,8 +22,7 @@ public class RandomAudioPlayer : MonoBehaviour
 
     private AudioSource m_Source;
     private Dictionary<int, AudioClip[]> m_LookupLayerOverride;
-
-    private bool isWalking = false;  // 用来判断玩家是否在行走
+    
     private float lastWalkSoundTime = 0f;  // 记录上次播放走路音效的时间
 
     void Start()

@@ -1,7 +1,6 @@
 using DG.Tweening;
 using System;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class DialoguePanel : BasePanel
@@ -31,6 +30,11 @@ public class DialoguePanel : BasePanel
         _characterNameText = transform.GetChild(1).GetChild(0).GetChild(0).GetComponent<Text>();
         _contentText = transform.GetChild(1).GetChild(1).GetComponent<Text>();
         _characterImage = transform.GetChild(0).GetComponent<Image>();
+    }
+
+    private void Start()
+    {
+        GameInput.Instance.OnInteractAction += RefreshDialogue;
     }
 
     public void StartDialogue(DialogueData data)
@@ -76,6 +80,8 @@ public class DialoguePanel : BasePanel
             .OnComplete(() =>
             {
                 _isTyping = false;
+                // 检查是否有事件需要触发
+                currentCell.TriggerEvent();  // 如果对话单元有事件，则触发事件
             });
     }
 
@@ -149,25 +155,5 @@ public class DialoguePanel : BasePanel
         NextDialogue();
         RefreshDialogue();
         selectPanel.gameObject.SetActive(false);
-    }
-
-    public void SkipAllDialogue()
-    {
-        _typingTween?.Kill(); // 停止打字机效果
-        _isTyping = false;
-
-        if (_currentData == null) return;
-
-        // 跳转到最后一条对话
-        _currentIndex = _currentData.Cells.Count - 1;
-
-        var finalCell = _currentData.Cells[_currentIndex];
-        _characterImage.sprite = finalCell.CharacterSprite;
-        _characterNameText.text = finalCell.CharacterName;
-        _contentText.text = finalCell.Content;
-
-        _isDialogueEnding = true;
-
-        EndDialogue();
     }
 }
