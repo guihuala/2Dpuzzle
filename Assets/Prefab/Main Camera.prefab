@@ -411,11 +411,11 @@ MonoBehaviour:
   m_ScreenY: 0.73
   m_CameraDistance: 9
   m_DeadZoneWidth: 0.1
-  m_DeadZoneHeight: 0
+  m_DeadZoneHeight: 1
   m_DeadZoneDepth: 0
   m_UnlimitedSoftZone: 0
   m_SoftZoneWidth: 0.1
-  m_SoftZoneHeight: 0
+  m_SoftZoneHeight: 1
   m_BiasX: 0
   m_BiasY: 0
   m_CenterOnActivate: 1

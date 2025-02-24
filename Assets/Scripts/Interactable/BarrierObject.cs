@@ -13,6 +13,8 @@ public class BarrierObject : MonoBehaviour, Interactable
     private SpriteRenderer spriteRenderer;
     private Collider2D collider2D;
 
+    [SerializeField] private Light2D[] targetLights;
+    
     [SerializeField]
     [TextArea]
     protected string interactInfo;
@@ -26,9 +28,8 @@ public class BarrierObject : MonoBehaviour, Interactable
 
     private void Update()
     {
-        Light2D[] lights = FindObjectsOfType<Light2D>();
         isLit = false;
-        foreach (var light in lights)
+        foreach (var light in targetLights)
         {
             if (IsInLightRange(light) && light.enabled)
             {

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
 
+// 记得修改一下修复的逻辑
 public class StreetLight : ItemReuiredObject
 {
     private Light2D _light;
