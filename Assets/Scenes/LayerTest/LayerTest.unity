@@ -1283,7 +1283,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 533633787}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9856433f0d610a74fa8dd21a2560f17d, type: 3}
+  m_Script: {fileID: 11500000, guid: a2c1011a9b609294eacbd535397aea0c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   targetLights:
@@ -1619,7 +1619,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 679649700}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9856433f0d610a74fa8dd21a2560f17d, type: 3}
+  m_Script: {fileID: 11500000, guid: a2c1011a9b609294eacbd535397aea0c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   targetLights:
@@ -2544,7 +2544,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 854400508}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9856433f0d610a74fa8dd21a2560f17d, type: 3}
+  m_Script: {fileID: 11500000, guid: a2c1011a9b609294eacbd535397aea0c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   targetLights:
@@ -3182,11 +3182,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1216966032}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9856433f0d610a74fa8dd21a2560f17d, type: 3}
+  m_Script: {fileID: 11500000, guid: a2c1011a9b609294eacbd535397aea0c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   targetLights:
-  - {fileID: 0}
   - {fileID: 694824999}
 --- !u!212 &1216966034
 SpriteRenderer:
@@ -3481,7 +3480,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1444736026}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9856433f0d610a74fa8dd21a2560f17d, type: 3}
+  m_Script: {fileID: 11500000, guid: a2c1011a9b609294eacbd535397aea0c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   targetLights:
@@ -5183,6 +5182,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 38446002}
     m_Modifications:
+    - target: {fileID: 3296038131238312127, guid: 1e7d79ffa68f5423dbb6d315cc0ebc29, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4711868238065511622, guid: 1e7d79ffa68f5423dbb6d315cc0ebc29, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -5265,6 +5268,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4711868238065511622, guid: 1e7d79ffa68f5423dbb6d315cc0ebc29, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4865563372638700996, guid: 1e7d79ffa68f5423dbb6d315cc0ebc29, type: 3}
+      propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7602960045379981291, guid: 1e7d79ffa68f5423dbb6d315cc0ebc29, type: 3}
@@ -5466,7 +5473,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1959614681}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9856433f0d610a74fa8dd21a2560f17d, type: 3}
+  m_Script: {fileID: 11500000, guid: a2c1011a9b609294eacbd535397aea0c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   targetLights:

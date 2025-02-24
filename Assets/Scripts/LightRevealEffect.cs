@@ -50,7 +50,8 @@ public class LightRevealEffect : MonoBehaviour
         foreach (Light2D light in targetLights)
         {
             if (currentLightCount >= 8) break;
-            if (light == null || !light.enabled) continue;  // 仅在光源启用时进行处理
+            // 检查光源引用是否存在，GameObject是否激活，以及Light2D组件是否启用
+            if (light == null || !light.gameObject.activeInHierarchy || !light.enabled) continue;
 
             // 转换光源位置到物体的局部空间
             Vector3 localPos = transform.InverseTransformPoint(light.transform.position);
