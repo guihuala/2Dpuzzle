@@ -18,7 +18,7 @@ public class CollectibleManager : SingletonPersistent<CollectibleManager>
         // GameProgressManager.Instance.OnCollectibleCollected -= 
     }
 
-    #region 存储相关的方法（并非存储）
+    #region 保存相关的方法
 
     // 遍历哈希表并返回已有的收藏品的数据，用于存储
     public List<CollectibleItem> GetCollectedItems()

@@ -1,8 +1,5 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 
 public class PlayerController : MonoBehaviour
@@ -115,6 +112,16 @@ public class PlayerController : MonoBehaviour
             rb.velocity = new Vector2(horizontalVelocity, verticalVelocity);
             rb.gravityScale = .5f;
 
+            // 判断纵向速度为0时暂停动画
+            if (verticalVelocity == 0)
+            {
+                animator.speed = 0f;  // 暂停动画
+            }
+            else
+            {
+                animator.speed = 1f;  // 恢复动画播放
+            }
+
             if (animator != null)
             {
                 animator.SetBool("IsClimb", true);
@@ -137,6 +144,7 @@ public class PlayerController : MonoBehaviour
             // 更新动画
             if (animator != null)
             {
+                animator.speed = 1f; 
                 animator.SetBool("IsClimb", false);
                 animator.SetFloat("speed", Mathf.Abs(horizontal)); 
             }

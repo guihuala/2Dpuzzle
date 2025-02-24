@@ -20,12 +20,14 @@ public class PickUpCollection : BaseInteractableObject
         if (!isPickedUp)
         {
             base.Apply();
+
+            isTaken = true;
+            
+            GameProgressManager.Instance.UpdateMechanismState(uniqueID,SaveState());
+            SaveManager.Instance.NewRecord();     
             
             CollectibleManager.Instance.CollectItem(_collectibleItem);
             Destroy(gameObject);
-
-            GameProgressManager.Instance.UpdateMechanismState(uniqueID,SaveState());
-            SaveManager.Instance.NewRecord();
         }
     }
 }

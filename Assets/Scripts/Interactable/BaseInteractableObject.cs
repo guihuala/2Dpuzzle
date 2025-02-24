@@ -6,7 +6,6 @@ using UnityEngine.Rendering.Universal;
 public class BaseInteractableObject : MonoBehaviour, Interactable, ISaveableMechanism
 {
     private bool canInteract = true;
-    
     private bool isLit = false;
     protected bool isActivated = false; // 机关是否被激活 比如灯是否被打开
     protected bool isTaken = false;    // 是否被取走 比如物品和收藏品
@@ -23,9 +22,15 @@ public class BaseInteractableObject : MonoBehaviour, Interactable, ISaveableMech
     protected virtual void Start()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
-        
+
+        // 生成一个全局唯一的标识符
         uniqueID = gameObject.name;
+
+        // 注册机关到游戏进度管理器
         GameProgressManager.Instance.RegisterMechanism(uniqueID, this);
+
+        // 加载物体的状态
+        LoadStateFromManager();
     }
 
     private void Update()
@@ -96,9 +101,25 @@ public class BaseInteractableObject : MonoBehaviour, Interactable, ISaveableMech
         isActivated = state.isActivated;
         isTaken = state.isTaken;
     }
+
+    // 自动从GameProgressManager中加载状态
+    private void LoadStateFromManager()
+    {
+        var state = GameProgressManager.Instance.GetMechanismStateByID(uniqueID);
+        if (state != null)
+        {
+            LoadState(state);
+        }
+    }
     
     public MechanismState SaveState()
     {
-        return new MechanismState { mechanismID = uniqueID, isActivated = isActivated, isTaken = isTaken };
+        return new MechanismState { isActivated = isActivated, isTaken = isTaken };
+    }
+
+    // 获取物体的唯一ID
+    public string GetUniqueID()
+    {
+        return uniqueID;
     }
 }

@@ -6,6 +6,7 @@ using UnityEngine.Rendering.Universal;
 public class StreetLight : ItemReuiredObject
 {
     private Light2D _light;
+    
     // 是否开启灯光
     private bool _isLightOn = false;
 
@@ -13,6 +14,7 @@ public class StreetLight : ItemReuiredObject
     {
         base.Start();
         _light = GetComponentInChildren<Light2D>();
+
         _light.enabled = _isLightOn;
     }
 

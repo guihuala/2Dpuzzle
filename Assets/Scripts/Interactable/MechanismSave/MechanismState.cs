@@ -3,8 +3,7 @@ using System;
 [Serializable]
 public class MechanismState
 {
-    public string mechanismID;
-    
+
     public bool isActivated;    // 机关是否被激活（灯）
     public bool isTaken;        // 机关是否被取走（可以被取走的物品）
     
@@ -18,4 +17,6 @@ public interface ISaveableMechanism
 
     // 根据传入的状态恢复机关
     void LoadState(MechanismState state);
+
+    public string GetUniqueID();
 }

@@ -24,4 +24,4 @@ MonoBehaviour:
   - uiName: SaveButtonGroup
     uiPath: UIPanels/SaveButtonGroup
   - uiName: CollectiblePanel
-    uiPath: UIPanels/CollectiblePanel
+    uiPath: UIPanels/InventoryPanel

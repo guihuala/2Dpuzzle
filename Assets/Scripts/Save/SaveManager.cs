@@ -5,7 +5,7 @@ using UnityEngine;
 public class SaveManager : SingletonPersistent<SaveManager>
 {
     public int ID;
-    
+
     public SceneName scensName;
     public float gameTime;
 
@@ -16,7 +16,8 @@ public class SaveManager : SingletonPersistent<SaveManager>
         public int level;
         public float gameTime;
         public List<CollectibleItem> collectedItems;  // 收藏品数据
-        public List<MechanismState> mechanismStates;  // 机关状态数据
+        public List<NormalItem> inventoryItems;       // 物品数据
+        public List<MechanismInfo> mechanismInfoList;  // 机关状态数据
     }
 
     // 构造保存数据
@@ -27,7 +28,8 @@ public class SaveManager : SingletonPersistent<SaveManager>
             scensName = scensName,
             gameTime = gameTime,
             collectedItems = CollectibleManager.Instance.GetCollectedItems(),
-            mechanismStates = GameProgressManager.Instance.GetAllMechanismStates()
+            inventoryItems = InventoryManager.Instance.GetInventoryItems(),
+            mechanismInfoList = GameProgressManager.Instance.GetAllMechanismStates()  // 添加机关状态
         };
         return savedata;
     }
@@ -45,8 +47,11 @@ public class SaveManager : SingletonPersistent<SaveManager>
             CollectibleManager.Instance.CollectItem(item);
         }
 
+        // 恢复物品数据
+        InventoryManager.Instance.LoadItems(savedata.inventoryItems);
+
         // 恢复机关状态
-        GameProgressManager.Instance.LoadMechanismStates(savedata.mechanismStates);
+        GameProgressManager.Instance.LoadMechanismStates(savedata.mechanismInfoList);  // 加载机关状态
     }
 
     /// <summary>
@@ -67,7 +72,7 @@ public class SaveManager : SingletonPersistent<SaveManager>
         RecordData.Instance.Save();
 
         Save(ID);
-        
+
         TIMEMGR.SetOriTime();
     }
 
@@ -87,23 +92,27 @@ public class SaveManager : SingletonPersistent<SaveManager>
             RecordData.Instance.recordName[i] = "";
         }
     }
-    
+
+    // 保存存档
     public void Save(int id)
     {
-        SAVE.JsonSave(RecordData.Instance.recordName[id], ForSave());
+        SAVE.JsonSave(RecordData.Instance.recordName[id], ForSave());  // 将保存数据存储为JSON
     }
 
+    // 加载存档
     public void Load(int id)
     {
         var saveData = SAVE.JsonLoad<SaveData>(RecordData.Instance.recordName[id]);
-        ForLoad(saveData);
+        ForLoad(saveData);  // 将加载的存档数据应用到游戏中
     }
 
+    // 读取存档数据（供显示用）
     public SaveData ReadForShow(int id)
     {
         return SAVE.JsonLoad<SaveData>(RecordData.Instance.recordName[id]);
     }
 
+    // 删除存档
     public void Delete(int id)
     {
         SAVE.JsonDelete(RecordData.Instance.recordName[id]);
