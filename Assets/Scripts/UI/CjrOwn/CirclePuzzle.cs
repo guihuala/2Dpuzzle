@@ -65,7 +65,19 @@ public class CirclePuzzle : MonoBehaviour,IDragHandler
 
     private void Update()
     {
-        
+        if (Puzzle_1.instance.isTouched)
+        {
+            
+            Vector3 screenPos = Input.mousePosition;
+            // 转换为视口坐标（0-1范围）
+            Vector3 viewportPos = Camera.main.ScreenToViewportPoint(screenPos);
+            // 将视口坐标转换为世界坐标（需指定Z值，通常为摄像机近裁剪面）
+            Vector3 worldPoint = Camera.main.ViewportToWorldPoint(
+                new Vector3(viewportPos.x, viewportPos.y, Camera.main.nearClipPlane)
+            );
+            Puzzle_1.instance.LineStack.Peek().GetComponent<LineRenderer>().SetPosition(1, worldPoint);
+            
+        }
     }
 
 
@@ -81,34 +93,19 @@ public class CirclePuzzle : MonoBehaviour,IDragHandler
 
     public void OnDrag(PointerEventData eventData)
     {
-        if (Puzzle_1.instance.isTouched)
-        {
-            
-            Vector3 screenPos = Input.mousePosition;
-            // 转换为视口坐标（0-1范围）
-            Vector3 viewportPos = Camera.main.ScreenToViewportPoint(screenPos);
-            // 将视口坐标转换为世界坐标（需指定Z值，通常为摄像机近裁剪面）
-            Vector3 worldPoint = Camera.main.ViewportToWorldPoint(
-                new Vector3(viewportPos.x, viewportPos.y, Camera.main.nearClipPlane)
-            );
-            Puzzle_1.instance.LineStack.Peek().transform.position=SeekMid(Puzzle_1.instance.current.transform.position, worldPoint);
-            
-            Vector3 dir = (worldPoint - Puzzle_1.instance.current.transform.position).normalized;
-            float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
-            GameObject Line = Puzzle_1.instance.LineStack.Peek();
-            Line.transform.rotation = Quaternion.Euler(0, 0, angle);
-            Vector2 boxSize = Line.GetComponent<SpriteRenderer>().bounds.size;
-            Vector2 oriScale = new Vector2(boxSize.x /Line.transform.localScale.x, boxSize.y /Line.transform.localScale.y);
-            // float Xdis = worldPoint.x - Puzzle_1.instance.current.transform.position.x;
-            // Xdis=Mathf.Abs(Xdis);
-            float Xdis=Vector2.Distance(worldPoint, Puzzle_1.instance.current.transform.position);
-            float newXscale = Xdis * oriScale.x/boxSize.x;
-            newXscale=Mathf.Max(newXscale,Line.transform.localScale.x);
-            Line.transform.localScale = new Vector3(newXscale, Line.transform.localScale.y, Line.transform.localScale.z);
-            LastPoi.x=worldPoint.x;
-            LastPoi=worldPoint;
-            
-        }
+        // if (Puzzle_1.instance.isTouched)
+        // {
+        //     
+        //     Vector3 screenPos = Input.mousePosition;
+        //     // 转换为视口坐标（0-1范围）
+        //     Vector3 viewportPos = Camera.main.ScreenToViewportPoint(screenPos);
+        //     // 将视口坐标转换为世界坐标（需指定Z值，通常为摄像机近裁剪面）
+        //     Vector3 worldPoint = Camera.main.ViewportToWorldPoint(
+        //         new Vector3(viewportPos.x, viewportPos.y, Camera.main.nearClipPlane)
+        //     );
+        //     Puzzle_1.instance.LineStack.Peek().GetComponent<LineRenderer>().SetPosition(1, worldPoint);
+        //     
+        // }
         
         
     }

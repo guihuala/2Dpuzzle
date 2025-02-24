@@ -47,6 +47,11 @@ public class Puzzle_1 : MonoBehaviour
         return;
     circlePuzzle.hasIn = true;
     var mid = Instantiate(Line);
+    mid.GetComponent<LineRenderer>().positionCount = 2;
+    mid.GetComponent<LineRenderer>().startWidth = 0.2f;
+    mid.GetComponent<LineRenderer>().endWidth = 0.2f;
+    mid.GetComponent<LineRenderer>().useWorldSpace = true;
+    mid.GetComponent<LineRenderer>().SetPosition(0, circlePuzzle.transform.position);
     LineList.Add(mid);
     LineStack.Push(mid);
     current = circlePuzzle;
