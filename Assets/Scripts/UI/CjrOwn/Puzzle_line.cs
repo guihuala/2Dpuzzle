@@ -21,16 +21,20 @@ public class Puzzle_line : MonoBehaviour
 
    private void Update()
    {
-      if (Physics2D.LinecastAll(lineRenderer.GetPosition(0),lineRenderer.GetPosition(1)).Length>0)
+      var hits = Physics2D.LinecastAll(lineRenderer.GetPosition(0), lineRenderer.GetPosition(1), Check);
+      if (hits.Length>0&&Puzzle_1.instance.isTouched)
       {
+         Debug.Log(hits.Length);
+         Debug.Log(hits[0].transform.name);
         Puzzle_1.instance.Init();
+        Debug.Log("Init");
+        Debug.Log(gameObject.name);
       }
       
    }
 
    private void OnDrawGizmos()
    {
-      Gizmos.DrawSphere(this.transform.position, radious);
       Gizmos.color = Color.red;
       Gizmos.DrawLine(lineRenderer.GetPosition(0),lineRenderer.GetPosition(1));
      

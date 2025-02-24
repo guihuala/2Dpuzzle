@@ -16,7 +16,6 @@ public class CirclePuzzle : MonoBehaviour,IDragHandler
     {
         circleImage = GetComponent<Image>();
         hasIn = false;
-        CANNEED = true;
         CANOp = false;
         LastPoi =Vector3.zero;
     }
@@ -65,6 +64,21 @@ public class CirclePuzzle : MonoBehaviour,IDragHandler
 
     private void Update()
     {
+    }
+
+
+    public void PointerUp()
+    {
+        if(!CANNEED)
+            return;
+        Puzzle_1.instance.CheckFinished();
+        Puzzle_1.instance.isTouched = false;
+        Puzzle_1.instance.Init();
+        CANOp = false;
+    }
+
+    public void OnDrag(PointerEventData eventData)
+    {
         if (Puzzle_1.instance.isTouched)
         {
             
@@ -78,33 +92,6 @@ public class CirclePuzzle : MonoBehaviour,IDragHandler
             Puzzle_1.instance.LineStack.Peek().GetComponent<LineRenderer>().SetPosition(1, worldPoint);
             
         }
-    }
-
-
-    public void PointerUp()
-    {
-        if(!CANNEED)
-            return;
-        Puzzle_1.instance.isTouched = false;
-        Puzzle_1.instance.Init();
-        CANOp = false;
-    }
-
-    public void OnDrag(PointerEventData eventData)
-    {
-        // if (Puzzle_1.instance.isTouched)
-        // {
-        //     
-        //     Vector3 screenPos = Input.mousePosition;
-        //     // 转换为视口坐标（0-1范围）
-        //     Vector3 viewportPos = Camera.main.ScreenToViewportPoint(screenPos);
-        //     // 将视口坐标转换为世界坐标（需指定Z值，通常为摄像机近裁剪面）
-        //     Vector3 worldPoint = Camera.main.ViewportToWorldPoint(
-        //         new Vector3(viewportPos.x, viewportPos.y, Camera.main.nearClipPlane)
-        //     );
-        //     Puzzle_1.instance.LineStack.Peek().GetComponent<LineRenderer>().SetPosition(1, worldPoint);
-        //     
-        // }
         
         
     }

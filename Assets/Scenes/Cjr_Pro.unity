@@ -487,7 +487,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -10.274017, y: -10.4373255}
+  m_Offset: {x: -10.274017, y: 19.855474}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -498,7 +498,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 21.548138, y: 21.874651}
+  m_Size: {x: 21.548138, y: 12.408145}
   m_EdgeRadius: 0
 --- !u!1 &318531434
 GameObject:
@@ -813,7 +813,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hasIn: 0
   circleImage: {fileID: 0}
-  CANNEED: 0
+  CANNEED: 1
   CANOp: 0
 --- !u!1 &385195707
 GameObject:
@@ -1271,7 +1271,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hasIn: 0
   circleImage: {fileID: 0}
-  CANNEED: 0
+  CANNEED: 1
   CANOp: 0
 --- !u!114 &572628521
 MonoBehaviour:
@@ -1667,7 +1667,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hasIn: 0
   circleImage: {fileID: 0}
-  CANNEED: 0
+  CANNEED: 1
   CANOp: 0
 --- !u!114 &886766153
 MonoBehaviour:
@@ -2353,7 +2353,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hasIn: 0
   circleImage: {fileID: 0}
-  CANNEED: 0
+  CANNEED: 1
   CANOp: 0
 --- !u!114 &1102903860
 MonoBehaviour:
@@ -3498,7 +3498,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hasIn: 0
   circleImage: {fileID: 0}
-  CANNEED: 0
+  CANNEED: 1
   CANOp: 0
 --- !u!114 &1446823832
 MonoBehaviour:
@@ -3653,7 +3653,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hasIn: 0
   circleImage: {fileID: 0}
-  CANNEED: 0
+  CANNEED: 1
   CANOp: 0
 --- !u!114 &1447527975
 MonoBehaviour:
@@ -3808,7 +3808,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hasIn: 0
   circleImage: {fileID: 0}
-  CANNEED: 0
+  CANNEED: 1
   CANOp: 0
 --- !u!114 &1450610982
 MonoBehaviour:
@@ -4110,7 +4110,7 @@ GameObject:
   - component: {fileID: 1529008056}
   - component: {fileID: 1529008055}
   - component: {fileID: 1529008058}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Line (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}

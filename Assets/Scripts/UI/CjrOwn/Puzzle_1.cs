@@ -88,8 +88,12 @@ public class Puzzle_1 : MonoBehaviour
       LineStack.Clear();
     }
   }
-  
-  
+
+  public void CheckFinished()
+  {
+    if(haveDown.Count == 7)
+      isResolved = true;
+  }
   
   
 }
