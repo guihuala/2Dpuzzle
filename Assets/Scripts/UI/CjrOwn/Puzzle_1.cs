@@ -1,7 +1,9 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.Serialization;
 
 public class Puzzle_1 : MonoBehaviour
@@ -12,8 +14,9 @@ public class Puzzle_1 : MonoBehaviour
   public List<CirclePuzzle> haveDown;
   public GameObject Line;
   private GameObject Step;
-  
-  
+  public Button CancelButton;
+  public Button NextButton;
+  public Transform Line_parent;
   
   [FormerlySerializedAs("LineStack")] public List<GameObject> LineList;
   
@@ -39,6 +42,7 @@ public class Puzzle_1 : MonoBehaviour
     LineList = new List<GameObject>();
     haveDown = new List<CirclePuzzle>();//<CirclePuzzle>();
     current = null;
+    CancelButton.onClick.AddListener(Cancel_Click);
   }
 
 
@@ -70,6 +74,25 @@ public class Puzzle_1 : MonoBehaviour
     LineStack.Peek().GetComponent<Puzzle_line>().lineRenderer.SetPosition(0,current.transform.position);
   }
 
+  private void OnDisable()
+  {
+    Puzzle_1.instance.isTouched = false;
+    LineList.Clear();
+    foreach (var item in haveDown)
+    {
+      item.hasIn = false;
+      if(item.CANNEED)
+        item.circleImage.color = Color.white;
+        
+    }
+    haveDown.Clear();
+    foreach (var item in LineStack)
+    {
+      Destroy(item.gameObject);
+    }
+    LineStack.Clear();
+  }
+
   public void Init()
   {
     if (!isResolved)
@@ -79,9 +102,10 @@ public class Puzzle_1 : MonoBehaviour
       foreach (var item in haveDown)
       {
         item.hasIn = false;
-        if(item.CANNEED)
+        if(item.CANNEED&&!item.isFirst)
           item.circleImage.color = Color.white;
-        
+        if(item.CANNEED&&item.isFirst)
+          item.circleImage.color = Color.yellow;
       }
       haveDown.Clear();
       foreach (var item in LineStack)
@@ -90,6 +114,12 @@ public class Puzzle_1 : MonoBehaviour
       }
       LineStack.Clear();
     }
+    else
+    {
+      NextButton.image.color = Color.green;
+      NextButton.GetComponentInChildren<TextMeshProUGUI>().text = "Íê³É";
+      NextButton.onClick.AddListener(Cancel_Click);
+    }
   }
 
   public void CheckFinished()
@@ -97,6 +127,11 @@ public class Puzzle_1 : MonoBehaviour
     if(haveDown.Count == 7)
       isResolved = true;
   }
-  
+
+
+  public void Cancel_Click()
+  {
+    gameObject.SetActive(false);
+  }
   
 }
