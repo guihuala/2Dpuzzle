@@ -86,7 +86,6 @@ public class CirclePuzzle : MonoBehaviour,IDragHandler
         if(!CANNEED)
             return;
         Puzzle_1.instance.isTouched = false;
-        Debug.Log("PointerUp");
         Puzzle_1.instance.Init();
         CANOp = false;
     }
