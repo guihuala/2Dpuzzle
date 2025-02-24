@@ -53,6 +53,7 @@ public class Puzzle_1 : MonoBehaviour
     mid.GetComponent<LineRenderer>().endWidth = 0.2f;
     mid.GetComponent<LineRenderer>().useWorldSpace = true;
     mid.GetComponent<LineRenderer>().SetPosition(0, circlePuzzle.transform.position);
+    mid.GetComponent<LineRenderer>().SetPosition(1, circlePuzzle.transform.position);
     if (LineStack.Count > 0)
     {
       Debug.Log(circlePuzzle.name);

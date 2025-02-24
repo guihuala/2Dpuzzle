@@ -11,6 +11,7 @@ public class CirclePuzzle : MonoBehaviour,IDragHandler
     public Image circleImage;
     public bool CANNEED;
     public bool CANOp;
+    public bool isFirst;
     private Vector3 LastPoi;
     private void Awake()
     {
@@ -25,8 +26,11 @@ public class CirclePuzzle : MonoBehaviour,IDragHandler
     {
         if(!CANNEED)
             return;
+        if(isFirst)
+            Puzzle_1.instance.isTouched=true;
+        if(!Puzzle_1.instance.isTouched)
+            return;
         circleImage.color=Color.cyan;
-        Puzzle_1.instance.isTouched=true;
         Puzzle_1.instance.AddCircle(this);
         Debug.Log(Puzzle_1.instance.current.transform.position);
         Puzzle_1.instance.LineStack.Peek().transform.position=new Vector3( Puzzle_1.instance.current.transform.position.x,Puzzle_1.instance.current.transform.position.y,Puzzle_1.instance.current.transform.position.z-2);
