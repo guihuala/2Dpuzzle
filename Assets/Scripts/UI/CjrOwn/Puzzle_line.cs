@@ -6,24 +6,37 @@ using UnityEngine.Serialization;
 
 public class Puzzle_line : MonoBehaviour
 {
-  public LineRenderer lineRenderer;
+   public BoxCollider2D boxCollider;
+   public float radious;
+
+   public LineRenderer lineRenderer;
+   
    public LayerMask Check;
-   public Vector3 StartPos;
-   public Vector3 EndPos;
    private void Awake()
    {
-     lineRenderer = GetComponent<LineRenderer>();
+      boxCollider = GetComponent<BoxCollider2D>();
+      lineRenderer = GetComponent<LineRenderer>();
    }
 
 
    private void Update()
    {
-     if(Physics2D.OverlapAreaAll(StartPos, EndPos, Check).Length > 0)
+      var hits = Physics2D.LinecastAll(lineRenderer.GetPosition(0), lineRenderer.GetPosition(1), Check);
+      if (hits.Length>0&&Puzzle_1.instance.isTouched)
       {
+         Debug.Log(hits.Length);
+         Debug.Log(hits[0].transform.name);
         Puzzle_1.instance.Init();
+        Debug.Log("Init");
+        Debug.Log(gameObject.name);
       }
-     Debug.DrawLine(StartPos, EndPos, Color.red);
+      
    }
 
-  
+   private void OnDrawGizmos()
+   {
+      Gizmos.color = Color.red;
+      Gizmos.DrawLine(lineRenderer.GetPosition(0),lineRenderer.GetPosition(1));
+     
+   }
 }

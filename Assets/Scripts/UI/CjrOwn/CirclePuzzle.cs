@@ -11,12 +11,12 @@ public class CirclePuzzle : MonoBehaviour,IDragHandler
     public Image circleImage;
     public bool CANNEED;
     public bool CANOp;
+    public bool isFirst;
     private Vector3 LastPoi;
     private void Awake()
     {
         circleImage = GetComponent<Image>();
         hasIn = false;
-        CANNEED = true;
         CANOp = false;
         LastPoi =Vector3.zero;
     }
@@ -26,8 +26,11 @@ public class CirclePuzzle : MonoBehaviour,IDragHandler
     {
         if(!CANNEED)
             return;
+        if(isFirst)
+            Puzzle_1.instance.isTouched=true;
+        if(!Puzzle_1.instance.isTouched)
+            return;
         circleImage.color=Color.cyan;
-        Puzzle_1.instance.isTouched=true;
         Puzzle_1.instance.AddCircle(this);
         Debug.Log(Puzzle_1.instance.current.transform.position);
         Puzzle_1.instance.LineStack.Peek().transform.position=new Vector3( Puzzle_1.instance.current.transform.position.x,Puzzle_1.instance.current.transform.position.y,Puzzle_1.instance.current.transform.position.z-2);
@@ -65,7 +68,6 @@ public class CirclePuzzle : MonoBehaviour,IDragHandler
 
     private void Update()
     {
-        
     }
 
 
@@ -73,8 +75,8 @@ public class CirclePuzzle : MonoBehaviour,IDragHandler
     {
         if(!CANNEED)
             return;
+        Puzzle_1.instance.CheckFinished();
         Puzzle_1.instance.isTouched = false;
-        Debug.Log("PointerUp");
         Puzzle_1.instance.Init();
         CANOp = false;
     }
@@ -91,14 +93,8 @@ public class CirclePuzzle : MonoBehaviour,IDragHandler
             Vector3 worldPoint = Camera.main.ViewportToWorldPoint(
                 new Vector3(viewportPos.x, viewportPos.y, Camera.main.nearClipPlane)
             );
-            Puzzle_1.instance.LineStack.Peek().transform.position=SeekMid(Puzzle_1.instance.current.transform.position, worldPoint);
+            Puzzle_1.instance.LineStack.Peek().GetComponent<LineRenderer>().SetPosition(1, worldPoint);
             
-            Vector3 dir = (worldPoint - Puzzle_1.instance.current.transform.position).normalized;
-            float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
-            GameObject Line = Puzzle_1.instance.LineStack.Peek();
-            Line.transform.rotation = Quaternion.Euler(0, 0, angle);
-            Line.GetComponent<Puzzle_line>().lineRenderer.SetPosition(1, worldPoint);
-           
         }
         
         

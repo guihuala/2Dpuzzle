@@ -38,6 +38,7 @@ public class Puzzle_1 : MonoBehaviour
    LineStack = new Stack<GameObject>();
     LineList = new List<GameObject>();
     haveDown = new List<CirclePuzzle>();//<CirclePuzzle>();
+    current = null;
   }
 
 
@@ -47,6 +48,21 @@ public class Puzzle_1 : MonoBehaviour
         return;
     circlePuzzle.hasIn = true;
     var mid = Instantiate(Line);
+    mid.GetComponent<LineRenderer>().positionCount = 2;
+    mid.GetComponent<LineRenderer>().startWidth = 0.2f;
+    mid.GetComponent<LineRenderer>().endWidth = 0.2f;
+    mid.GetComponent<LineRenderer>().useWorldSpace = true;
+    mid.GetComponent<LineRenderer>().SetPosition(0, circlePuzzle.transform.position);
+    mid.GetComponent<LineRenderer>().SetPosition(1, circlePuzzle.transform.position);
+    if (LineStack.Count > 0)
+    {
+      Debug.Log(circlePuzzle.name);
+      Debug.LogWarning(LineStack.Peek().GetComponent<LineRenderer>().GetPosition(0));
+      Debug.LogWarning(LineStack.Peek().GetComponent<LineRenderer>().GetPosition(1));
+      Vector3 midVector3=circlePuzzle.transform.position;
+      midVector3.z -= 2;
+      LineStack.Peek().GetComponent<LineRenderer>().SetPosition(1, midVector3);
+    }
     LineList.Add(mid);
     LineStack.Push(mid);
     current = circlePuzzle;
@@ -75,8 +91,12 @@ public class Puzzle_1 : MonoBehaviour
       LineStack.Clear();
     }
   }
-  
-  
+
+  public void CheckFinished()
+  {
+    if(haveDown.Count == 7)
+      isResolved = true;
+  }
   
   
 }
