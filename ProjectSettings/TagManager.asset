@@ -11,9 +11,9 @@ TagManager:
   - Ground
   - Water
   - UI
-  - 
-  - 
-  - 
+  - Toplayer
+  - Puzzle_1Line
+  - Puzzle_1Check
   - 
   - 
   - 
@@ -46,4 +46,10 @@ TagManager:
     locked: 0
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: UI
+    uniqueID: 3100440839
+    locked: 0
+  - name: Toplayer
+    uniqueID: 2467297697
     locked: 0
