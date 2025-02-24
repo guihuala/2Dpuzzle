@@ -51,6 +51,7 @@ public class Puzzle_1 : MonoBehaviour
     LineStack.Push(mid);
     current = circlePuzzle;
     haveDown.Add(circlePuzzle);
+    LineStack.Peek().GetComponent<Puzzle_line>().lineRenderer.SetPosition(0,current.transform.position);
   }
 
   public void Init()
@@ -62,7 +63,8 @@ public class Puzzle_1 : MonoBehaviour
       foreach (var item in haveDown)
       {
         item.hasIn = false;
-        item.circleImage.color = Color.white;
+        if(item.CANNEED)
+          item.circleImage.color = Color.white;
         
       }
       haveDown.Clear();

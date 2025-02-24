@@ -97,16 +97,8 @@ public class CirclePuzzle : MonoBehaviour,IDragHandler
             float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
             GameObject Line = Puzzle_1.instance.LineStack.Peek();
             Line.transform.rotation = Quaternion.Euler(0, 0, angle);
-            Vector2 boxSize = Line.GetComponent<SpriteRenderer>().bounds.size;
-            Vector2 oriScale = new Vector2(boxSize.x /Line.transform.localScale.x, boxSize.y /Line.transform.localScale.y);
-            // float Xdis = worldPoint.x - Puzzle_1.instance.current.transform.position.x;
-            // Xdis=Mathf.Abs(Xdis);
-            float Xdis=Vector2.Distance(worldPoint, Puzzle_1.instance.current.transform.position);
-            float newXscale = Xdis * oriScale.x/boxSize.x;
-            newXscale=Mathf.Max(newXscale,Line.transform.localScale.x);
-            Line.transform.localScale = new Vector3(newXscale, Line.transform.localScale.y, Line.transform.localScale.z);
-            LastPoi.x=worldPoint.x;
-            LastPoi=worldPoint;
+            Line.GetComponent<Puzzle_line>().lineRenderer.SetPosition(1, worldPoint);
+           
         }
         
         
