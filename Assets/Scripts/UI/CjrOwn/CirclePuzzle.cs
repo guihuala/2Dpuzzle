@@ -107,6 +107,7 @@ public class CirclePuzzle : MonoBehaviour,IDragHandler
             Line.transform.localScale = new Vector3(newXscale, Line.transform.localScale.y, Line.transform.localScale.z);
             LastPoi.x=worldPoint.x;
             LastPoi=worldPoint;
+            
         }
         
         
