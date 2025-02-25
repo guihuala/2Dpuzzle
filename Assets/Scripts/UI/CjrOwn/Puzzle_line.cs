@@ -10,8 +10,10 @@ public class Puzzle_line : MonoBehaviour
    public float radious;
 
    public LineRenderer lineRenderer;
-   
+   public int UpID;
    public LayerMask Check;
+   
+   public LayerMask Check2;
    private void Awake()
    {
       boxCollider = GetComponent<BoxCollider2D>();
@@ -24,13 +26,22 @@ public class Puzzle_line : MonoBehaviour
       var hits = Physics2D.LinecastAll(lineRenderer.GetPosition(0), lineRenderer.GetPosition(1), Check);
       if (hits.Length>0&&Puzzle_1.instance.isTouched)
       {
-         Debug.Log(hits.Length);
-         Debug.Log(hits[0].transform.name);
         Puzzle_1.instance.Init();
-        Debug.Log("Init");
-        Debug.Log(gameObject.name);
       }
-      
+
+   }
+
+   private void OnTriggerStay2D(Collider2D other)
+   {
+      if (other.gameObject.TryGetComponent<Puzzle_line>(out var _puzzle_line))
+      {
+         if (Mathf.Abs(_puzzle_line.UpID - UpID) > 1)
+         {
+            Debug.LogWarning(UpID.ToString()+" - "+_puzzle_line.UpID.ToString());
+            Time.timeScale = 0;
+            Debug.LogError("NONONO");
+         }
+      }
    }
 
    private void OnDrawGizmos()

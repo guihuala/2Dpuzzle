@@ -13,6 +13,10 @@ public class CirclePuzzle : MonoBehaviour,IDragHandler
     public bool CANOp;
     public bool isFirst;
     private Vector3 LastPoi;
+
+  
+    
+    
     private void Awake()
     {
         circleImage = GetComponent<Image>();
@@ -33,7 +37,6 @@ public class CirclePuzzle : MonoBehaviour,IDragHandler
         circleImage.color=Color.yellow;
         circleImage.sprite = Puzzle_1.instance.Lighting;
         Puzzle_1.instance.AddCircle(this);
-        Debug.Log(Puzzle_1.instance.current.transform.position);
         Puzzle_1.instance.LineStack.Peek().transform.position=new Vector3( Puzzle_1.instance.current.transform.position.x,Puzzle_1.instance.current.transform.position.y,Puzzle_1.instance.current.transform.position.z-2);
         Puzzle_1.instance.LineStack.Peek().transform.localScale=new Vector3(1,Puzzle_1.instance.moveDistance,1);
         CANOp = true;

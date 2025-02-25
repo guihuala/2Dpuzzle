@@ -63,16 +63,24 @@ public class Puzzle_1 : MonoBehaviour
     mid.GetComponent<LineRenderer>().startWidth = 0.2f;
     mid.GetComponent<LineRenderer>().endWidth = 0.2f;
     mid.GetComponent<LineRenderer>().useWorldSpace = true;
+    mid.GetComponent<Puzzle_line>().UpID=LineList.Count + 1;
     mid.GetComponent<LineRenderer>().SetPosition(0, circlePuzzle.transform.position);
     mid.GetComponent<LineRenderer>().SetPosition(1, circlePuzzle.transform.position);
     if (LineStack.Count > 0)
     {
-      Debug.Log(circlePuzzle.name);
-      Debug.LogWarning(LineStack.Peek().GetComponent<LineRenderer>().GetPosition(0));
-      Debug.LogWarning(LineStack.Peek().GetComponent<LineRenderer>().GetPosition(1));
       Vector3 midVector3=circlePuzzle.transform.position;
       midVector3.z -= 2;
       LineStack.Peek().GetComponent<LineRenderer>().SetPosition(1, midVector3);
+      var midd = LineStack.Peek().GetComponent<LineRenderer>();
+      Vector3 dir=(midd.GetPosition(1)-midd.GetPosition(0)).normalized;
+      float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+      midd.transform.rotation=Quaternion.Euler(0, 0, angle);  
+      var rb = LineStack.Peek().AddComponent<Rigidbody2D>();
+      rb.bodyType = RigidbodyType2D.Static;
+      var col= LineStack.Peek().AddComponent<BoxCollider2D>();
+      col.isTrigger = true;
+      col.size = new Vector2(col.size.x,0.2f);
+      col.includeLayers = 255;
     }
     LineList.Add(mid);
     LineStack.Push(mid);
