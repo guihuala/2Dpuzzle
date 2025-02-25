@@ -6,6 +6,7 @@ Shader "Custom/LightReveal"
         _Opacity ("Overall Opacity", Range(0, 1)) = 1
         _Color ("Tint Color", Color) = (1,1,1,1)
         _LightColor ("Light Color", Color) = (1,1,1,1)
+        _SpotlightFalloff ("Spotlight Falloff", Range(1, 10)) = 2 // 控制聚光灯边缘过渡
     }
     
     SubShader
@@ -52,10 +53,19 @@ Shader "Custom/LightReveal"
                 float _Opacity;
                 float4 _Color;
                 float4 _LightColor;
+                float _SpotlightFalloff;
+                
+                // 光源基本信息
                 float4 _LightPositions[8];
                 float _LightIntensities[8];
                 float _LightRanges[8];
                 int _LightCount;
+                
+                // 聚光灯特定信息
+                int _LightTypes[8]; // 0=点光源, 1=聚光灯
+                float4 _LightDirections[8]; // 聚光灯方向
+                float _LightInnerAngles[8]; // 内角 (弧度)
+                float _LightOuterAngles[8]; // 外角 (弧度)
             CBUFFER_END
 
             Varyings vert(Attributes IN)
@@ -67,6 +77,48 @@ Shader "Custom/LightReveal"
                 OUT.uv = TRANSFORM_TEX(IN.uv, _MainTex);
                 OUT.color = IN.color;
                 return OUT;
+            }
+
+            // 计算点光源亮度
+            float CalculatePointLight(float2 position, float2 lightPos, float range, float intensity)
+            {
+                float distance = length(position - lightPos);
+                float attenuation = saturate(1 - distance / range);
+                attenuation = smoothstep(0, 1, attenuation);
+                return attenuation * intensity;
+            }
+
+            // 计算聚光灯亮度
+            float CalculateSpotlight(float2 position, float2 lightPos, float2 lightDir, 
+                                    float innerAngle, float outerAngle, float range, float intensity)
+            {
+                float distance = length(position - lightPos);
+                
+                // 基础距离衰减
+                float distanceAttenuation = saturate(1 - distance / range);
+                
+                // 如果距离衰减为0，提前返回
+                if (distanceAttenuation <= 0)
+                    return 0;
+                
+                // 计算当前位置到光源的方向
+                float2 toFragment = normalize(position - lightPos);
+                
+                // 计算点积 (越接近1，表示越接近光照中心)
+                float cosAngle = dot(lightDir, toFragment);
+                
+                // 将内外角的余弦值计算出来
+                float cosOuter = cos(outerAngle * 0.5);
+                float cosInner = cos(innerAngle * 0.5);
+                
+                // 计算角度衰减
+                float angleAttenuation = smoothstep(cosOuter, cosInner, cosAngle);
+                
+                // 应用非线性衰减使边缘更加锐利
+                angleAttenuation = pow(angleAttenuation, _SpotlightFalloff);
+                
+                // 综合距离衰减和角度衰减
+                return distanceAttenuation * angleAttenuation * intensity;
             }
 
             float4 frag(Varyings IN) : SV_Target
@@ -83,16 +135,27 @@ Shader "Custom/LightReveal"
                 for (int i = 0; i < _LightCount; i++)
                 {
                     float2 lightPos = _LightPositions[i].xy;
-                    float distance = length(IN.positionOS.xy - lightPos);
                     float range = _LightRanges[i];
                     float intensity = _LightIntensities[i];
+                    float lightContribution = 0;
                     
-                    // 计算光照衰减
-                    float attenuation = saturate(1 - distance / range);
-                    attenuation = smoothstep(0, 1, attenuation);
+                    // 根据光源类型选择不同的计算方法
+                    if (_LightTypes[i] == 0) // 点光源
+                    {
+                        lightContribution = CalculatePointLight(IN.positionOS.xy, lightPos, range, intensity);
+                    }
+                    else if (_LightTypes[i] == 1) // 聚光灯
+                    {
+                        float2 lightDir = _LightDirections[i].xy;
+                        float innerAngle = _LightInnerAngles[i];
+                        float outerAngle = _LightOuterAngles[i];
+                        
+                        lightContribution = CalculateSpotlight(IN.positionOS.xy, lightPos, lightDir, 
+                                                            innerAngle, outerAngle, range, intensity);
+                    }
                     
-                    totalLight += attenuation * intensity;
-                    finalLightColor += _LightColor.rgb * attenuation * intensity;
+                    totalLight += lightContribution;
+                    finalLightColor += _LightColor.rgb * lightContribution;
                 }
                 
                 // 限制总光照强度并应用平滑过渡

@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
+using System.Linq; // 用于数组转换
 
 [RequireComponent(typeof(SpriteRenderer))]
 public class LightRevealEffect : MonoBehaviour
@@ -14,10 +15,18 @@ public class LightRevealEffect : MonoBehaviour
     private static readonly int LightIntensitiesID = Shader.PropertyToID("_LightIntensities");
     private static readonly int LightRangesID = Shader.PropertyToID("_LightRanges");
     private static readonly int LightCountID = Shader.PropertyToID("_LightCount");
+    private static readonly int LightTypesID = Shader.PropertyToID("_LightTypes");
+    private static readonly int LightDirectionsID = Shader.PropertyToID("_LightDirections");
+    private static readonly int LightInnerAnglesID = Shader.PropertyToID("_LightInnerAngles");
+    private static readonly int LightOuterAnglesID = Shader.PropertyToID("_LightOuterAngles");
 
     private Vector4[] lightPositions;
     private float[] lightIntensities;
     private float[] lightRanges;
+    private int[] lightTypes; // 0=点光源, 1=聚光灯
+    private Vector4[] lightDirections;
+    private float[] lightInnerAngles;
+    private float[] lightOuterAngles;
     private int currentLightCount;
 
     private void Awake()
@@ -31,6 +40,10 @@ public class LightRevealEffect : MonoBehaviour
         lightPositions = new Vector4[8];
         lightIntensities = new float[8];
         lightRanges = new float[8];
+        lightTypes = new int[8];
+        lightDirections = new Vector4[8];
+        lightInnerAngles = new float[8];
+        lightOuterAngles = new float[8];
 
         // 设置初始值
         material.SetFloat(OpacityID, 1f);
@@ -58,6 +71,32 @@ public class LightRevealEffect : MonoBehaviour
             lightPositions[currentLightCount] = new Vector4(localPos.x, localPos.y, 0, 0);
             lightIntensities[currentLightCount] = light.intensity;
             lightRanges[currentLightCount] = light.pointLightOuterRadius;
+
+            // 通过检查光源角度来判断是点光源还是聚光灯
+            float outerAngle = light.pointLightOuterAngle;
+
+            // 如果外部角度接近或等于360度，则视为点光源
+            if (outerAngle >= 359f)
+            {
+                lightTypes[currentLightCount] = 0; // 点光源
+                lightDirections[currentLightCount] = Vector4.zero;
+                lightInnerAngles[currentLightCount] = 0;
+                lightOuterAngles[currentLightCount] = 0;
+            }
+            else
+            {
+                lightTypes[currentLightCount] = 1; // 聚光灯
+
+                // 获取聚光灯方向 (局部空间)
+                Vector3 worldDirection = light.transform.up;
+                Vector3 localDirection = transform.InverseTransformDirection(worldDirection).normalized;
+                lightDirections[currentLightCount] = new Vector4(localDirection.x, localDirection.y, 0, 0);
+
+                // 设置内角和外角 (转换为弧度)
+                lightInnerAngles[currentLightCount] = light.pointLightInnerAngle * Mathf.Deg2Rad;
+                lightOuterAngles[currentLightCount] = light.pointLightOuterAngle * Mathf.Deg2Rad;
+            }
+
             currentLightCount++;
         }
     }
@@ -67,6 +106,13 @@ public class LightRevealEffect : MonoBehaviour
         material.SetVectorArray(LightPositionsID, lightPositions);
         material.SetFloatArray(LightIntensitiesID, lightIntensities);
         material.SetFloatArray(LightRangesID, lightRanges);
+
+        // 将int数组转换为float数组
+        material.SetFloatArray(LightTypesID, lightTypes.Select(t => (float)t).ToArray());
+
+        material.SetVectorArray(LightDirectionsID, lightDirections);
+        material.SetFloatArray(LightInnerAnglesID, lightInnerAngles);
+        material.SetFloatArray(LightOuterAnglesID, lightOuterAngles);
         material.SetInt(LightCountID, currentLightCount);
     }
 
