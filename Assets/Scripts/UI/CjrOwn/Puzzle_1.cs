@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -12,7 +13,10 @@ public class Puzzle_1 : MonoBehaviour
   public List<CirclePuzzle> haveDown;
   public GameObject Line;
   private GameObject Step;
-  
+  public CanvasGroup canvasGroup;
+
+  public Sprite Ori;
+  public Sprite Lighting;
   
   
   [FormerlySerializedAs("LineStack")] public List<GameObject> LineList;
@@ -32,6 +36,12 @@ public class Puzzle_1 : MonoBehaviour
 
   public bool isResolved;
 
+  private void Update()
+  {
+    if(canvasGroup.alpha <= 0.05f)
+      gameObject.SetActive(false);
+  }
+
   private void Awake()
   {
     isResolved = false;
@@ -39,6 +49,7 @@ public class Puzzle_1 : MonoBehaviour
     LineList = new List<GameObject>();
     haveDown = new List<CirclePuzzle>();//<CirclePuzzle>();
     current = null;
+    canvasGroup = GetComponent<CanvasGroup>();
   }
 
 
@@ -78,7 +89,10 @@ public class Puzzle_1 : MonoBehaviour
       foreach (var item in haveDown)
       {
         item.hasIn = false;
+        if(item.isFirst)
+          continue;
         item.circleImage.color = Color.white;
+        item.circleImage.sprite = Ori;
         
       }
       haveDown.Clear();
@@ -92,9 +106,16 @@ public class Puzzle_1 : MonoBehaviour
 
   public void CheckFinished()
   {
+    
+    
+    
+    
     if(haveDown.Count == 7)
       isResolved = true;
   }
-  
-  
+
+  public void CancelClick()
+  {
+    canvasGroup.DOFade(0, 2);
+  }
 }

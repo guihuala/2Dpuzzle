@@ -30,7 +30,8 @@ public class CirclePuzzle : MonoBehaviour,IDragHandler
             Puzzle_1.instance.isTouched=true;
         if(!Puzzle_1.instance.isTouched)
             return;
-        circleImage.color=Color.cyan;
+        circleImage.color=Color.yellow;
+        circleImage.sprite = Puzzle_1.instance.Lighting;
         Puzzle_1.instance.AddCircle(this);
         Debug.Log(Puzzle_1.instance.current.transform.position);
         Puzzle_1.instance.LineStack.Peek().transform.position=new Vector3( Puzzle_1.instance.current.transform.position.x,Puzzle_1.instance.current.transform.position.y,Puzzle_1.instance.current.transform.position.z-2);
@@ -52,7 +53,8 @@ public class CirclePuzzle : MonoBehaviour,IDragHandler
             return;
         if(!Puzzle_1.instance.isTouched)
             return;
-        circleImage.color=Color.cyan;
+        circleImage.color=Color.yellow;
+        circleImage.sprite = Puzzle_1.instance.Lighting;
         Puzzle_1.instance.AddCircle(this);
         Puzzle_1.instance.LineStack.Peek().transform.position=new Vector3( Puzzle_1.instance.current.transform.position.x,Puzzle_1.instance.current.transform.position.y,Puzzle_1.instance.current.transform.position.z-2);
         Puzzle_1.instance.LineStack.Peek().transform.localScale=new Vector3(1,Puzzle_1.instance.moveDistance,1);
