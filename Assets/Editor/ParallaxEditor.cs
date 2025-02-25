@@ -4,6 +4,11 @@ using UnityEditor;
 /// <summary>
 /// 视差效果编辑器扩展
 /// 提供在编辑器中设置视差效果的便捷工具
+/// 使用方法：
+/// 1. 创建一个空对象作为视差管理器
+/// 2.将所有背景层作为该对象的子对象
+/// 3.将 ParallaxManager.cs 脚本添加到该空对象上
+/// 4. 勾选"自动添加子对象"选项，或手动设置每个层的视差因子
 /// </summary>
 [CustomEditor(typeof(ParallaxManager))]
 public class ParallaxManagerEditor : Editor
