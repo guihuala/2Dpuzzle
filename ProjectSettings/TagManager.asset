@@ -11,7 +11,7 @@ TagManager:
   - Ground
   - Water
   - UI
-  - shadow
+  - Hints
   - 
   - 
   - 
@@ -46,4 +46,7 @@ TagManager:
     locked: 0
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Top
+    uniqueID: 1502105513
     locked: 0
