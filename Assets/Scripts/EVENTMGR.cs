@@ -4,6 +4,8 @@ using UnityEngine.UI;
 
 public static class EVENTMGR
 {
+    public static bool isInDialogue;
+    
     // 游戏需要用到的主要事件
 
     #region 进入可交互物体的UI提示

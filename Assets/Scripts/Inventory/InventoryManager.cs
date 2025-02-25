@@ -7,11 +7,17 @@ using UnityEngine;
 public class InventoryManager : SingletonPersistent<InventoryManager>
 {
    // 事件
+   public Action<NormalItem , int> OnGetItem;
    public Action<NormalItem> OnSelectItem;
    public Action OnOpenSelectList;
    
    private List<NormalItem> items = new List<NormalItem>();
-   
+
+   private void Start()
+   {
+      OnGetItem += AddItem;
+   }
+
    public List<NormalItem> GetInventoryItems()
    {
       return new List<NormalItem>(items);
@@ -31,7 +37,7 @@ public class InventoryManager : SingletonPersistent<InventoryManager>
       }
 
       // 如果没有相同物品，构造一个新的物品并加入到背包
-      NormalItem newItemInstance = new NormalItem(newItem.itemID, newItem.itemName, newItem.icon, quantity);
+      NormalItem newItemInstance = new NormalItem(newItem.itemID, newItem.itemName, newItem.icon, newItem.description,quantity);
       items.Add(newItemInstance);
    }
 

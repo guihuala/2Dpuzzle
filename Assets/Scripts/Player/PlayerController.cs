@@ -61,7 +61,7 @@ public class PlayerController : MonoBehaviour
     
     void InstanceOnInteract()
     {
-        if (_currentBaseInteractableObject != null)
+        if (_currentBaseInteractableObject != null && !EVENTMGR.isInDialogue)
         {
             _currentBaseInteractableObject.Interact();
         }

@@ -12,11 +12,12 @@ public class NormalItem : ScriptableObject
     public string description;   // 收藏品描述
     public int quantity;      // 物品的数量
 
-    public NormalItem(int itemID, string itemName, Sprite icon, int quantity)
+    public NormalItem(int itemID, string itemName, Sprite icon, string description,int quantity)
     {
         this.itemID = itemID;
         this.itemName = itemName;
         this.icon = icon;
+        this.description = description;
         this.quantity = quantity;
     }
 

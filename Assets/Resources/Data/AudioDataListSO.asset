@@ -17,3 +17,7 @@ MonoBehaviour:
     audioPath: Audios/BGM/Tropical Blast
   - audioName: click
     audioPath: Audios/Sfx/Click
+  - audioName: Sizzle_1
+    audioPath: 
+  - audioName: Sizzle_2
+    audioPath: 
