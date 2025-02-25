@@ -1,0 +1,262 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b47e8935dc184185b1e75ee5c1267e7, type: 3}
+  m_Name: Lv1_Chu1
+  m_EditorClassIdentifier: 
+  Cells:
+  - Index: 0
+    CharacterName: 
+    NPCs:
+    - {fileID: 11400000, guid: 7c843a595a30e4dbbb4b80192736b59f, type: 2}
+    - {fileID: 11400000, guid: 7e0f1ac2065b442d1975aa754b25fe65, type: 2}
+    SelectedNPCIndex: 1
+    SelectedVariantIndex: 0
+    CellType: 0
+    JumpToIndex: 1
+    CellFlag: 0
+    Content: "\u5466\uFF0C\u4F60\u6765\u7684\u4E0D\u5DE7\uFF0C\u6211\u8981\u6253\u70CA\u4E86\u3002"
+    item: {fileID: 0}
+    itemQuantity: 0
+  - Index: 1
+    CharacterName: 
+    NPCs:
+    - {fileID: 11400000, guid: 7c843a595a30e4dbbb4b80192736b59f, type: 2}
+    - {fileID: 11400000, guid: 7e0f1ac2065b442d1975aa754b25fe65, type: 2}
+    SelectedNPCIndex: 1
+    SelectedVariantIndex: 0
+    CellType: 0
+    JumpToIndex: 2
+    CellFlag: 2
+    Content: "\u5982\u679C\u4F60\u4ED8\u4E09\u500D\u5DE5\u8D44\u7684\u8BDD\uFF0C\u4E5F\u4E0D\u662F\u4E0D\u80FD\u518D\u4E3A\u4F60\u52A0\u4F1A\u513F\u73ED\u3002"
+    item: {fileID: 0}
+    itemQuantity: 0
+  - Index: 2
+    CharacterName: 
+    NPCs:
+    - {fileID: 11400000, guid: 7c843a595a30e4dbbb4b80192736b59f, type: 2}
+    - {fileID: 11400000, guid: 7e0f1ac2065b442d1975aa754b25fe65, type: 2}
+    SelectedNPCIndex: 0
+    SelectedVariantIndex: 0
+    CellType: 0
+    JumpToIndex: 3
+    CellFlag: 2
+    Content: ......
+    item: {fileID: 0}
+    itemQuantity: 0
+  - Index: 3
+    CharacterName: 
+    NPCs:
+    - {fileID: 11400000, guid: 7c843a595a30e4dbbb4b80192736b59f, type: 2}
+    - {fileID: 11400000, guid: 7e0f1ac2065b442d1975aa754b25fe65, type: 2}
+    SelectedNPCIndex: 0
+    SelectedVariantIndex: 0
+    CellType: 0
+    JumpToIndex: 4
+    CellFlag: 2
+    Content: "\u98CE\u66B4\u9A6C\u4E0A\u5C31\u8981\u767B\u9646\u4E86\uFF0C\u4F60\u4E0D\u8DDF\u5927\u5BB6\u4E00\u8D77\u64A4\u79BB\u5417\uFF1F"
+    item: {fileID: 0}
+    itemQuantity: 0
+  - Index: 4
+    CharacterName: 
+    NPCs:
+    - {fileID: 11400000, guid: 7c843a595a30e4dbbb4b80192736b59f, type: 2}
+    - {fileID: 11400000, guid: 7e0f1ac2065b442d1975aa754b25fe65, type: 2}
+    SelectedNPCIndex: 1
+    SelectedVariantIndex: 0
+    CellType: 0
+    JumpToIndex: 5
+    CellFlag: 2
+    Content: "\u642C\u4E1C\u897F\u597D\u9EBB\u70E6\uFF0C\u8239\u5230\u6865\u5934\u81EA\u7136\u6C89\uFF0C\u8FC7\u4E24\u5929\u518D\u8BF4\u5427\u3002"
+    item: {fileID: 0}
+    itemQuantity: 0
+  - Index: 5
+    CharacterName: 
+    NPCs:
+    - {fileID: 11400000, guid: 7c843a595a30e4dbbb4b80192736b59f, type: 2}
+    - {fileID: 11400000, guid: 7e0f1ac2065b442d1975aa754b25fe65, type: 2}
+    SelectedNPCIndex: 0
+    SelectedVariantIndex: 0
+    CellType: 0
+    JumpToIndex: 6
+    CellFlag: 2
+    Content: "\u597D\u5427\u3002"
+    item: {fileID: 0}
+    itemQuantity: 0
+  - Index: 6
+    CharacterName: 
+    NPCs:
+    - {fileID: 11400000, guid: 7c843a595a30e4dbbb4b80192736b59f, type: 2}
+    - {fileID: 11400000, guid: 7e0f1ac2065b442d1975aa754b25fe65, type: 2}
+    SelectedNPCIndex: 0
+    SelectedVariantIndex: 0
+    CellType: 0
+    JumpToIndex: 7
+    CellFlag: 2
+    Content: "\u697C\u4E0B\u7684\u95E8\u88AB\u9501\u4E0A\u4E86\uFF0C\u4F60\u6709\u94A5\u5319\u5417\uFF1F"
+    item: {fileID: 0}
+    itemQuantity: 0
+  - Index: 7
+    CharacterName: 
+    NPCs:
+    - {fileID: 11400000, guid: 7c843a595a30e4dbbb4b80192736b59f, type: 2}
+    - {fileID: 11400000, guid: 7e0f1ac2065b442d1975aa754b25fe65, type: 2}
+    SelectedNPCIndex: 1
+    SelectedVariantIndex: 0
+    CellType: 0
+    JumpToIndex: 8
+    CellFlag: 2
+    Content: "\u95EE\u5F97\u597D\u3002"
+    item: {fileID: 0}
+    itemQuantity: 0
+  - Index: 8
+    CharacterName: 
+    NPCs:
+    - {fileID: 11400000, guid: 7c843a595a30e4dbbb4b80192736b59f, type: 2}
+    - {fileID: 11400000, guid: 7e0f1ac2065b442d1975aa754b25fe65, type: 2}
+    SelectedNPCIndex: 1
+    SelectedVariantIndex: 0
+    CellType: 0
+    JumpToIndex: 9
+    CellFlag: 2
+    Content: "\u8981\u662F\u6709\uFF0C\u6211\u4E5F\u5C31\u4E0D\u5728\u8FD9\u91CC\u4E86\u3002"
+    item: {fileID: 0}
+    itemQuantity: 0
+  - Index: 9
+    CharacterName: 
+    NPCs:
+    - {fileID: 11400000, guid: 7c843a595a30e4dbbb4b80192736b59f, type: 2}
+    - {fileID: 11400000, guid: 7e0f1ac2065b442d1975aa754b25fe65, type: 2}
+    SelectedNPCIndex: 1
+    SelectedVariantIndex: 0
+    CellType: 0
+    JumpToIndex: 10
+    CellFlag: 2
+    Content: "\u54E6\uFF0C\u5BF9\u4E86\u3002"
+    item: {fileID: 0}
+    itemQuantity: 0
+  - Index: 10
+    CharacterName: 
+    NPCs:
+    - {fileID: 11400000, guid: 7c843a595a30e4dbbb4b80192736b59f, type: 2}
+    - {fileID: 11400000, guid: 7e0f1ac2065b442d1975aa754b25fe65, type: 2}
+    SelectedNPCIndex: 1
+    SelectedVariantIndex: 0
+    CellType: 0
+    JumpToIndex: 11
+    CellFlag: 2
+    Content: "\u4E0B\u9762\u7684\u7535\u95F8\u5012\u662F\u6709\u94A5\u5319\u2014\u2014\u6BD5\u7ADF\u662F\u6211\u4EB2\u624B\u88C5\u7684\u3002"
+    item: {fileID: 0}
+    itemQuantity: 0
+  - Index: 11
+    CharacterName: 
+    NPCs:
+    - {fileID: 11400000, guid: 7c843a595a30e4dbbb4b80192736b59f, type: 2}
+    - {fileID: 11400000, guid: 7e0f1ac2065b442d1975aa754b25fe65, type: 2}
+    SelectedNPCIndex: 1
+    SelectedVariantIndex: 0
+    CellType: 0
+    JumpToIndex: 12
+    CellFlag: 2
+    Content: "\u539F\u672C\u662F\u4E3A\u4E86\u662F\u907F\u514D\u4E4B\u524D\u603B\u6709\u9189\u9B3C\u53BB\u6446\u5F04\u7535\u95F8\u7684\u60C5\u51B5\u518D\u6B21\u53D1\u751F\uFF0C\u4E0D\u8FC7\u6211\u60F3\u73B0\u5728\u4E5F\u7528\u4E0D\u7740\u4E86\uFF0C\u4F60\u9700\u8981\u5C31\u62FF\u8D70\u5427\u3002"
+    item: {fileID: 11400000, guid: 4a4bf1fd1507b48b8bb80fcc5a0b67c4, type: 2}
+    itemQuantity: 1
+  - Index: 12
+    CharacterName: 
+    NPCs:
+    - {fileID: 11400000, guid: 7c843a595a30e4dbbb4b80192736b59f, type: 2}
+    - {fileID: 11400000, guid: 7e0f1ac2065b442d1975aa754b25fe65, type: 2}
+    SelectedNPCIndex: 0
+    SelectedVariantIndex: 0
+    CellType: 0
+    JumpToIndex: 13
+    CellFlag: 2
+    Content: "\u5662\uFF0C"
+    item: {fileID: 0}
+    itemQuantity: 0
+  - Index: 13
+    CharacterName: 
+    NPCs:
+    - {fileID: 11400000, guid: 7c843a595a30e4dbbb4b80192736b59f, type: 2}
+    - {fileID: 11400000, guid: 7e0f1ac2065b442d1975aa754b25fe65, type: 2}
+    SelectedNPCIndex: 0
+    SelectedVariantIndex: 0
+    CellType: 0
+    JumpToIndex: 14
+    CellFlag: 2
+    Content: "\u8FD9\u76CF\u706F\u80FD\u501F\u7ED9\u6211\u5417\uFF1F"
+    item: {fileID: 0}
+    itemQuantity: 0
+  - Index: 14
+    CharacterName: 
+    NPCs:
+    - {fileID: 11400000, guid: 7c843a595a30e4dbbb4b80192736b59f, type: 2}
+    - {fileID: 11400000, guid: 7e0f1ac2065b442d1975aa754b25fe65, type: 2}
+    SelectedNPCIndex: 1
+    SelectedVariantIndex: 0
+    CellType: 0
+    JumpToIndex: 15
+    CellFlag: 2
+    Content: "\u5F53\u7136\u3002\u4F46\u5F97\u5148\u9EBB\u70E6\u4F60\u5E2E\u6211\u627E\u5230\u5269\u4E0B\u7684\u534A\u74F6\u675C\u677E\u5B50\u9152\u2014\u2014\u90A3\u53EF\u662F\u6211\u4E24\u767E\u5E74\u524D\u4EB2\u624B\u917F\u7684\u3002"
+    item: {fileID: 0}
+    itemQuantity: 0
+  - Index: 16
+    CharacterName: 
+    NPCs:
+    - {fileID: 11400000, guid: 7c843a595a30e4dbbb4b80192736b59f, type: 2}
+    - {fileID: 11400000, guid: 7e0f1ac2065b442d1975aa754b25fe65, type: 2}
+    SelectedNPCIndex: 0
+    SelectedVariantIndex: 0
+    CellType: 0
+    JumpToIndex: 17
+    CellFlag: 2
+    Content: ......
+    item: {fileID: 0}
+    itemQuantity: 0
+  - Index: 17
+    CharacterName: 
+    NPCs:
+    - {fileID: 11400000, guid: 7c843a595a30e4dbbb4b80192736b59f, type: 2}
+    - {fileID: 11400000, guid: 7e0f1ac2065b442d1975aa754b25fe65, type: 2}
+    SelectedNPCIndex: 0
+    SelectedVariantIndex: 0
+    CellType: 0
+    JumpToIndex: 18
+    CellFlag: 2
+    Content: "\u4F60\u8FD8\u8BB0\u5F97\u6700\u540E\u4E00\u6B21\u770B\u89C1\u5B83\u662F\u4EC0\u4E48\u65F6\u5019\u5417\uFF1F"
+    item: {fileID: 0}
+    itemQuantity: 0
+  - Index: 18
+    CharacterName: 
+    NPCs:
+    - {fileID: 11400000, guid: 7c843a595a30e4dbbb4b80192736b59f, type: 2}
+    - {fileID: 11400000, guid: 7e0f1ac2065b442d1975aa754b25fe65, type: 2}
+    SelectedNPCIndex: 1
+    SelectedVariantIndex: 0
+    CellType: 0
+    JumpToIndex: 19
+    CellFlag: 2
+    Content: "......\u4E0A\u4E00\u6B21\u770B\u89C1\u5B83\u8FD8\u662F\u4E0A\u4E00\u6B21\u6765\u7740\u3002"
+    item: {fileID: 0}
+    itemQuantity: 0
+  - Index: 19
+    CharacterName: 
+    NPCs:
+    - {fileID: 11400000, guid: 7c843a595a30e4dbbb4b80192736b59f, type: 2}
+    - {fileID: 11400000, guid: 7e0f1ac2065b442d1975aa754b25fe65, type: 2}
+    SelectedNPCIndex: 1
+    SelectedVariantIndex: 0
+    CellType: 0
+    JumpToIndex: 0
+    CellFlag: 1
+    Content: "\u563F\uFF0C\u522B\u7528\u90A3\u6837\u7684\u773C\u795E\u770B\u7740\u6211\uFF0C\u6211\u771F\u7684\u8BB0\u4E0D\u4F4F\u4E86\uFF0C\u4E5F\u8BB8\u662F\u5728\u821E\u53F0\u90A3\u8FB9\u5427\uFF1F"
+    item: {fileID: 0}
+    itemQuantity: 0

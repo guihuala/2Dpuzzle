@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 public class PickUpItem : BaseInteractableObject
 {
@@ -24,7 +23,7 @@ public class PickUpItem : BaseInteractableObject
         {
             base.Apply();
             
-            InventoryManager.Instance.AddItem(itemToAdd,quantity);
+            InventoryManager.Instance.OnGetItem.Invoke(itemToAdd, quantity);
             
             isPickedUp = true;
             

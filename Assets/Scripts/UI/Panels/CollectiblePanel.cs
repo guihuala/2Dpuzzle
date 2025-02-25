@@ -58,6 +58,8 @@ public class CollectiblePanel : BasePanel
 
                 itemIcon.sprite = item.icon;
                 itemAmount.text = item.quantity.ToString();
+                
+                itemButtons.Add(button);
 
                 button.onClick.AddListener(() => ShowItemDetails(item));
             }
@@ -77,6 +79,8 @@ public class CollectiblePanel : BasePanel
 
                 itemAmount.gameObject.SetActive(false);
                 itemIcon.sprite = item.icon;
+                
+                itemButtons.Add(button);
 
                 button.onClick.AddListener(() => ShowItemDetails(item));
             }

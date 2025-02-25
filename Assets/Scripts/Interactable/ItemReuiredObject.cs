@@ -15,11 +15,8 @@ public class ItemReuiredObject : BaseInteractableObject
     {
         base.Start();
         
-        Debug.Log($"{gameObject.name} : {isActivated}");
-        if (isActivated)
-        {
-            ActiveObject();
-        }
+        if(isActivated)
+            FirstTimeActiveObject();
         
         requiredItemId = requiredItem.itemID;
         
@@ -36,14 +33,29 @@ public class ItemReuiredObject : BaseInteractableObject
     {
         base.Apply();
         
-        // 打开选择栏UI进行验证
+        // 验证成功就不会再消耗物品了
+        if (isActivated)
+        {
+            ActiveObject();
+            return;
+        }        
+        
+        // 没有验证过，则打开选择栏UI进行验证
         // InventoryManager.Instance.OnOpenSelectList?.Invoke();
         
         InventoryManager.Instance.OnSelectItem?.Invoke(InventoryManager.Instance.GetItem(requiredItemId));
     }
 
-    // 验证通过的逻辑
+    // 验证通过后的逻辑
     protected virtual void ActiveObject() { }
+    
+    // 第一次完成验证，只写影响
+    protected virtual void FirstTimeActiveObject()
+    {
+        isActivated = true;
+        
+        ActiveObject();
+    }
     
     // 判断是否满足条件
     private void IfItemMatch(NormalItem item)
@@ -52,8 +64,7 @@ public class ItemReuiredObject : BaseInteractableObject
         {
             InventoryManager.Instance.RemoveItem(requiredItemId,requiredItemAmount);
             
-            ActiveObject();     
-            isActivated = true;
+            FirstTimeActiveObject();   
             
             GameProgressManager.Instance.UpdateMechanismState(uniqueID,SaveState());
             SaveManager.Instance.NewRecord();  

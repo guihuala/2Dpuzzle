@@ -8,6 +8,8 @@ public class DialoguePanel : BasePanel
     #region 对话面板
 
     private Image _characterImage;
+    private Image _secondCharacterImage;
+
     private Text _characterNameText;
     private Text _contentText;
 
@@ -27,9 +29,10 @@ public class DialoguePanel : BasePanel
     {
         base.Awake();
 
-        _characterNameText = transform.GetChild(1).GetChild(0).GetChild(0).GetComponent<Text>();
-        _contentText = transform.GetChild(1).GetChild(1).GetComponent<Text>();
+        _characterNameText = transform.GetChild(2).GetChild(0).GetChild(0).GetComponent<Text>();
+        _contentText = transform.GetChild(2).GetChild(1).GetComponent<Text>();
         _characterImage = transform.GetChild(0).GetComponent<Image>();
+        _secondCharacterImage = transform.GetChild(1).GetComponent<Image>();
     }
 
     private void Start()
@@ -44,6 +47,8 @@ public class DialoguePanel : BasePanel
 
     public void StartDialogue(DialogueData data)
     {
+        EVENTMGR.isInDialogue = true;
+        
         _currentData = data;
         _currentIndex = 0;
         _isDialogueEnding = false;
@@ -60,35 +65,99 @@ public class DialoguePanel : BasePanel
         }
 
         var currentCell = _currentData.Cells[_currentIndex];
-
-        // 更新角色头像
-        if (currentCell.CharacterSprite != null)
+        
+        ResetPortraitEffects();
+        
+        if (currentCell.NPCs != null && currentCell.NPCs.Count > 0 && currentCell.NPCs[0] != null)
         {
-            _characterImage.sprite = currentCell.CharacterSprite;
-            _characterImage.enabled = true;
+            Sprite leftCharacterSprite = currentCell.NPCs[0].Variants[currentCell.SelectedVariantIndex];
+            if (leftCharacterSprite != null)
+            {
+                _characterImage.sprite = leftCharacterSprite;
+                _characterImage.enabled = true;
+
+                if (currentCell.SelectedNPCIndex == 0)
+                {
+                    _characterImage.rectTransform.localScale = new Vector3(1.1f, 1.1f, 1);
+                    _characterImage.color = Color.white;
+                }
+                else
+                {
+                    _characterImage.rectTransform.localScale = new Vector3(1f, 1f, 1);
+                    _characterImage.color = new Color(1f, 1f, 1f, 0.5f);
+                }
+            }
+            else
+            {
+                _characterImage.enabled = false;
+            }
         }
         else
         {
             _characterImage.enabled = false;
         }
-
-        // 更新角色名字，优先使用npc的角色名
-        _characterNameText.text = currentCell.NPC != null ? currentCell.NPC.NPCName : currentCell.CharacterName;
-
-        // 打字机效果
+        
+        if (currentCell.NPCs != null && currentCell.NPCs.Count > 1 && currentCell.NPCs[1] != null)
+        {
+            Sprite rightCharacterSprite = currentCell.NPCs[1].Variants[currentCell.SelectedVariantIndex];
+            if (rightCharacterSprite != null)
+            {
+                _secondCharacterImage.sprite = rightCharacterSprite;
+                _secondCharacterImage.enabled = true;
+                if (currentCell.SelectedNPCIndex == 1)
+                {
+                    _secondCharacterImage.rectTransform.localScale =
+                        new Vector3(1.1f, 1.1f, 1);
+                    _secondCharacterImage.color = Color.white;
+                }
+                else
+                {
+                    _secondCharacterImage.rectTransform.localScale = new Vector3(1f, 1f, 1);
+                    _secondCharacterImage.color = new Color(1f, 1f, 1f, 0.5f);
+                }
+            }
+            else
+            {
+                _secondCharacterImage.enabled = false;
+            }
+        }
+        else
+        {
+            _secondCharacterImage.enabled = false;
+        }
+        
+        if (currentCell.NPCs != null && currentCell.NPCs.Count > currentCell.SelectedNPCIndex)
+        {
+            _characterNameText.text = currentCell.NPCs[currentCell.SelectedNPCIndex].NPCName;
+        }
+        else
+        {
+            _characterNameText.text = currentCell.CharacterName;
+        }
+        
         _typingTween?.Kill();
         _isTyping = true;
-        _contentText.text = ""; // 清空文本
+        _contentText.text = "";
 
         _typingTween = _contentText.DOText(currentCell.Content, currentCell.Content.Length * 0.05f)
             .SetEase(Ease.Linear)
             .OnComplete(() =>
             {
                 _isTyping = false;
-                // 检查是否有事件需要触发
-                currentCell.TriggerEvent();  // 如果对话单元有事件，则触发事件
+                if(currentCell.item != null)
+                    InventoryManager.Instance.OnGetItem(currentCell.item , currentCell.itemQuantity);
             });
     }
+
+    private void ResetPortraitEffects()
+    {
+        _characterImage.rectTransform.localScale = new Vector3(1f, 1f, 1);
+        _characterImage.color = Color.white;
+
+        _secondCharacterImage.rectTransform.localScale = new Vector3(1f, 1f, 1);
+        _secondCharacterImage.color = Color.white;
+    }
+
 
     public void NextDialogue()
     {
@@ -149,6 +218,8 @@ public class DialoguePanel : BasePanel
 
     private void EndDialogue()
     {
+        EVENTMGR.isInDialogue = false;
+        
         UIManager.Instance.ClosePanel(panelName);
     }
 
