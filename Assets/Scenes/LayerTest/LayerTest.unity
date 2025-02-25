@@ -2469,7 +2469,7 @@ MonoBehaviour:
   interactOutlineMaterial: {fileID: 2100000, guid: 919c5a951799b430f84508b2b0612c77, type: 2}
   defaultMaterial: {fileID: 2100000, guid: 80c11bc0820d6487ab2e4cd1b991d556, type: 2}
   requiresLightToActivate: 0
-  dialogueData: {fileID: 11400000, guid: a6d66e1d4896c4fd0ba400f72f48c060, type: 2}
+  npcDialogueSets: []
 --- !u!61 &1048765596
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -2584,6 +2584,7 @@ GameObject:
   - component: {fileID: 1092625969}
   - component: {fileID: 1092625968}
   - component: {fileID: 1092625976}
+  - component: {fileID: 1092625977}
   m_Layer: 0
   m_Name: ----------MANAGER----------
   m_TagString: Untagged
@@ -2723,6 +2724,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2347ea9b9ccfb4763948c79f122fb3d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1092625977
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1092625967}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 988c0bdf7dd8a4a13b55fc5cc96adcb9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  levels: []
 --- !u!1001 &1186215271
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e2d4612930be74efcad774f38eed65f6, type: 3}
-  m_Name: Test
+  m_Name: fuse
   m_EditorClassIdentifier: 
   itemName: "\u4FDD\u9669\u4E1D"
   itemID: 0

@@ -47,8 +47,6 @@ public class DialoguePanel : BasePanel
 
     public void StartDialogue(DialogueData data)
     {
-        EVENTMGR.isInDialogue = true;
-        
         _currentData = data;
         _currentIndex = 0;
         _isDialogueEnding = false;
@@ -218,8 +216,6 @@ public class DialoguePanel : BasePanel
 
     private void EndDialogue()
     {
-        EVENTMGR.isInDialogue = false;
-        
         UIManager.Instance.ClosePanel(panelName);
     }
 

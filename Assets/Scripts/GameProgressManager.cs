@@ -21,8 +21,6 @@ public class GameProgressManager : SingletonPersistent<GameProgressManager>
 {
     // 推动游戏进度的事件，比如获得了关键物品（收藏品）
     public event Action<CollectibleItem> OnCollectibleCollected;
-    
-    private SceneName nextScene; // 根据游戏进度设置目的地，在新创建存档的时候记得初始化
 
     #region 机关状态列表
     
@@ -31,28 +29,12 @@ public class GameProgressManager : SingletonPersistent<GameProgressManager>
 
     #endregion
 
-    private void Start()
-    {
-    }
-
-    private void OnDestroy()
-    {
-    }
 
     #region 触发
 
     public void TriggerCollectibleCollected(CollectibleItem collectibleItem)
     {
         OnCollectibleCollected?.Invoke(collectibleItem);
-    }
-
-    #endregion
-
-    #region 与目的地有关的方法
-
-    public SceneName GetNextScene()
-    {
-        return nextScene;
     }
 
     #endregion

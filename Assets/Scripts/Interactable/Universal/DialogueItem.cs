@@ -25,32 +25,61 @@ public class DialogueItem : BaseInteractableObject
         {
             dialoguePanel = UIManager.Instance.OpenPanel("DialoguePanel") as DialoguePanel;
         }
-
-        // 查找并播放第一个未完成的对话
+        else
+        {
+            return;
+        }
+        
         while (currentSetIndex < npcDialogueSets.Count)
         {
             NpcDialogue currentDialogue = npcDialogueSets[currentSetIndex];
-
-            // 如果该对话已经完成，跳过
+            
             if (currentDialogue.IsCompleted)
             {
-                currentSetIndex++; // 跳到下一个对话
+                currentSetIndex++;
                 continue;
             }
-
-            // 检查是否需要物品
+            
             if (currentDialogue.requiredItem != null)
             {
-                // 
+                NormalItem requiredItem = InventoryManager.Instance.GetItem(currentDialogue.requiredItem.itemID);
+                
+                if (requiredItem != null)
+                {
+                    // 消耗物品
+                    InventoryManager.Instance.RemoveItem(currentDialogue.requiredItem.itemID,1);
+                    
+                    currentDialogue.IsCompleted = true;
+                    
+                    currentSetIndex++;
+                    currentDialogue = npcDialogueSets[currentSetIndex];
+                    
+                    dialoguePanel.StartDialogue(currentDialogue.dialogueData);
+                    
+                    if (currentSetIndex != npcDialogueSets.Count - 1)
+                    {
+                        currentDialogue.IsCompleted = true;
+                    }
+                    
+                    return;
+                }
+                else
+                {
+                    dialoguePanel.StartDialogue(currentDialogue.dialogueData);
+                    
+                    return;
+                }
             }
             
             dialoguePanel.StartDialogue(currentDialogue.dialogueData);
-            
-            currentDialogue.IsCompleted = true;
 
+            // 如果是最后一组对话，不允许设置为已完成
+            if (currentSetIndex != npcDialogueSets.Count - 1)
+            {
+                currentDialogue.IsCompleted = true;
+            }
+            
             return;
         }
-
-        Debug.Log("没有更多可用的对话。");
     }
 }

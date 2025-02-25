@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e2d4612930be74efcad774f38eed65f6, type: 3}
+  m_Name: gin
+  m_EditorClassIdentifier: 
+  itemName: "\u534A\u74F6\u675C\u677E\u5B50\u9152"
+  itemID: 2
+  icon: {fileID: 0}
+  description: "\u534A\u74F6\u675C\u677E\u5B50\u9152\uFF0C\u9690\u7EA6\u8FD8\u80FD\u95FB\u5230\u9038\u6563\u7684\u9152\u9999"
+  quantity: 1

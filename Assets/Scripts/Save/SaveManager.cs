@@ -18,6 +18,7 @@ public class SaveManager : SingletonPersistent<SaveManager>
         public List<CollectibleItem> collectedItems;  // 收藏品数据
         public List<NormalItem> inventoryItems;       // 物品数据
         public List<MechanismInfo> mechanismInfoList;  // 机关状态数据
+        public List<LevelData> levelUnlocks = new List<LevelData>();
     }
 
     // 构造保存数据
@@ -29,7 +30,8 @@ public class SaveManager : SingletonPersistent<SaveManager>
             gameTime = gameTime,
             collectedItems = CollectibleManager.Instance.GetCollectedItems(),
             inventoryItems = InventoryManager.Instance.GetInventoryItems(),
-            mechanismInfoList = GameProgressManager.Instance.GetAllMechanismStates()  // 添加机关状态
+            mechanismInfoList = GameProgressManager.Instance.GetAllMechanismStates(),
+            levelUnlocks = LevelManager.Instance.levels
         };
         return savedata;
     }
@@ -52,6 +54,12 @@ public class SaveManager : SingletonPersistent<SaveManager>
 
         // 恢复机关状态
         GameProgressManager.Instance.LoadMechanismStates(savedata.mechanismInfoList);  // 加载机关状态
+        
+        LevelManager.Instance.levels.Clear();
+        foreach (var levelData in savedata.levelUnlocks)
+        {
+            LevelManager.Instance.levels.Add(levelData);
+        }
     }
 
     /// <summary>

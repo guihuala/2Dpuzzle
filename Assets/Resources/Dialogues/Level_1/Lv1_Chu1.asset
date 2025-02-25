@@ -167,8 +167,8 @@ MonoBehaviour:
     JumpToIndex: 12
     CellFlag: 2
     Content: "\u539F\u672C\u662F\u4E3A\u4E86\u662F\u907F\u514D\u4E4B\u524D\u603B\u6709\u9189\u9B3C\u53BB\u6446\u5F04\u7535\u95F8\u7684\u60C5\u51B5\u518D\u6B21\u53D1\u751F\uFF0C\u4E0D\u8FC7\u6211\u60F3\u73B0\u5728\u4E5F\u7528\u4E0D\u7740\u4E86\uFF0C\u4F60\u9700\u8981\u5C31\u62FF\u8D70\u5427\u3002"
-    item: {fileID: 11400000, guid: 4a4bf1fd1507b48b8bb80fcc5a0b67c4, type: 2}
-    itemQuantity: 1
+    item: {fileID: 0}
+    itemQuantity: 0
   - Index: 12
     CharacterName: 
     NPCs:
@@ -180,8 +180,8 @@ MonoBehaviour:
     JumpToIndex: 13
     CellFlag: 2
     Content: "\u5662\uFF0C"
-    item: {fileID: 0}
-    itemQuantity: 0
+    item: {fileID: 11400000, guid: 4a4bf1fd1507b48b8bb80fcc5a0b67c4, type: 2}
+    itemQuantity: 1
   - Index: 13
     CharacterName: 
     NPCs:
