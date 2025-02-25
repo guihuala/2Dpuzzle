@@ -7,6 +7,7 @@ Shader "Custom/LightReveal"
         _Color ("Tint Color", Color) = (1,1,1,1)
         _LightColor ("Light Color", Color) = (1,1,1,1)
         _SpotlightFalloff ("Spotlight Falloff", Range(1, 10)) = 2 // 控制聚光灯边缘过渡
+        _ShadowIntensity ("Shadow Intensity", Range(0, 1)) = 0.7 // 阴影强度
     }
     
     SubShader
@@ -54,6 +55,7 @@ Shader "Custom/LightReveal"
                 float4 _Color;
                 float4 _LightColor;
                 float _SpotlightFalloff;
+                float _ShadowIntensity;
                 
                 // 光源基本信息
                 float4 _LightPositions[8];
@@ -66,6 +68,11 @@ Shader "Custom/LightReveal"
                 float4 _LightDirections[8]; // 聚光灯方向
                 float _LightInnerAngles[8]; // 内角 (弧度)
                 float _LightOuterAngles[8]; // 外角 (弧度)
+                
+                // 阴影投射器信息
+                float4 _ShadowCasterPositions[16];
+                int _ShadowCasterCount;
+                float4 _ShadowCasterCorners[64]; // 16个阴影投射器 * 每个4个角点
             CBUFFER_END
 
             Varyings vert(Attributes IN)
@@ -121,6 +128,119 @@ Shader "Custom/LightReveal"
                 return distanceAttenuation * angleAttenuation * intensity;
             }
 
+            // 检查点是否在多边形阴影中
+            bool IsInPolygonShadow(float2 position, float2 lightPos, float4 corners[4])
+            {
+                // 计算光源到当前片段的方向和距离
+                float2 lightToPos = normalize(position - lightPos);
+                float distToPos = length(position - lightPos);
+                
+                // 首先检查光源是否在多边形内部
+                bool lightInsidePolygon = true; // 假设光源在内部，然后尝试证明它在外部
+                for (int i = 0; i < 4; i++)
+                {
+                    float2 v1 = corners[i].xy;
+                    float2 v2 = corners[(i + 1) % 4].xy;
+                    float2 edge = v2 - v1;
+                    float2 normal = float2(-edge.y, edge.x); // 边的法线
+                    normal = normalize(normal);
+                    
+                    // 如果光源在任何一条边的外侧，则光源不在多边形内部
+                    if (dot(lightPos - v1, normal) > 0)
+                    {
+                        lightInsidePolygon = false;
+                        break;
+                    }
+                }
+                
+                // 如果光源在多边形内部，表示当前点在阴影中
+                if (lightInsidePolygon)
+                {
+                    return true;
+                }
+                
+                // 检查光线是否与多边形的任意边相交
+                const float EPSILON = 0.0001; // 数值精度容差
+                
+                for (int i = 0; i < 4; i++)
+                {
+                    float2 v1 = corners[i].xy;
+                    float2 v2 = corners[(i + 1) % 4].xy;
+                    
+                    // 计算光源到顶点的向量和距离
+                    float2 lightToV1 = v1 - lightPos;
+                    float distLightToV1 = length(lightToV1);
+                    
+                    float2 lightToV2 = v2 - lightPos;
+                    float distLightToV2 = length(lightToV2);
+                    
+                    // 如果两个顶点都在光源后面或比当前片段更远，跳过这条边
+                    if ((distLightToV1 > distToPos && distLightToV2 > distToPos))
+                        continue;
+                    
+                    // 计算光线与边的交点
+                    float2 edge = v2 - v1;
+                    float2 normal = float2(-edge.y, edge.x); // 边的法线
+                    normal = normalize(normal);
+                    
+                    // 如果光线与法线几乎平行，则不相交
+                    float d = dot(lightToPos, normal);
+                    if (abs(d) < EPSILON)
+                        continue;
+                    
+                    // 计算交点参数
+                    float2 v1ToLightPos = v1 - lightPos; // 修正向量方向
+                    float t1 = dot(v1ToLightPos, normal) / d;
+                    
+                    // 如果交点在光线的正方向上且在片段之前
+                    if (t1 > 0 && t1 < distToPos)
+                    {
+                        // 计算交点
+                        float2 intersection = lightPos + t1 * lightToPos;
+                        
+                        // 检查交点是否在边上
+                        float2 v1ToIntersection = intersection - v1;
+                        float dotProduct = dot(v1ToIntersection, edge);
+                        float edgeLengthSq = dot(edge, edge);
+                        
+                        // 使用容差进行边界检查
+                        if (dotProduct >= -EPSILON && dotProduct <= edgeLengthSq + EPSILON)
+                        {
+                            return true;
+                        }
+                    }
+                }
+                
+                return false;
+            }
+
+            // 计算阴影衰减
+            float CalculateShadowAttenuation(float2 position, float2 lightPos)
+            {
+                float shadowAttenuation = 1.0;
+                
+                // 检查所有阴影投射器
+                for (int i = 0; i < _ShadowCasterCount; i++)
+                {
+                    // 使用精确形状计算阴影
+                    float4 corners[4];
+                    for (int j = 0; j < 4; j++)
+                    {
+                        corners[j] = _ShadowCasterCorners[i * 4 + j];
+                    }
+                    
+                    bool inShadow = IsInPolygonShadow(position, lightPos, corners);
+                    
+                    if (inShadow)
+                    {
+                        // 应用阴影强度
+                        shadowAttenuation *= (1.0 - _ShadowIntensity);
+                    }
+                }
+                
+                return shadowAttenuation;
+            }
+
             float4 frag(Varyings IN) : SV_Target
             {
                 float4 color = SAMPLE_TEXTURE2D(_MainTex, sampler_MainTex, IN.uv);
@@ -152,6 +272,13 @@ Shader "Custom/LightReveal"
                         
                         lightContribution = CalculateSpotlight(IN.positionOS.xy, lightPos, lightDir, 
                                                             innerAngle, outerAngle, range, intensity);
+                    }
+                    
+                    // 应用阴影衰减
+                    if (_ShadowCasterCount > 0)
+                    {
+                        float shadowAttenuation = CalculateShadowAttenuation(IN.positionOS.xy, lightPos);
+                        lightContribution *= shadowAttenuation;
                     }
                     
                     totalLight += lightContribution;

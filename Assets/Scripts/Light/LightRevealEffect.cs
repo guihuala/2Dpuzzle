@@ -1,6 +1,8 @@
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
 using System.Linq; // 用于数组转换
+using System.Collections.Generic; // 用于List
+using System.Reflection; // 用于反射
 
 [RequireComponent(typeof(SpriteRenderer))]
 public class LightRevealEffect : MonoBehaviour
@@ -19,6 +21,9 @@ public class LightRevealEffect : MonoBehaviour
     private static readonly int LightDirectionsID = Shader.PropertyToID("_LightDirections");
     private static readonly int LightInnerAnglesID = Shader.PropertyToID("_LightInnerAngles");
     private static readonly int LightOuterAnglesID = Shader.PropertyToID("_LightOuterAngles");
+    private static readonly int ShadowCasterPositionsID = Shader.PropertyToID("_ShadowCasterPositions");
+    private static readonly int ShadowCasterCountID = Shader.PropertyToID("_ShadowCasterCount");
+    private static readonly int ShadowCasterCornersID = Shader.PropertyToID("_ShadowCasterCorners");
 
     private Vector4[] lightPositions;
     private float[] lightIntensities;
@@ -28,6 +33,15 @@ public class LightRevealEffect : MonoBehaviour
     private float[] lightInnerAngles;
     private float[] lightOuterAngles;
     private int currentLightCount;
+
+    // 阴影投射器相关
+    private Vector4[] shadowCasterPositions;
+    private int currentShadowCasterCount;
+    private List<ShadowCaster2D> shadowCasters = new List<ShadowCaster2D>();
+    private Vector4[] shadowCasterCorners; // 每个阴影投射器最多4个角点
+
+    // 使用反射获取内部字段
+    private FieldInfo shapePathField;
 
     private void Awake()
     {
@@ -45,13 +59,22 @@ public class LightRevealEffect : MonoBehaviour
         lightInnerAngles = new float[8];
         lightOuterAngles = new float[8];
 
+        // 初始化阴影投射器数组（使用固定大小16）
+        shadowCasterPositions = new Vector4[16];
+        shadowCasterCorners = new Vector4[64]; // 16个阴影投射器 * 每个4个角点
+
         // 设置初始值
         material.SetFloat(OpacityID, 1f);
+
+        // 获取反射字段
+        shapePathField = typeof(ShadowCaster2D).GetField("m_ShapePath",
+            BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public);
     }
 
     private void Update()
     {
         UpdateLightInformation();
+        UpdateShadowCasterInformation();
         UpdateMaterialProperties();
     }
 
@@ -101,6 +124,56 @@ public class LightRevealEffect : MonoBehaviour
         }
     }
 
+    private void UpdateShadowCasterInformation()
+    {
+        // 清空当前阴影投射器计数
+        currentShadowCasterCount = 0;
+        shadowCasters.Clear();
+
+        // 查找场景中的所有ShadowCaster2D组件
+        ShadowCaster2D[] allShadowCasters = FindObjectsOfType<ShadowCaster2D>();
+
+        foreach (ShadowCaster2D caster in allShadowCasters)
+        {
+            if (currentShadowCasterCount >= 16) break;
+
+            // 检查阴影投射器是否激活且能投射阴影
+            if (!caster.gameObject.activeInHierarchy || !caster.castsShadows) continue;
+
+            // 转换阴影投射器位置到物体的局部空间
+            Vector3 localPos = transform.InverseTransformPoint(caster.transform.position);
+            shadowCasterPositions[currentShadowCasterCount] = new Vector4(localPos.x, localPos.y, 0, 0);
+
+            // 获取形状路径
+            if (shapePathField != null)
+            {
+                var shapePath = shapePathField.GetValue(caster) as Vector3[];
+                if (shapePath != null && shapePath.Length > 0)
+                {
+                    // 最多使用4个角点
+                    int cornerCount = Mathf.Min(shapePath.Length, 4);
+                    for (int i = 0; i < cornerCount; i++)
+                    {
+                        // 转换到世界空间，再转换到我们的局部空间
+                        Vector3 worldCorner = caster.transform.TransformPoint(shapePath[i]);
+                        Vector3 localCorner = transform.InverseTransformPoint(worldCorner);
+                        shadowCasterCorners[currentShadowCasterCount * 4 + i] = new Vector4(localCorner.x, localCorner.y, 0, 0);
+                    }
+
+                    // 如果角点少于4个，用最后一个角点填充剩余位置
+                    for (int i = cornerCount; i < 4; i++)
+                    {
+                        shadowCasterCorners[currentShadowCasterCount * 4 + i] =
+                            shadowCasterCorners[currentShadowCasterCount * 4 + cornerCount - 1];
+                    }
+                }
+            }
+
+            shadowCasters.Add(caster);
+            currentShadowCasterCount++;
+        }
+    }
+
     private void UpdateMaterialProperties()
     {
         material.SetVectorArray(LightPositionsID, lightPositions);
@@ -114,12 +187,12 @@ public class LightRevealEffect : MonoBehaviour
         material.SetFloatArray(LightInnerAnglesID, lightInnerAngles);
         material.SetFloatArray(LightOuterAnglesID, lightOuterAngles);
         material.SetInt(LightCountID, currentLightCount);
+
+        // 设置阴影投射器信息
+        material.SetVectorArray(ShadowCasterPositionsID, shadowCasterPositions);
+        material.SetInt(ShadowCasterCountID, currentShadowCasterCount);
+        material.SetVectorArray(ShadowCasterCornersID, shadowCasterCorners);
     }
 
-    private void OnDrawGizmosSelected()
-    {
-        // 在Scene视图中显示检测范围
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(transform.position, 5f);
-    }
+
 }
