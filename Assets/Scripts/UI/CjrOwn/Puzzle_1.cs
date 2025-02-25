@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -17,7 +18,7 @@ public class Puzzle_1 : MonoBehaviour
   public Button CancelButton;
   public Button NextButton;
   public Transform Line_parent;
-  
+  public CanvasGroup CanvasGroup;
   [FormerlySerializedAs("LineStack")] public List<GameObject> LineList;
   
   public Stack<GameObject> LineStack;
@@ -37,6 +38,7 @@ public class Puzzle_1 : MonoBehaviour
 
   private void Awake()
   {
+    CanvasGroup = GetComponent<CanvasGroup>();
     isResolved = false;
    LineStack = new Stack<GameObject>();
     LineList = new List<GameObject>();
@@ -45,6 +47,10 @@ public class Puzzle_1 : MonoBehaviour
     CancelButton.onClick.AddListener(Cancel_Click);
   }
 
+  private void OnEnable()
+  {
+    CanvasGroup.alpha = 1;
+  }
 
   public void AddCircle(CirclePuzzle circlePuzzle)
   {
@@ -131,7 +137,22 @@ public class Puzzle_1 : MonoBehaviour
 
   public void Cancel_Click()
   {
-    gameObject.SetActive(false);
+    CanvasGroup.DOFade(0, 2);
+    StartCoroutine(CloseCoroutine());
+  }
+
+  IEnumerator CloseCoroutine()
+  {
+    while (true)
+    {
+      if (CanvasGroup.alpha <= 0.05f)
+      {
+        gameObject.SetActive(false);
+        break;
+      }
+      yield return null;
+    }
+    
   }
   
 }
