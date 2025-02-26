@@ -7,8 +7,9 @@ public class ClimbingLadder : BaseInteractableObject
 {
     private PlayerController player;
 
-    private void Start()
+    private new void Start()
     {
+        base.Start();
         player = FindObjectOfType<PlayerController>();
 
         // 设置交互提示文本

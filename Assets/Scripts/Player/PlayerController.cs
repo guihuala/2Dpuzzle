@@ -25,7 +25,7 @@ public class PlayerController : MonoBehaviour
 
     [Header("音频")]
     [SerializeField] private RandomAudioPlayer walkAudioPlayer;
-    
+
     [Header("粒子特效")]
     [SerializeField] private ParticleSystem landingParticleEffect; // 落地特效
     [SerializeField] private Transform particleEffectTransform;
@@ -38,14 +38,14 @@ public class PlayerController : MonoBehaviour
         GameInput.Instance.OnInteractAction += InstanceOnInteract;
         GameInput.Instance.OnOpenBag += InstanceOnOnOpenBag;
     }
-    
-    
+
+
     void PlayLandingEffect()
     {
         if (landingParticleEffect != null)
         {
             ParticleSystem landingEffectInstance = Instantiate(landingParticleEffect, particleEffectTransform.position, Quaternion.identity);
-            
+
             landingEffectInstance.Play();
         }
     }
@@ -58,7 +58,7 @@ public class PlayerController : MonoBehaviour
             UIManager.Instance.ClosePanel("CollectiblePanel");
         }
     }
-    
+
     void InstanceOnInteract()
     {
         if (_currentBaseInteractableObject != null)
@@ -93,7 +93,10 @@ public class PlayerController : MonoBehaviour
 
         if (isNearLadder)
         {
-            isClimbing = true;
+            if (vertical > 0)
+            {
+                isClimbing = true;
+            }
         }
         else if (!isNearLadder || isGrounded)
         {
@@ -125,7 +128,7 @@ public class PlayerController : MonoBehaviour
             if (animator != null)
             {
                 animator.SetBool("IsClimb", true);
-                animator.SetFloat("speed", Mathf.Abs(horizontal)); 
+                animator.SetFloat("speed", Mathf.Abs(horizontal));
             }
 
             if (horizontal != 0)
@@ -144,9 +147,9 @@ public class PlayerController : MonoBehaviour
             // 更新动画
             if (animator != null)
             {
-                animator.speed = 1f; 
+                animator.speed = 1f;
                 animator.SetBool("IsClimb", false);
-                animator.SetFloat("speed", Mathf.Abs(horizontal)); 
+                animator.SetFloat("speed", Mathf.Abs(horizontal));
             }
 
             if (horizontal != 0)
@@ -169,7 +172,7 @@ public class PlayerController : MonoBehaviour
             isClimbing = false;
         }
     }
-    
+
     private void OnTriggerStay2D(Collider2D other)
     {
         Interactable baseInteractableObject = other.GetComponent<Interactable>();
@@ -179,12 +182,12 @@ public class PlayerController : MonoBehaviour
             {
                 _currentBaseInteractableObject.Exit();
             }
-            
+
             _currentBaseInteractableObject = baseInteractableObject;
             _currentBaseInteractableObject.Enter();
         }
     }
-    
+
     private void OnTriggerExit2D(Collider2D other)
     {
         Interactable baseInteractableObject = other.GetComponent<Interactable>();
