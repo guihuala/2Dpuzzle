@@ -54,10 +54,8 @@ public class CollectiblePanel : BasePanel
                 GameObject itemGO = Instantiate(itemPrefab, contentPanel);
                 Button button = itemGO.GetComponent<Button>();
                 Image itemIcon = itemGO.transform.GetChild(0).GetComponent<Image>();
-                Text itemAmount = itemGO.transform.GetChild(1).GetComponent<Text>();
 
                 itemIcon.sprite = item.icon;
-                itemAmount.text = item.quantity.ToString();
                 
                 itemButtons.Add(button);
 
@@ -75,9 +73,6 @@ public class CollectiblePanel : BasePanel
                 GameObject itemGO = Instantiate(itemPrefab, contentPanel);
                 Button button = itemGO.GetComponent<Button>();
                 Image itemIcon = itemGO.transform.GetChild(0).GetComponent<Image>();
-                Text itemAmount = itemGO.transform.GetChild(1).GetComponent<Text>();
-
-                itemAmount.gameObject.SetActive(false);
                 itemIcon.sprite = item.icon;
                 
                 itemButtons.Add(button);

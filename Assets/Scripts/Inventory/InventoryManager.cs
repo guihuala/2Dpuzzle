@@ -7,9 +7,9 @@ using UnityEngine;
 public class InventoryManager : SingletonPersistent<InventoryManager>
 {
     // 事件
-    public Action<NormalItem, int> OnGetItem;
+    public Action<NormalItem> OnGetItem;
     public Action<NormalItem> OnSelectItem;
-    public Action OnOpenSelectList;
+    public Action<NormalItem> OnOpenSelectList;
 
     private List<NormalItem> items = new List<NormalItem>();
 
@@ -26,46 +26,38 @@ public class InventoryManager : SingletonPersistent<InventoryManager>
     #region 增删改查
 
     // 添加物品到背包
-    public void AddItem(NormalItem newItem, int quantity)
+    public void AddItem(NormalItem newItem)
     {
         // 查找是否已经有相同物品
         foreach (NormalItem item in items)
         {
             if (item.itemID == newItem.itemID)
             {
-                item.AddQuantity(quantity); // 如果有相同物品，增加数量
+                items.Add(item);
                 return;
             }
         }
 
         // 如果没有相同物品，构造一个新的物品并加入到背包
         NormalItem newItemInstance =
-            new NormalItem(newItem.itemID, newItem.itemName, newItem.icon, newItem.description, quantity);
+            new NormalItem(newItem.itemID, newItem.itemName, newItem.icon, newItem.description);
         items.Add(newItemInstance);
     }
 
     // 从背包移除物品
     public bool RemoveItem(int itemID, int quantity)
     {
-        foreach (NormalItem item in items)
         {
-            if (item.itemID == itemID)
+            foreach (NormalItem item in items)
             {
-                if (item.quantity >= quantity)
+                if (item.itemID == itemID)
                 {
-                    item.RemoveQuantity(quantity);
-                    if (item.quantity == 0)
-                    {
-                        items.Remove(item);
-                    }
-
+                    items.Remove(item);
                     return true;
                 }
-
                 break;
             }
         }
-
         return false; // 未找到或数量不足
     }
     

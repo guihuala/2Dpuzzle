@@ -23,7 +23,7 @@ public class PickUpItem : BaseInteractableObject
         {
             base.Apply();
             
-            InventoryManager.Instance.OnGetItem.Invoke(itemToAdd, quantity);
+            InventoryManager.Instance.OnGetItem.Invoke(itemToAdd);
             
             isPickedUp = true;
             

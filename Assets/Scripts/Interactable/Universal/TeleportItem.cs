@@ -8,10 +8,8 @@ using UnityEngine;
 /// </summary>
 public class TeleportItem : BaseInteractableObject
 {
-    [SerializeField]
-    private SceneName nextScene;
     public override void Enter()
     {
-        SceneLoader.Instance.LoadScene(nextScene,"...");
+        UIManager.Instance.OpenPanel("LevelSelectionPanel");
     }
 }

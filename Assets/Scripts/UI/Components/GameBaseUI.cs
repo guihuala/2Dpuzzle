@@ -17,13 +17,13 @@ public class GameBaseUI : MonoBehaviour
         getItemUI.gameObject.SetActive(false);
     }
 
-    private void UpdateGetItemUI(NormalItem item, int quantity)
+    private void UpdateGetItemUI(NormalItem item)
     {
         Image itemImg = getItemUI.GetChild(0).GetComponent<Image>();
         Text itemInfo = getItemUI.GetChild(1).GetComponent<Text>();
         
         itemImg.sprite = item.icon;
-        itemInfo.text = $"获得物品：{item.itemName} * {quantity}";
+        itemInfo.text = $"获得物品：{item.itemName}。";
         
         ShowGetItemUI();
     }

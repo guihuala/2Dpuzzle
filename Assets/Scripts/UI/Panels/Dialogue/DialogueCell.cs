@@ -28,7 +28,6 @@ public class DialogueCell
     // 使用 UnityEvent 来支持在编辑器中配置事件
     [Header("携带物品")] 
     public NormalItem item;
-    public int itemQuantity;
 
     /// <summary>
     /// 获取当前对话单元对应的角色头像。

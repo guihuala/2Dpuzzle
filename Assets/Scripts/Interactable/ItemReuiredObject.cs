@@ -38,12 +38,10 @@ public class ItemReuiredObject : BaseInteractableObject
         {
             ActiveObject();
             return;
-        }        
-        
+        }
+
         // 没有验证过，则打开选择栏UI进行验证
-        // InventoryManager.Instance.OnOpenSelectList?.Invoke();
-        
-        InventoryManager.Instance.OnSelectItem?.Invoke(InventoryManager.Instance.GetItem(requiredItemId));
+        InventoryManager.Instance.OnOpenSelectList?.Invoke(requiredItem);
     }
 
     // 验证通过后的逻辑
@@ -60,7 +58,7 @@ public class ItemReuiredObject : BaseInteractableObject
     // 判断是否满足条件
     private void IfItemMatch(NormalItem item)
     {
-        if (item.itemID == requiredItemId && item.quantity >= requiredItemAmount)
+        if (item.itemID == requiredItemId)
         {
             InventoryManager.Instance.RemoveItem(requiredItemId,requiredItemAmount);
             

@@ -25,3 +25,5 @@ MonoBehaviour:
     uiPath: UIPanels/SaveButtonGroup
   - uiName: CollectiblePanel
     uiPath: UIPanels/InventoryPanel
+  - uiName: LevelSelectionPanel
+    uiPath: UIPanels/LevelSelectionPanel

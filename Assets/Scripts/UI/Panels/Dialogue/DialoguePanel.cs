@@ -143,7 +143,7 @@ public class DialoguePanel : BasePanel
             {
                 _isTyping = false;
                 if(currentCell.item != null)
-                    InventoryManager.Instance.OnGetItem(currentCell.item , currentCell.itemQuantity);
+                    InventoryManager.Instance.OnGetItem(currentCell.item);
             });
     }
 
