@@ -125,5 +125,10 @@ public class Puzzle_1 : MonoBehaviour
   public void CancelClick()
   {
     canvasGroup.DOFade(0, 2);
+    foreach (var item in LineStack)
+    {
+      Destroy(item.gameObject);
+    }
+    LineStack.Clear();
   }
 }

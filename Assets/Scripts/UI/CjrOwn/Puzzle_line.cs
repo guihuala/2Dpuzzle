@@ -28,6 +28,23 @@ public class Puzzle_line : MonoBehaviour
       {
         Puzzle_1.instance.Init();
       }
+      
+      hits= Physics2D.LinecastAll(lineRenderer.GetPosition(0), lineRenderer.GetPosition(1), Check2);
+      if (hits.Length > 0)
+      {
+         foreach (var item in hits)
+         {
+            if (item.transform.gameObject.TryGetComponent<Puzzle_line>(out var _line))
+            {
+               if (Mathf.Abs(_line.UpID - UpID) > 1)
+               {
+                  Puzzle_1.instance.Init();
+               }
+               
+            }
+            
+         }
+      }
 
    }
 
