@@ -36,6 +36,8 @@ public class CirclePuzzle : MonoBehaviour, IPointerDownHandler, IPointerEnterHan
     
     public void OnPointerDown(PointerEventData eventData)
     {
+        Debug.Log("OnPointerDown");
+        
         if (!selectible) return;
 
         if (isFirst)
